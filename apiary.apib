@@ -7400,8 +7400,9 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
     + (object)
         + include `Employee_divisions`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (object, optional)
-    + include (`External_contractors`, required)
++ `external_contractors` (array, optional)
+    + (object)
+        + include (`External_contractors`, required)
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
@@ -7452,8 +7453,9 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
     + (object)
         + include `Employee_divisions_response`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (object, optional)
-    + include (`External_contractors_response`, required)
++ `external_contractors` (array, optional)
+    + (object)
+        + include (`External_contractors_response`, required)
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
@@ -7584,8 +7586,9 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
     + (object)
         + include `Contractor_divisions`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (object, optional)
-    + include (`External_contractors_response`, required)
++ `external_contractors` (array, optional)
+    + (object)
+        + include (`External_contractors_response`, required)
 + `contractor_employee_divisions` (array, fixed, required)
     + (object)
         + include `Employee_divisions_response`
