@@ -5321,7 +5321,27 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
             + code: 201 (number)
         + data (object)
             + include `Contract_Details`
-            
+
+### Private. Get Contract printout form [GET /api/contracts/{id}/printout_content]
+
+This method is designed to get printout content by contract id. 
+After contract request was signed by both sides signed contract request with printout content was saved to the storage. This WS extract printout conten from the storage.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
+            + `printout_content`: `Contract request content` (string, required) - HTML document for contract
+
 
 # Data Structures
 ## Responses
@@ -7631,7 +7651,6 @@ c
 + contract_requets_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - contract id
 + is_suspended: false (boolean, required) - whether the contract is active or temporary suspended
 + `end_date`: `2017-04-20` (string, required) - contract end date
-+ `printout_content`: `Contract request content` (optional) - HTML document for contract request, is getted from media storage 
 
 ### `Capitation_report`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
