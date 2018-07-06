@@ -4896,7 +4896,7 @@ medical_service|true| послуга, що надається на відділ�
             + include `Contract_request_Details_Full`
 
 
-### Public. Get Contract Requests list [GET /api/contract_requests{?id,contractor_legal_entity_id,contractor_owner_id,nhs_signer_id,issue_city,status,contract_number,page,page_size}]
+### Public. Get Contract Requests list [GET /api/contract_requests{?id,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,issue_city,status,contract_number,page,page_size}]
 
 This method is designed to obtain list of contract request with filters. This method returns shorten information about contract request, in order to see all information try to use 'get contract request details'
 
@@ -4906,8 +4906,8 @@ This method is designed to obtain list of contract request with filters. This me
     + contractor_owner_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity owner.
     + `nhs_signer_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of nhs employee
     + issue_city: `КИЇВ` (string, optional) - contract request place
+    + edrpou: `12345678` (string, optional) - legal entity edrpou
     + status: `NEW` (enum, optional) - current status on contract request.
-        - DRAFT
         - NEW
         - APPROVED
         - DECLINED
@@ -4982,6 +4982,7 @@ To approve contract next fields must be signed by NHS employee and sent by same 
       "name": "Клініка Ноунейм",
       "edrpou": "32323454"
     },
+"next_status": "APPROVED",
 "text": "static_text"
 }
 ```
@@ -5018,7 +5019,8 @@ To decline contract next fields must be signed by NHS employee and sent by same 
       "name": "Клініка Ноунейм",
       "edrpou": "32323454"
     },
-"status_reason": "Не відповідає попереднім домовленостям"
+"next_status": "DECLINED",
+"status_reason": "Не відповідає попереднім домовленостям",
 "text": "static_text"
 }
 ```
@@ -5217,7 +5219,7 @@ This method is designed to get full information of contract by id
         + data (object)
             + include `Contract_Details`
 
-### Public. Get Contract Employees [GET /api/contracts/{contract_id}/employees?{is_active,employee_id,division_id,page,page_size}]
+### Public. Get Contract Employees [GET /api/contracts/{contract_id}/employees{?is_active,employee_id,division_id,page,page_size}]
 
 This method allows to get whole history of all changes employees and divisions which were included in Contract.
 In order to see list of employees as for now set parametr `is_active:true`.
@@ -5242,13 +5244,14 @@ The data received in response can be changed and signed in order to update emplo
         
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
-        + data (array)
-            + (object) 
-                + include `Employee_divisions_response`
-            + `start_date`: `2017-04-20` (string, required) - employee start date 
-            + `end_date`: `2017-04-20` (string, required) - employee end date
-            + `contract_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
-            
+        + data (object)
+            + `contractor_employee_divisions` (array, fixed, required)
+                + (object)
+                    + include `Employee_divisions_response`
+                    + `start_date`: `2017-04-20` (string, required) - employee start date 
+                    + `end_date`: `2017-04-20` (string, required) - employee end date
+                    + `contract_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
+                       
 
 ### Public. Update Contract Employees [PATCH /api/contracts/{contract_id}/employees/actions/update]
 
@@ -7490,10 +7493,7 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
 + `miscellaneous`: `Жодна зі сторін не має права передавати права і зобов’язання за цим контрактом третій стороні без письмової на те згоди іншої сторони` (string, optional) - miscellaneous of a contract
 + status: `NEW` (string, required) - contract_request status
 + status_reason: `Не відповідає попереднім домовленостям`(string, optional) - reason of status theat is setted bu nhs
-+ `nhs_signer` (object, optional) 
-    + include (`Person_Minimal_Contract`)
-+ `nhs_legal_entity` (object)
-    + include (`contract_legal_entity_details`)
+c
 + issue_city: `Київ` (string, optional) - place of contract request
 + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
 + contract_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - contract id
