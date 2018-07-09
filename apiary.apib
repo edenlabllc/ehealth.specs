@@ -3021,6 +3021,50 @@ For changes to take effect employee must confirm the changes.
             + inserted_at: `2017-05-05T14:09:59.232112` (string, required)
             + updated_at: `2017-05-05T14:09:59.232112` (string, required)
 
+### Create Employee Request v2 [POST /api/v2/employee_requests]
+
+Employee_Request consist of the three mandatory parts:
+* Person info
+* Employee info
+* User Info
+
+Additionally to register/update Physician the `Doctor info` should be passed.
+
+When the `Employee_Request` will be posted the Invitation e-mail with a request
+secret token will be sent to the User specified in the request.
+
+In case the employee doesn't have tax_id no_tax_id must be true and in fields tax_id input passport number (serial number in cyrillic without spaces) 
+
+It can be also used to update employee data. In this case `employee_id` should be passed in the payload.
+
+User may accept or decline Invitation.
+
+For changes to take effect employee must confirm the changes.
+Method receives signed message (pkcs7) including signed content, digital signature and signer public key. 
+All signature fields will be validated (including signer certificate authority).
+Signed content MUST consists of JSON object with the `employee_request` block of [data](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/employee-requests/create-employee-request):
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + `signed_employee_request`: `...` (string, required)
+        + `signed_content_encoding`: base64 (string, required)
+
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (Employee_Request_Details)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + inserted_at: `2017-05-05T14:09:59.232112` (string, required)
+            + updated_at: `2017-05-05T14:09:59.232112` (string, required)
+
 ### Get Employee Requests List [GET /api/employee_requests{?id,edrpou,legal_entity_name,no_tax_id,status,page,page_size}]
 
 + Parameters
@@ -5265,13 +5309,11 @@ It's impossible to update contract appendix 2 if contract status<>'VERIFIED'
 
 Example data to sign:
 ```
-{"employee":
-    {
-        "id": "09106b70-18b0-4726-b0ed-6bda1369fd52",
-        "staff_units": 1,
-        "declaration_limit": 45000,
-        "division_id": "6eb6123a-b3ce-4d27-ad3a-f6e3fb3ef1a1"
-    }
+{
+ "employee_id": "09106b70-18b0-4726-b0ed-6bda1369fd52",
+ "staff_units": 1,
+ "declaration_limit": 45000,
+ "division_id": "6eb6123a-b3ce-4d27-ad3a-f6e3fb3ef1a1"
 }
 ```
 
@@ -5325,7 +5367,7 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
 ### Private. Get Contract printout form [GET /api/contracts/{id}/printout_content]
 
 This method is designed to get printout content by contract id. 
-After contract request was signed by both sides signed contract request with printout content was saved to the storage. This WS extract printout conten from the storage.
+After contract request was signed by both sides signed contract request with printout content was saved to the storage. This WS extract printout content from the storage.
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
@@ -5340,7 +5382,7 @@ After contract request was signed by both sides signed contract request with pri
     + Attributes (Response__Process_OK)
         + data (object)
             + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
-            + `printout_content`: `Contract request content` (string, required) - HTML document for contract
+            + `printout_content`: `Contract content` (string, required) - HTML document for contract
 
 
 # Data Structures
