@@ -5027,7 +5027,7 @@ To approve contract next fields must be signed by NHS employee and sent by same 
       "edrpou": "32323454"
     },
 "next_status": "APPROVED",
-"text": "static_text"
+"text": "consent_text"
 }
 ```
 
@@ -5065,7 +5065,7 @@ To decline contract next fields must be signed by NHS employee and sent by same 
     },
 "next_status": "DECLINED",
 "status_reason": "Не відповідає попереднім домовленостям",
-"text": "static_text"
+"text": "consent_text"
 }
 ```
 
@@ -5190,7 +5190,7 @@ This WS is designed to sign contract request from MSP side. Contract request's s
 Tax_id in DS certeficate = contractor_owner_id.tax_id
 Method receives signed message (pkcs7) including signed content, digital signature of first signer, digital signature of second signer and signer public key in signed_content property. 
 All signature fields will be validated (including signer certificate authority). This service will store signed copy of Contract Request in Media Content Storage (will update previous version of file),created contract records and linked employees_divisions if signature is all checks is passed. 
-Object that need to be signed is returned by Get Partially Sigend Contract request by ID. In response will be receive a link to download a file in pkcs7 format (signed by NHS side).
+Object that need to be signed is returned by Get Contract request by ID, urgent, type='signed_content'. In response will be receive a link to download a file in pkcs7 format (signed by NHS side).
 This data must be signed.
 
 + Parameters
@@ -5262,6 +5262,8 @@ This method is designed to get full information of contract by id
     + Attributes (Response__Process_OK)
         + data (object)
             + include `Contract_Details`
+        + urgent (object, required)
+            + documents (array[`contract_media_content`], optional)
 
 ### Public. Get Contract Employees [GET /api/contracts/{contract_id}/employees{?is_active,employee_id,division_id,page,page_size}]
 
@@ -5274,17 +5276,15 @@ The data received in response can be changed and signed in order to update emplo
     + `is_active`: true (boolean, optional)
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
     + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
-     
+    + page: 2 (number, optional) - Page number.
+    + page_size: 1000 (number, optional) - A limit on the number of objects to be returned. Default: 1000
+
      
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
-    + Attributes (object)
-        + `contractor_employee_divisions` (array, fixed, required)
-                + (object)
-                    + include `Employee_divisions_response`
         
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
@@ -5307,13 +5307,22 @@ Otherwise end_date=update_date.
 To decativate employee in contract parameter `is_active=false` must be set in signed content.
 It's impossible to update contract appendix 2 if contract status<>'VERIFIED'
 
-Example data to sign:
+Example data to sign in order to update/add employee:
 ```
 {
  "employee_id": "09106b70-18b0-4726-b0ed-6bda1369fd52",
  "staff_units": 1,
  "declaration_limit": 45000,
  "division_id": "6eb6123a-b3ce-4d27-ad3a-f6e3fb3ef1a1"
+}
+```
+
+Example data to sign in order to deactivate employee:
+```
+{
+ "employee_id": "09106b70-18b0-4726-b0ed-6bda1369fd52",
+ "division_id": "6eb6123a-b3ce-4d27-ad3a-f6e3fb3ef1a1",
+ "is_active": false
 }
 ```
 
@@ -5596,7 +5605,7 @@ After contract request was signed by both sides signed contract request with pri
 + url: `https://storage.ehealth.world` (string, required)
 
 ### `contract_media_content`
-+ type: `signed_content` (string, required)
++ type: `SIGNED_CONTENT` (string, required)
 + url: `https://storage.ehealth.world` (string, required)
 
 ## Declarations
@@ -7683,7 +7692,8 @@ c
 + `nhs_payment_details` (object, optional)
     + include (`Payment_details`, optional)
 + `miscellaneous`: `Жодна зі сторін не має права передавати права і зобов’язання за цим контрактом третій стороні без письмової на те згоди іншої сторони` (string, optional) - miscellaneous of a contract
-+ status: `VERIFIED` (string, required) - contract_request status
++ status: `VERIFIED` (string, required) - contract status
++ status_reason: `не було виконано умов контракту` (string, optional) - the reason of terminated status 
 + `nhs_signer` (object, optional) 
     + include (`Person_Minimal_Contract`)
 + `nhs_legal_entity` (object)
