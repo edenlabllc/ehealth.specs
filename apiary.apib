@@ -3860,7 +3860,7 @@ Capitation reports are created monthly
         + data (array)
             + (`Capitation_report`)
 
-### Get capitation report details [GET /api/capitation_report_details{?edrpou,report_id,page,page_size}]
+### Get capitation report details [GET /api/capitation_report_details{?edrpou,report_id}]
 
 This method returns details of specified capitation report.
 
@@ -3872,8 +3872,6 @@ This method returns details of specified capitation report.
 + Parameters
     + `edrpou`: `34056008` (string,optional)
     + `report_id`: `role-1380df72-275a-11e7-93ae-92361f002671` (string, optional)
-    + `page`: 2 (number) - Page number.    
-    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
 
@@ -5968,7 +5966,7 @@ After contract request was signed by both sides signed contract request with pri
 + position: P6 (string, required) - `Dictionary POSITION`
 + party (object)
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-    + tax_id: `3015492563` (string, required)
+    + no_tax_id: true (boolean, required)
     + include `Party_Short`
     + email: email@example.com (string, optional)
     + phones (array[Phone], optional)
@@ -6117,9 +6115,6 @@ After contract request was signed by both sides signed contract request with pri
 + status: ACTIVE (enum, required)
     - ACTIVE
     - CLOSED
-+ `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE`
-+ `legal_form`: 140 (enum, required) - `Dictionary LEGAL_FORM`
-+ mis_verified: true (string, optional)
 
 ### `Legal_Entity_For_Declaration_Short`
 + short_name: Ноунейм (string, required)
@@ -7559,12 +7554,8 @@ After contract request was signed by both sides signed contract request with pri
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
 + `nhs_contract_price`: `50000` (number, optional) - contract price
 + `nhs_payment_method`: `BACKWARD` (enum, optional) - payment method for contract
-+ `nhs_payment_details` (object, optional)
-    + include (`Payment_details`, optional)
-+ `miscellaneous`: `Жодна зі сторін не має права передавати права і зобов’язання за цим контрактом третій стороні без письмової на те згоди іншої сторони` (string, optional) - miscellaneous of a contract
 + status: `NEW` (string, required) - contract_request status
-+ status_reason: `Не відповідає попереднім домовленостям`(string, optional) - reason of status theat is setted bu nhs
-c
++ status_reason: `Не відповідає попереднім домовленостям`(string, optional) - reason of status that was set
 + issue_city: `Київ` (string, optional) - place of contract request
 + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
 + contract_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - contract id
@@ -7689,9 +7680,6 @@ c
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
 + `nhs_contract_price`: `50000` (number, optional) - contract price
 + `nhs_payment_method`: `prepayment` (enum, optional) - payment method for contract
-+ `nhs_payment_details` (object, optional)
-    + include (`Payment_details`, optional)
-+ `miscellaneous`: `Жодна зі сторін не має права передавати права і зобов’язання за цим контрактом третій стороні без письмової на те згоди іншої сторони` (string, optional) - miscellaneous of a contract
 + status: `VERIFIED` (string, required) - contract status
 + status_reason: `не було виконано умов контракту` (string, optional) - the reason of terminated status 
 + `nhs_signer` (object, optional) 
@@ -7710,6 +7698,7 @@ c
 + inserted_at: `2018-05-22` (string, required) - Date that shows when the report was generated
 
 ### `Capitation_report_detail`
++ id: `2900016520170420` (string, required) - Synthetical record identifier
 + biling_date: `2017-04-20` (string, required) - report biling date
 + report_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
 + legal_entity_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Legal entity id
