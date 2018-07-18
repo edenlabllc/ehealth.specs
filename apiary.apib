@@ -2345,7 +2345,7 @@ Method is used to verify that provided in declarartion request phone number is v
 
 After declaration request is signed and/or verified (depends on verification logic) it will be automatically moved to [Declarations]().
 
-### Get Declaration Requests List [GET /api/declaration_requests{?employee_id,legal_entity_id,status,declaration_number,page,page_size}]
+### Get Declaration Requests List [GET /api/declaration_requests{?employee_id,legal_entity_id,status,page,page_size}]
 
 Use this method to obrain list of Declaration Requests for an `empolee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
 
@@ -2362,7 +2362,6 @@ Method returns shortened details, to obtain full information - get Declaration R
         - APPROVED
         - SIGNED
         - REJECTED
-    + `declaration_number`: `0000-12H4-245D` (string, required) - unique human redable number of declaration.
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
     
@@ -2796,7 +2795,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
 
 ## Declarations [/api/declarations]
 
-### Get Declarations List [GET /api/declarations{?employee_id,legal_entity_id,status,page,page_size}]
+### Get Declarations List [GET /api/declarations{?employee_id,legal_entity_id,status,declaration_number,page,page_size}]
 
 Use this method to obrain list of Declarations for an `empolee_id` and legal_entity_id. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -2804,7 +2803,8 @@ Method returns shortened details, to obtain full information - get Declaration D
 
 + Parameters
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - `user_id` of a Doctor.
-    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - MSP ID.
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MSP ID.
+    + `declaration_number`: `0000-12H4-245D` (string, optional) - unique human redable number of declaration.
     + status: active (string, optional)
         + Default: active
     + page: 2 (number, optional) - Page number.
