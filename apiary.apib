@@ -7657,6 +7657,7 @@ After contract request was signed by both sides signed contract request with pri
 + `start_date`: `2017-04-20` (string, required) - contract start date
 + `end_date`: `2018-04-20` (string, required) - contract start date
 + is_suspended: false (string, required) - whether the contract is active or temporary suspended
++ id_form: `PMD` (string, required)
 
 ### `Contract_Details`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID 
@@ -7694,6 +7695,8 @@ After contract request was signed by both sides signed contract request with pri
 + contract_request_id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - contract request id
 + is_suspended: false (boolean, required) - whether the contract is active or temporary suspended
 + `end_date`: `2017-04-20` (string, required) - contract end date
++ id_form: `PMD` (string, required)
++ parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
 
 ### `Capitation_report`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
