@@ -5350,7 +5350,7 @@ Example data to sign in order to update/add employee:
 {
  "employee_id": "09106b70-18b0-4726-b0ed-6bda1369fd52",
  "staff_units": 1,
- "declaration_limit": 45000,
+ "declaration_limit": 800,
  "division_id": "6eb6123a-b3ce-4d27-ad3a-f6e3fb3ef1a1"
 }
 ```
@@ -5380,13 +5380,7 @@ Example data to sign in order to deactivate employee:
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (object)
-            + `contractor_employee_divisions` (array, fixed, required)
-                + (object)
-                    + include `Employee_divisions_response`
-            + `start_date`: `2017-04-20` (string, required) - employee start date 
-            + `end_date`: `2017-04-20` (string, required) - employee end date
-            + `contract_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
-
+            + include `Contract_Details`
 
 ### Private. Terminate Contract [PATCH /api/contracts/{id}/actions/terminate]
 
