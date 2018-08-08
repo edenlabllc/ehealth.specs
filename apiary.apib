@@ -1091,7 +1091,7 @@ Method searches divisions by parameters and returnes division details
 
 ## Employees [/api/stats/employees]
 
-### Search Employees [GET /api/stats/employees{?id,employee_type,full_name,speciality,division_id,division_name,area,region,settlement,is_available,page,page_size}]
+### Search Employees [GET /api/stats/employees{?id,employee_type,full_name,speciality,division_id,division_name,area,region,settlement,is_available,patient_birth_date,page,page_size}]
 Method searches doctor by parameters and returnes division details
 
 + Parameters
@@ -1105,6 +1105,7 @@ Method searches doctor by parameters and returnes division details
     + region: `Луцький` (string, optional) -  the name of district where division is located
     + settlement: `Луцьк` (string, optional) - the name of settlement where division is located
     + is_available: true (boolen, optional) - whether doctor is available to make declaration with
+    + patient_birth_date: `01-01-1987` (string, optional) - patient birth date
     + page: 2 (number, optional)
     + page_size: 50 (number, optional)
     
