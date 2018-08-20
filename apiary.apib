@@ -3821,7 +3821,7 @@ Roles are set separately for each Client.
     + Attributes (`Response_OK`)
         + data (`Role_Response`)
 
-## Client secret [/admin/clients]
+## Deprecated - Client secret [/admin/clients]
 
 ### Refresh client secret [PATCH /admin/clients/{id}/refresh_secret]
 
@@ -3837,7 +3837,140 @@ Only legal entity owner can request new client secret for his own legal entity
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
+        + data (`Client_Deprecated`)
+
+## Manage client configuration [/api/clients]
+
+### Get clients [GET /api/clients]
+
+This service returns list of clients filtered by context depending on client type:
+
+* Mithril Admin - receives all client records without context
+* MSP - receives only its own client
+* MIS - receives only its own client
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Client`])
+
+### Get client details [GET /api/clients/{id}]
+
+This service returns client details. 
+
+Service will return authorization error (403) if the requested client doesn't correspond with context
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
         + data (`Client`)
+
+### Get client connections [GET /api/clients/{id}/connections]
+
+Service returns list of connections for specified client
+
+Service will return authorization error (403) if the requested client doesn't correspond with context
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Connection`])
+
+### Get client connection details [GET /api/clients/{id}/connections/{connection_id}]
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Connection`)
+
+### Update client connection [PATCH /api/clients/{id}/connections/{connection_id}]
+
+Only redirect uri can be updated using this method
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
+    + Attributes (object)
+        + redirect_uri: `http://example3.com` (array[string], required)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (`Connection`)
+
+### Refresh client secret [PATCH /api/clients/{id}/connections/{connection_id}/actions/refresh_secret]
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (object)
+            + include `Connection`
+            + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
+
+### Delete client connection [DELETE /api/clients/{id}/connections/{connection_id}]
+
++ Parameters
+    + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + meta (Response__Meta, fixed-type)
 
 ## Capitation reports [/api/capitation_reports]
 
@@ -3849,7 +3982,7 @@ Capitation reports are created monthly
 **Scopes required:** `capitation_report:read`
 
 + Parameters
-    + `page`: 2 (number) - Page number.    
+    + `page`: 2 (number) - Page number
     + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
@@ -7484,13 +7617,32 @@ After contract request was signed by both sides signed contract request with pri
 
 
 ## Clients
-### Client (object)
+### Client_Deprecated (object)
 + id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique client id
 + name: `Аптека 199` (string, required) - Client name
 + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
 + redirect_uri: `http://example2.com` (string, required)
 + settings (object)
 + priv_settings (object)
+
+### Client (object)
++ id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique client id
++ name: `eHealth portal` (string, required) - Client name.
++ settings (object) - Client settings.
++ priv_settings (object) - Client private settings.
++ user_id: `user-1380df72-275a-11e7-93ae-92361f002671` (string, required) - Owner-user internal ID, a UUID string.
++ `client_type_id`: `261d52f9-b355-4029-863d-8fc52e9d0b81` - Client Type identifier
++ is_blocked: `false` (string, required) - whether the client is marked as fraud
++ block_reason: `MSP has fakes doctors` (string, optional) - the reason to block
++ inserted_at: `2017-04-20T19:14:13Z` (string, required) - date and time, when the entity was created
++ updated_at: `2017-04-20T19:14:13Z` (string, required) - date and time, when the entity was updated
+
+## Connections
+### Connection
++ id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique connection id
++ client_id: `c4a6d45f-2cf2-4e6d-909a-5962604ad63b` (string, required) - Unique connection id
++ consumer_id: `25c03af6-69bd-439e-b0dd-f1669b3dbbfd` (string, required) - Unique connection id
++ redirect_uri: `http://example2.com` (array[string], required)
 
 ## Events
 ### `Get_events`
