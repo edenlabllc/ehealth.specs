@@ -3849,6 +3849,8 @@ This service returns list of clients filtered by context depending on client typ
 * MSP - receives only its own client
 * MIS - receives only its own client
 
+**Scopes required:** `client:read`
+
 + Request (application/json)
 
     + Headers
@@ -3865,6 +3867,8 @@ This service returns list of clients filtered by context depending on client typ
 This service returns client details. 
 
 Service will return authorization error (403) if the requested client doesn't correspond with context
+
+**Scopes required:** `client:read`
 
 + Parameters
     + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
@@ -3886,6 +3890,8 @@ Service returns list of connections for specified client
 
 Service will return authorization error (403) if the requested client doesn't correspond with context
 
+**Scopes required:** `connection:read`
+
 + Request (application/json)
 
     + Headers
@@ -3898,6 +3904,8 @@ Service will return authorization error (403) if the requested client doesn't co
         + data (array[`Connection`])
 
 ### Get client connection details [GET /api/clients/{id}/connections/{connection_id}]
+
+**Scopes required:** `connection:read`
 
 + Parameters
     + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
@@ -3917,6 +3925,8 @@ Service will return authorization error (403) if the requested client doesn't co
 ### Update client connection [PATCH /api/clients/{id}/connections/{connection_id}]
 
 Only redirect uri can be updated using this method
+
+**Scopes required:** `connection:write`
 
 + Parameters
     + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
@@ -3938,6 +3948,11 @@ Only redirect uri can be updated using this method
 
 ### Refresh client secret [PATCH /api/clients/{id}/connections/{connection_id}/actions/refresh_secret]
 
+This method is used to refresh client secret for specified client connection
+Only legal entity owner can request new client secret for his own legal entity
+
+**Scopes required:** `connection:refresh_secret`
+
 + Parameters
     + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
     + connection_id: `e5372365-d47a-467f-81d0-f35117864352` (string, required)
@@ -3956,6 +3971,11 @@ Only redirect uri can be updated using this method
             + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
 
 ### Delete client connection [DELETE /api/clients/{id}/connections/{connection_id}]
+
+This method is used to **delete** specified client connection. 
+Deleted connection can't be restored and used again
+
+**Scopes required:** `connection:delete`
 
 + Parameters
     + id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
