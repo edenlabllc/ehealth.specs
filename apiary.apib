@@ -2423,6 +2423,8 @@ Method returns shortened details, to obtain full information - get Declaration R
 
 This method is used to create Declaration Request (as part of Declaration creation process). Fields descriptions are listed in request Example view.
 
+Each doctor has its own limit of declarations. In case there is a necessity to create more declarations `overlimit` should be TRUE. By default `overlimit`= FALSE
+
 Methods-independence (Online/Offline) the attacment with scan of declaration must be added. The scan should be single page JPEG document.
 
 After sign new declaration all previously created pending (status one of the following: NEW, APPROVED) declaration request will be cancelled automatically.
@@ -5840,6 +5842,7 @@ After contract request was signed by both sides signed contract request with pri
 + division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider Division identifier.
 + scope (enum, required)
     - family_doctor
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
 
 ### `Declaration_Request_Public_Response`
 + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
@@ -5864,6 +5867,7 @@ After contract request was signed by both sides signed contract request with pri
 + division (`Division_Details`)
 + scope (enum, required)
     - family doctor
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
 + `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 
 ### `Declaration_Request_Online`
@@ -5876,6 +5880,7 @@ After contract request was signed by both sides signed contract request with pri
 + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
 + person(object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person ID
++ overlimit: false (boolean, optional) - when doctor needs more declaration then in declaration_limit is, overlimit should be true
 
 ### `Declaration_Request_Short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
@@ -6067,6 +6072,8 @@ After contract request was signed by both sides signed contract request with pri
 + phones (array[Phone], optional)
 + working_experience: 10 (number, optional) - full years of working experience
 + about_myself: `Закінчив всі можливі курси` (string, optional) - field for medical employee to describe the most important statements.
++ declaration_limit: `2000` (number) - maximum number of declaration with a doctor.
++ declaration_count: `1578` (number) - current number of declaration with a doctor.
 
 ### `Party_Update`
 + include `Party_Short`
@@ -6078,6 +6085,7 @@ After contract request was signed by both sides signed contract request with pri
 + phones (array[Phone], optional)
 + working_experience: 10 (number, optional) - full years of working experience
 + about_myself: `Закінчив всі можливі курси` (string, optional) - field for medical employee to describe the most important statements.
++ declaration_limit: `2000` (number) - maximum number of declaration with a doctor.
 + educations (array[Education], optional)  - освіта
 + qualifications (array[Qualification], optional) - підвищення кваліфікації
 + specialities (array[Speciality_party], optional)  - блок інформації про отримання сертифікату спеціалісту та проходження атестацій
@@ -6231,6 +6239,8 @@ After contract request was signed by both sides signed contract request with pri
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
     + no_tax_id: true (boolean, optional) - true if employee doesn't have tax_id and false otherwise
     + include `Party_Short`
+    + declaration_limit: `2000` (number) - maximum number of declaration with a doctor.
+    + declaration_count: `1578` (number) - current number of declaration with a doctor.
 + division (`Division_Short`)
 + `legal_entity` (`Legal_Entity_Short`)
 + doctor (DoctorNew_Short)
