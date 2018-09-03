@@ -1939,6 +1939,226 @@ Method returns list of records from each uploaded file with status.
         + meta (Response__Meta)
         + data (array[`Register_entries_list_response`])
 
+# Group Internal. NHS Admin v2
+
+## Persons [/api/nhs_admin/persons]
+
+### Get Persons List [GET /api/nhs_admin/persons{?first_name,last_name,birth_date,tax_id,national_id,phone_number,sort,page,page_size}]
+
+***Scope  person:read***
+
+This method allows to search for a Person (MPI).
+There are different sets of required parametrs. Search can be done either by
+
+```
+- tax_id
+- national_id
+- phone_number (phone number in authentification_method='OTP')
+- first_name & last_name & birth_date
+```
+
+Result can be filtered either by 
+```
+- birth_date
+- tax_id
+- national_id 
+- first_name & last_name
+```
+
++ Parameters
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + birth_date: `1991-08-19T00:00:00.000Z` (string, required) - ISO Datetime.
+    + tax_id: 3126509816 (string, required)
+    + national_id: `19910824-00026` (string, required)
+    + phone_number: `+380508887700` (string, required)
+    + sort: birth_date:asc  (enum, optional)
+      - birth_date:acs
+      - birth_date:desc
+      - tax_id:asc
+      - tax_id:desc
+      - national_id:asc
+      - national_id:desc
+      - first_name&last_name:asc
+      - first_name&last_name:desc
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`person_short_v2`])
+
+### Get Person Details [GET /api/nhs_admin/persons/{id}]
+
+This method allows to view Person's (MPI) details.
+
+***Scope  person:read***
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (`person_short_v2`)
+
+
+### Reset authentication method [PATCH /api/nhs_admin/persons/{id}/actions/reset_authentication_method]
+
+This method allows to reset (set to **NA**) person authentication method.
+
+***Scope person:reset_authentication_method***
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (`person_short_v2`)
+
++ Response 403 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta, fixed-type)
+            + code: 404 (number)
+        + error (Response__Error, fixed-type)
+            + type: `not_found`
+            + message: `Not found active person with such ID!` (string)
+
+## Declarations [/api/nhs_admin/declarations]
+
+### Get Declarations List [GET /api/nhs_admin/declarations{?id,declaration_number,person_id,sort,page,page_size}]
+
+***Scope declaration:read***
+
+Using this method it's possible to see the list of all declarations which belongs to a person (knowing person_id)
+or one particular declartion knowing its' id or declaration_number.
+
+Also it's possible to sort declatations either by
+```
+- start_date
+- status
+```
+By defaut the result is sorted by start_date:desc
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - declaration ID.
+    + `person_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MPI ID.
+    + `declaration_number`: `0000-12H4-245D` (string, optional) - unique human redable number of declaration.
+    + sort: start_date (enum, required)
+      - start_date:desc
+      - start_date:asc
+      - status:desc
+      - status:asc
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Nhs_Declaration_v2`])
+
+### Get Declaration by ID [GET /api/nhs_admin/declarations/{id}]
+
+***Scope declaration:read***
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (object)
+            + include `Nhs_Declaration_v2`
+
+### Terminate declaration  [PATCH /api/nhs_admin/declarations/{id}/actions/terminate]
+NHS admin can terminate active declaration using this method. 
+
+**Scopes required:** `declaration:terminate`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + reason_description: `Непрвдиві дані` (string, optional)
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (Nhs_Declaration_v2)
+
+### Verify declaration  [PATCH /api/nhs_admin/declarations/{id}/actions/approve]
+
+This method is used by NHS_admin to verify declarations that has been created with the offline authorization.
+declaration status will be changed to `active`
+
+**Scopes required:** `declaration:approve`
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+    
+    + Attributes (crud_Declaration_patch)
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+
+### Reject declaration  [PATCH /declarations/{id}/actions/reject]
+
+This method is used by NHS_admin to reject declarations that has been created with the offline authorization.
+In case if the verification result is not acceptable.
+declaration status will be changed to `closed`
+
+**Scopes required:** `declaration:reject`
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (crud_Declaration_patch)
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+    
+
 # Group Internal. Gandalf
 
 ## Gandalf [/api.gndf.io/api]
@@ -3942,7 +4162,7 @@ Only redirect uri can be updated using this method
             API-key: uXhEczJ56adsfh3Ri9SUkc4en 
 
     + Attributes (object)
-        + redirect_uri: `http://example3.com` (array[string], required)
+        + redirect_uri: `http://example3.com` (string, required)
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -5773,6 +5993,7 @@ After contract request was signed by both sides signed contract request with pri
 + `emergency_contact`(`Emergency_Contact`)
 + `process_disclosure_data_consent`: true (boolean, required)
 
+
 ## `Merge_Candidates`
 ### `Merge_Candidate`
 + id: `8aa4d353-a58f-45f6-b5ce-a89a9cc39391` (string, optional) - Unique record identifier
@@ -7015,6 +7236,84 @@ After contract request was signed by both sides signed contract request with pri
 + include `Declaration_Request_Details_Public`
 + `media_content`: `http://cs5.pikabu.ru/post_img/big/2015/12/04/5/1449210847155432089.jpg`,`http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg`  (array, required)
 
+## NHS Portal v2
+
+### `person_short_v2`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ status: `active` (enum, required)
+  - active
+  - inactive
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required) - ISO Datetime.
++ birth_country: Україна (string, required) - країна народження
++ birth_settlement: Вінниця (string, required)
++ tax_id: 3126509816 (string, optional)
++ national_id: `19840510-00011` (string, optional)
++ gender (enum, required)
+    - FEMALE
+    - MALE
++ `authentication_method_current` (object, required)
+    + type: `OTP` (enum, required)
+        - OTP
+        - OFFLINE
+        - NA
+    + number: `+380937777785` (string, required)
++ documents (array[Document],optional) 
+
+### `Nhs_Declaration_v2`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - id of the signed document stored on the Media content storage
++ declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
++ `legal_entity` (`Legal_Entity_Short`, required)
+  + addresses (array[Address], optional)
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T10:45:16.000Z` (string, required)
++ status (enum, optional)
+    - active
+    - closed
++ person (`Person_Minimal`, required)
+    + birth_date: `1991-08-19` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required) + tax_id: 3126509816 (string, optional)
++ secret: secret (string, required)
++ documents (array[Document], required)
++ addresses (array[Address], required)
++ phones (array[Phone], optional)
++ `authentication_methods` (array[Authentication_Method], required)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ `division` (`DivisionName`, required)
+  + addresses (array[Address], optional)
+  + phones (array[Phone], required)
+  + email: email@example.com (string, required) - division's email
+  + status: ACTIVE (enum, required)
+    - ACTIVE
+    - INACTIVE
+  + type: clinic (enum, required) - division type
+    - CLINIC
+    - AMBULANT_CLINIC
+    - FAP
+  + mountain_group: false (boolean, optional)
++ `employee` (object, required)
+   + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+   + position: P8 (string, required) - `Dictionary POSITION`
+   + start_date: `2017-03-02T10:45:16.000Z` (string, required)
+   + end_date: `2018-03-02T10:45:16.000Z` (string, optional)
+   + status: APPROVED, DISMISSED (enum, required)
+   + `employee_type`: DOCTOR (string, required) - `Dictionary EMPLOYEE_TYPE`
+   + party (`Party_Short`)
+   + doctor (DoctorNew_Short, optional)
++ scope (enum, required)
+    - family_doctor
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
+
 ## Global Parameters and Products
 ### `Global_Parameters`
 + `declaration_term`: `30` (string, required) - термін дії декларації
@@ -7680,7 +7979,7 @@ After contract request was signed by both sides signed contract request with pri
 + id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique connection id
 + client_id: `c4a6d45f-2cf2-4e6d-909a-5962604ad63b` (string, required) - Unique connection id
 + consumer_id: `25c03af6-69bd-439e-b0dd-f1669b3dbbfd` (string, required) - Unique connection id
-+ redirect_uri: `http://example2.com` (array[string], required)
++ redirect_uri: `http://example2.com` (string, required)
 
 ## Events
 ### `Get_events`
