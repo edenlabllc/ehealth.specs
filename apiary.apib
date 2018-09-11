@@ -5989,7 +5989,7 @@ After contract request was signed by both sides signed contract request with pri
 + phones (array[Phone], optional)
 + email: emaill@example.com (string, optional)
 + `preferred_way_communication`: `email` (string, optional)
-        
+
 ### `Emergency_Contact`
 + first_name: Петро (string, required)
 + last_name: Іванов (string, required)
@@ -6135,7 +6135,25 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Declaration_Request_Public_v2`
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
-    + include `Person`
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `1991-08-19` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required)
+    + email: email@example.com (string, optional)
+    + tax_id: 3126509816 (string, optional)
+    + secret: secret (string, required)
+    + documents (array, required)
+        + (Document)
+            + expiration_date: `1991-08-19` (string, optional)
+    + addresses (array[Address], required)
+    + phones (array[Phone], optional)
+    + `authentication_methods` (array[Authentication_Method], required)
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone
     + `no_tax_id`: false (boolean, required) - fact of declining tax_id
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
