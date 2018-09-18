@@ -3894,6 +3894,25 @@ Update status on CLOSED
             + include `Legal_Entity_Request_Public_Short`
 
 
+### Get legators Legal Entities [GET /api/legal_entities/{id}/related]
+
+Use this method to get the list of child legal entities which are related to current legal entity.
+
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+ + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Legal_Entity_Related`])
+
 ## Divisions [/api/divisions]
 
 ### Get divisions [GET /api/divisions{?ids,name,legal_entity_id,type,status,page,page_size}]
@@ -4154,6 +4173,7 @@ Service will return authorization error (403) if the requested client doesn't co
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
         + data (`Client`)
+            + client_type_name: MSP (string, optional)
 
 ### Get client connections [GET /api/clients/{id}/connections]
 
@@ -4981,6 +5001,7 @@ Entity data:
     "gender": "MALE",
     "email": "email@example.com",
     "tax_id": "3126509816",
+    "unzr": "19910819-00022",
     "secret": "secret",
     "documents": [
       {
@@ -6058,9 +6079,9 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `cabinet_person_response`
 + include `Person`
++ unzr: `19900101-00099` (string, optional)
 + `emergency_contact`(`Emergency_Contact`)
 + `process_disclosure_data_consent`: true (boolean, required)
-
 
 ## `Merge_Candidates`
 ### `Merge_Candidate`
@@ -6286,6 +6307,7 @@ After contract request was signed by both sides signed contract request with pri
 + start_date: `2017-03-02` (string, required)
 + end_date: `2017-03-02` (string, required)
 + person(`Person_Short`)
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + `emergency_contact` (`Emergency_Contact`, required)
     + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
 + employee (`Employee_Declaration_Short`)
@@ -6743,6 +6765,18 @@ After contract request was signed by both sides signed contract request with pri
 + created_by_mis_client_id:  `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
 + updated_at: `1991-08-19T00:00:00.000Z` (string, required)
 + updated_by: `userid` (string, required)
+
+
+### `Legal_Entity_Related` 
++ merged_from_legal_entity (object, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - merged_from legal entity id
+    + name: Клініка Ноунейм (string, required) - full official name of legal entity
+    + edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
++ base: на підставі наказу №1111 (string, required) - the legit documents which prove the relationship between legal entities
++ is_active: true (boolean, required) - whether relationship between legal entities is active
+    - Default: true
++ inserted_at: `2005-10-30 10:45` (string, required) - timestamp
++ inserted_by: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - user id
 
 ## `Divisions`
 ### `Division`
@@ -8085,7 +8119,6 @@ After contract request was signed by both sides signed contract request with pri
 + id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique client id
 + name: `eHealth portal` (string, required) - Client name.
 + settings (object) - Client settings.
-+ priv_settings (object) - Client private settings.
 + user_id: `user-1380df72-275a-11e7-93ae-92361f002671` (string, required) - Owner-user internal ID, a UUID string.
 + `client_type_id`: `261d52f9-b355-4029-863d-8fc52e9d0b81` - Client Type identifier
 + is_blocked: `false` (string, required) - whether the client is marked as fraud
