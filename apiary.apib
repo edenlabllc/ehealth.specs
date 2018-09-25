@@ -3444,8 +3444,8 @@ Method returns only **requested** parameters, birth place and second name in add
             + type: `too_many_results`
             + message: `This API method returns only exact match results, please retry with more specific search result` (string)
 
-### Create Person [GET /api/persons/create]
-This WS is designed to create person in offline method by legal_entity employee. Employee need scope person:write to create person.
+### Create Person [POST /api/persons/create]
+**[Not implemented]** This WS is designed to create person in offline method by legal_entity employee. Employee need scope person:write to create person.
 Method receives signed message (pkcs7) including signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority). 
 
 Entity data:
