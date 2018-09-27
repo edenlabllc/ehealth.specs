@@ -341,7 +341,7 @@ Method returns only **requested** parameters and those from the search, birth pl
     + Attributes (`Response_Collection_V2`)
         + data (array)
             + (`Person_Short`)
-                + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+                + unzr: `19910819-00011` (string, optional) - the record number in the demographic register
 
 + Response 403 (application/json)
     + Attributes (Response_Error)
@@ -6307,7 +6307,7 @@ After contract request was signed by both sides signed contract request with pri
 + start_date: `2017-03-02` (string, required)
 + end_date: `2017-03-02` (string, required)
 + person(`Person_Short`)
-    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + unzr: `19910819-00011` (string, optional) - the record number in the demographic register
     + `emergency_contact` (`Emergency_Contact`, required)
     + `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this Person is disabled, underage, etc.
 + employee (`Employee_Declaration_Short`)
@@ -7012,9 +7012,10 @@ After contract request was signed by both sides signed contract request with pri
 
 ### Document
 + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
-+ number: 120518 (string, required) - document issue number
++ number: АА120518 (string, required) - document issue number
 + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
 + issued_at: `2017-02-28` (string, optional) - the date when document was issued
++ expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
 
 ### `Medical_Certificate`
 + name: Диплом доктора медицини (string, required)
@@ -7403,7 +7404,7 @@ After contract request was signed by both sides signed contract request with pri
 + birth_country: Україна (string, required) - країна народження
 + birth_settlement: Вінниця (string, required)
 + tax_id: 3126509816 (string, optional)
-+ unzr: `19840510-00011` (string, optional)
++ unzr: `19910819-00011` (string, optional)
 + gender (enum, required)
     - FEMALE
     - MALE
