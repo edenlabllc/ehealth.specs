@@ -1013,11 +1013,11 @@ The service returns statistics for all regions
 **Detailed spec**
 
 ```
-  "declarations": 100, --> declarations.division.addreses['REGISTRATION'].region_ID and status in('active', 'pending_verification')
+  "declarations": 100, --> declarations.division.addreses['RESIDENCE'].region_ID and status in('active', 'pending_verification')
   "msps": 2, --> legal_entities.[type='MSP' and status='ACTIVE'].addreses['REGISTRATION'].region_ID
-  "doctors": 15 --> employees.[employee_type='DOCTOR' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['REGISTRATION'].region_ID
+  "doctors": 15 --> employees.[employee_type='DOCTOR' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['RESIDENCE'].region_ID
   "pharmacies": 2, --> legal_entities.[type='PHARMACY' and status='ACTIVE'].addreses['REGISTRATION'].region_ID
-  "pharmacists": 15 --> employees.[employee_type='PHARMACIST' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['REGISTRATION'].region_ID
+  "pharmacists": 15 --> employees.[employee_type='PHARMACIST' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['RESIDENCE'].region_ID
   "medication_requests": 30 -->medication_requests.employee_id-->division_id-->divisions.addreses['REGISTRATION'].region_ID
 ```
 
@@ -5334,6 +5334,7 @@ medical_service|true| послуга, що надається на відділ�
 {
   "contractor_owner_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_base": "на підставі статуту",
+  "previous_request": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
     "bank_name": "Банк номер 1",
     "MFO": "351005",
@@ -8245,6 +8246,7 @@ After contract request was signed by both sides signed contract request with pri
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `printout_content`: `Contract request content` (optional) - HTML document for contract request, is shown only for requests in `APPROVED`, `PENDING_NHS_SIGN`, `NHS_SIGNED`, `SIGNED` statuses.
++ `previous_request`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - changed contract request id
 
 ### `Contract_request_Details_Full`
 + include `Contract_request_Details`
