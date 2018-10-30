@@ -3666,13 +3666,15 @@ Update status on CLOSED
             + include `Legal_Entity_Request_Public_Short`
 
 
-### Get legators Legal Entities [GET /api/legal_entities/{id}/related]
+### Get legators Legal Entities [GET /api/legal_entities/{id}/related{?page,page_size}]
 
 Use this method to get the list of child legal entities which are related to current legal entity.
 
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+    + `page`: 2 (number) - Page number.    
+    + `page_size`: 50 (number) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
 
@@ -3680,7 +3682,8 @@ Use this method to get the list of child legal entities which are related to cur
 
             Authorization: Bearer mF_9.B5f-4.1JqM
 
- + Attributes (`Response_Collection_V2`)
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[`Legal_Entity_Related`])
@@ -4494,6 +4497,210 @@ This method is used to dispense medications to patient
 
 This method is used to process created dispense
 
+**Important**
+Invoke Get Medication dispanse details to obtain previously created medication dispense. In order to process dispense `payment_id` and `payment_amount` should be added. 
+
+**Signed object example:**
+```
+{
+    "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+    "medication_request": {
+      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+      "status": "ACTIVE",
+      "request_number": "0000-243P-1X53-EH38",
+      "created_at": "2017-08-17",
+      "started_at": "2017-08-17",
+      "ended_at": "2017-09-16",
+      "dispense_valid_from": "2017-08-17",
+      "dispense_valid_to": "2017-09-16",
+      "legal_entity": {
+        "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+        "name": "Клініка Ноунейм",
+        "short_name": "Ноунейм",
+        "public_name": "Клініка Ноунейм",
+        "type": "MSP",
+        "edrpou": "5432345432",
+        "status": "ACTIVE"
+      },
+      "division": {
+        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "legal_entity_id": "c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9",
+        "name": "Бориспільське відділення Клініки Ноунейм",
+        "addresses": [
+          {
+            "type": "RESIDENCE",
+            "country": "UA",
+            "area": "Житомирська",
+            "region": "Бердичівський",
+            "settlement": "Київ",
+            "settlement_type": "CITY",
+            "settlement_id": "43432432",
+            "street_type": "STREET",
+            "street": "вул. Ніжинська",
+            "building": "15",
+            "apartment": "23",
+            "zip": "02090"
+          }
+        ],
+        "phones": [
+          {
+            "type": "MOBILE",
+            "number": "+380503410870"
+          }
+        ],
+        "email": "email@example.com",
+        "working_hours": {
+          "mon": [
+            [
+              "08.00",
+              "12.00"
+            ],
+            [
+              "14.00",
+              "18.00"
+            ]
+          ],
+          "tue": [
+            [
+              "08.00",
+              "12.00"
+            ]
+          ],
+          "wed": [
+            [
+              "08.00",
+              "12.00"
+            ]
+          ],
+          "thu": [
+            [
+              "08.00",
+              "12.00"
+            ]
+          ],
+          "fri": [
+            [
+              "08.00",
+              "12.00"
+            ]
+          ],
+          "sat": [],
+          "sun": []
+        },
+        "type": "clinic",
+        "external_id": "3213213",
+        "location": {
+          "latitude": 30.1233,
+          "longitude": 50.32423
+        }
+      },
+      "employee": {
+        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+        "position": "P6",
+        "party": {
+          "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+          "no_tax_id": true,
+          "first_name": "Петро",
+          "last_name": "Іванов",
+          "second_name": "Миколайович",
+          "email": "email@example.com",
+          "phones": [
+            {
+              "type": "MOBILE",
+              "number": "+380503410870"
+            }
+          ]
+        }
+      },
+      "person": {
+        "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+        "first_name": "Петро",
+        "last_name": "Іванов",
+        "second_name": "Миколайович",
+        "age": 35
+      },
+      "medication_info": {
+        "medication_id": "4a63b858-c138-4921-9341-ae9e384bcbd6",
+        "medication_name": "Аміодарон 200мг таблетки",
+        "form": "PILL",
+        "dosage": {
+          "numerator_unit": "MG",
+          "numerator_value": 200,
+          "denumerator_unit": "PILL",
+          "denumerator_value": 1
+        },
+        "medication_qty": 10
+      },
+      "medical_program": {
+        "id": "59781de0-2e64-4359-b716-bcc05a32c10f",
+        "name": "program 'DOSTUPNI LIKI'"
+      }
+    },
+    "dispensed_at": "2017-08-17",
+    "dispensed_by": "Іванов Іван Іванович",
+    "party": {
+      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+      "first_name": "Петро",
+      "last_name": "Іванов",
+      "second_name": "Миколайович"
+    },
+    "legal_entity": {
+      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
+      "name": "Клініка Ноунейм",
+      "short_name": "Ноунейм",
+      "public_name": "Клініка Ноунейм",
+      "type": "MSP",
+      "edrpou": "5432345432",
+      "status": "ACTIVE"
+    },
+    "division": {
+      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
+      "name": "Бориспільське відділення Клініки Ноунейм",
+      "legal_entity_id": "d290f1ee",
+      "type": "CLINIC",
+      "status": "ACTIVE",
+      "mountain_group": false
+    },
+    "medical_program": {
+      "id": "59781de0-2e64-4359-b716-bcc05a32c10f",
+      "name": "program 'DOSTUPNI LIKI'"
+    },
+    "details": [
+      {
+        "medication": {
+          "name": "Амідарон",
+          "type": "MEDICATION",
+          "manufacturer": {
+            "name": "ПАТ \"Київський вітамінний завод\"",
+            "country": "UA"
+          },
+          "form": "PILL",
+          "container": {
+            "numerator_unit": "PILL",
+            "numerator_value": 1,
+            "denumerator_unit": "PILL",
+            "denumerator_value": 1
+          }
+        },
+        "medication_qty": 10,
+        "sell_price": 18.65,
+        "sell_amount": 186.5,
+        "discount_amount": 150,
+        "reimbursement_amount": 450
+      }
+    ],
+    "payment_id": "1239804",
+    "payment_amount": 50,
+    "status": "NEW",
+    "inserted_at": "2017-04-20T19:14:13Z",
+    "inserted_by": "e1453f4c-1077-4e85-8c98-c13ffca0063e",
+    "updated_at": "2017-04-20T19:14:13Z",
+    "updated_by": "2922a240-63db-404e-b730-09222bfeb2dd",
+    "payment_id": "1239804",
+    "payment_amount": 50
+}
+```
+
 + Parameters
     + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
 
@@ -4504,8 +4711,9 @@ This method is used to process created dispense
             Authorization: Bearer mF_9.B5f-4.1JqM
     
     + Attributes (object)
-        + payment_id: F324H456 (string, optional)
-        + payment_amount: 50 (number, optional)
+        + `signed_medication_dispense`: `MIIWmAYJKoZIhvcNAQcCoIIWiTCCFoUCAQExCzAJBgUrDgMCGgUAMIISuwYJKoZIhvcNAQcBoIISrASCEqh7XHJ0ZjFcYW5zaVxhbnNpY3BnMTI1Mlxjb2NvYXJ0ZjE1MDRcY29jb2FzdWJydGY4MTANCntcZm9udHRibFxmMFxmc3dpc3NcZmNoYXJzZXQwIEhlbHZldGljYTt9DQp7XGNvbG9ydGJsO1xyZWQyNTVcZ3JlZW4yNTVcYmx1ZTI1NTtccmVkNzBcZ3JlZW41M1xibHVlOTY7XHJlZDI0OVxncmVlbjI0OVxibHVlMjUxO30NCntcKlxleHBhbmRlZGNvbG9ydGJsOztcY3NzcmdiXGMzNDUxMFxjMjc4NDNcYzQ1MDk4O1xjc3NyZ2JcYzk4MDM5XGM5ODAzOVxjOTg4MjQ7fQ0KXG1hcmdsMTQ0MFxtYXJncjE0NDBcdmlld3cxMDgwMFx2aWV3aDg0MDBcdmlld2tpbmQwDQpcZGVmdGFiNzIwDQpccGFyZFxwYXJkZWZ0YWI3MjBccGFydGlnaHRlbmZhY3RvcjANCg0KXGYwXGZzMjggXGNmMiBcY2IzIFxleHBuZDBcZXhwbmR0dzBca2VybmluZzANClx7XA0KICAgImlkIjoiYjA3NWYxNDgiLFwNCiAgICJzdGFydF9kYXRlIjoiMjAxNy0wMy0wMlQxMDo0NToxNi4wMDBaIixcDQogICAiZW5kX2RhdGUiOiIyMDE3LTAzLTAyVDEwOjQ1OjE2LjAwMFoiLFwNCiAgICJwZXJzb24iOlx7XA0KICAgICAgImZpcnN0X25hbWUiOiJcdWMwXHUxMDU1IFx1MTA3NyBcdTEwOTAgXHUxMDg4IFx1MTA4NiAiLFwNCiAgICAgICJsYXN0X25hbWUiOiJcdWMwXHUxMDMwIFx1MTA3NCBcdTEwNzIgXHUxMDg1IFx1MTA4NiBcdTEwNzQgIixcDQogICAgICAic2blic Vjb25kX25hbWUiOiJcdWMwXHUxMDUyIFx1MTA4MCBcdTEwODIgXHUxMDg2IFx1MTA4MyBcdTEwNzIgXHUxMDgxIFx1MTA4NiBcdTEwNzQgXHUxMDgwIFx1MTA5NSAiLFwNCiAgICAgICJiaXJ0aF9kYXRlIjoiMTk5MS0wOC0xOVQwMDowMDowMC4wMDBaIixcDQogICAgICAiYmlydGhfcGxhY2UiOiJcdWMwXHUxMDQyIFx1MTExMCBcdTEwODUgXHUxMDg1IFx1MTA4MCBcdTEwOTQgXHUxMTAzICwgXHUxMDU5IFx1MTA4MiBcdTEwODggXHUxMDcyIFx1MTExMSBcdTEwODUgXHUxMDcyICIsXA0KICAgICAgImdlbmRlciI6Ik1BTEUiLFwNCiAgICAgICJlbWFpbCI6ImVtYWlsQGV4YW1wbGUuY29tIixcDQogICAgICAidGF4X2lkIjoiMzEyNjUwOTgxNiIsXA0KICAgICAgIm5hdGlvbmFsX2lkIjoiQ0M3MTUwOTg1MjQzIixcDQogICAgICAic2VjcmV0Ijoic2VjcmV0IixcDQogICAgICAiZG9jdW1lbnRzIjpbXA0KICAgICAgICAgXHtcDQogICAgICAgICAgICAidHlwZSI6IlBBU1NQT1JUIixcDQogICAgICAgICAgICAibnVtYmVyIjoiMTIwNTE4IixcDQogICAgICAgICAgICAiaXNzdWVfZGF0ZSI6IjIwMTUtMDQtMDdUMDA6MDA6MDAuMDAwWiIsXA0KICAgICAgICAgICAgImV4cGlyeV9kYXRlIjoiMjAxNS0wNC0wN1QwMDowMDowMC4wMDBaIixcDQogICAgICAgICAgICAiaXNzdWVkX2J5IjoiRE1TVSJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImFkZHJlc3NlcyI6W1wNCiAgICAgICAgIFx7XA0KICAgICAgICAgICAgInR5cGUiOiJSRVNJREVOQ0UiLFwNCiAgICAgICAgICAgICJjb3VudHJ5IjoiVUEiLFwNCiAgICAgICAgICAgICJhcmVhIjoiXHVjMFx1MTA0NiBcdTEwODAgXHUxMDkwIFx1MTA4NiBcdTEwODQgXHUxMDgwIFx1MTA4OCBcdTEwODkgXHUxMTAwIFx1MTA4MiBcdTEwNzIgIixcDQogICAgICAgICAgICAicmVnaW9uIjoiXHVjMFx1MTA0MSBcdTEwNzcgXHUxMDg4IFx1MTA3NiBcdTEwODAgXHUxMDk1IFx1MTExMCBcdTEwNzQgXHUxMDg5IFx1MTEwMCBcdTEwODIgXHUxMDgwIFx1MTA4MSAiLFwNCiAgICAgICAgICAgICJjaXR5IjoiXHVjMFx1MTA1MCBcdTEwODAgXHUxMTExIFx1MTA3NCAiLFwNCiAgICAgICAgICAgICJjaXR5X3R5cGUiOiJDSVRZIixcDQogICAgICAgICAgICAic3RyZWV0IjoiXHVjMFx1MTA3NCBcdTEwOTEgXHUxMDgzIC4gXHUxMDUzIFx1MTExMCBcdTEwNzggXHUxMDgwIFx1MTA4NSBcdTEwODkgXHUxMTAwIFx1MTA4MiBcdTEwNzIgIixcDQogICAgICAgICAgICAiYnVpbGRpbmciOiIxNSIsXA0KICAgICAgICAgICAgImFwYXJ0bWVudCI6IjIzIixcDQogICAgICAgICAgICAiemlwIjoiMDIwOTAiXA0KICAgICAgICAgXH1cDQogICAgICBdLFwNCiAgICAgICJwaG9uZXMiOltcDQogICAgICAgICBce1wNCiAgICAgICAgICAgICJ0eXBlIjoiTU9CSUxFIixcDQogICAgICAgICAgICAibnVtYmVyIjoiKzM4MDUwMzQxMDg3MCJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImF1dGhlbnRpY2F0aW9uX21ldGhvZHMiOltcDQogICAgICAgICBce1wNCiAgICAgICAgICAgICJ0eXBlIjoiU01TIixcDQogICAgICAgICAgICAicGhvbmVfbnVtYmVyIjoiKzM4MDUwODg4NzcwMCJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImVtZXJnZW5jeV9jb250YWN0Ijpce1wNCiAgICAgICAgICJmaXJzdF9uYW1lIjoiXHVjMFx1MTA1NSBcdTEwNzcgXHUxMDkwIFx1MTA4OCBcdTEwODYgIixcDQogICAgICAgICAibGFzdF9uYW1lIjoiXHVjMFx1MTAzMCBcdTEwNzQgXHUxMDcyIFx1MTA4NSBcdTEwODYgXHUxMDc0ICIsXA0KICAgICAgICAgInNlY29uZF9uYW1lIjoiXHVjMFx1MTA1MiBcdTEwODAgXHUxMDgyIFx1MTA4NiBcdTEwODMgXHUxMDcyIFx1MTA4MSBcdTEwODYgXHUxMDc0IFx1MTA4MCBcdTEwOTUgIixcDQogICAgICAgICAicGhvbmVzIjpbXA0KICAgICAgICAgICAgXHtcDQogICAgICAgICAgICAgICAidHlwZSI6Ik1PQklMRSIsXA0KICAgICAgICAgICAgICAgIm51bWJlciI6IiszODA1MDM0MTA4NzAiXA0KICAgICAgICAgICAgXH1cDQogICAgICAgICBdXA0KICAgICAgXH0sXA0KICAgICAgImNvbmZpZGFudF9wZXJzb24iOlx7XA0KICAgICAgICAgInJlbGF0aW9uX3R5cGUiOiJ0cnVzdGVlIixcDQogICAgICAgICAiZmlyc3RfbmFtZSI6Ilx1YzBcdTEwNTUgXHUxMDc3IFx1MTA5MCBcdTEwODggXHUxMDg2ICIsXA0KICAgICAgICAgImxhc3RfbmFtZSI6Ilx1YzBcdTEwMzAgXHUxMDc0IFx1MTA3MiBcdTEwODUgXHUxMDg2IFx1MTA3NCAiLFwNCiAgICAgICAgICJzZWNvbmRfbmFtZSI6Ilx1YzBcdTEwNTIgXHUxMDgwIFx1MTA4MiBcdTEwODYgXHUxMDgzIFx1MTA3MiBcdTEwODEgXHUxMDg2IFx1MTA3NCBcdTEwODAgXHUxMDk1ICIsXA0KICAgICAgICAgImJpcnRoX2RhdGUiOiIxOTkxLTA4LTE5VDAwOjAwOjAwLjAwMFoiLFwNCiAgICAgICAgICJiaXJ0aF9wbGFjZSI6Ilx1YzBcdTEwNDIgXHUxMTEwIFx1MTA4NSBcdTEwODUgXHUxMDgwIFx1MTA5NCBcdTExMDMgLCBcdTEwNTkgXHUxMDgyIFx1MTA4OCBcdTEwNzIgXHUxMTExIFx1MTA4NSBcdTEwNzIgIixcDQogICAgICAgICAiZ2VuZGVyIjoiTUFMRSIsXA0KICAgICAgICAgInRheF9pZCI6IjMxMjY1MDk4MTYiLFwNCiAgICAgICAgICJkb2N1bWVudHMiOltcDQogICAgICAgICAgICBce1wNCiAgICAgICAgICAgICAgICJ0eXBlIjoiUEFTU1BPUlQiLFwNCiAgICAgICAgICAgICAgICJudW1iZXIiOiIxMjA1MTgiLFwNCiAgICAgICAgICAgICAgICJpc3N1ZV9kYXRlIjoiMjAxNS0wNC0wN1QwMDowMDowMC4wMDBaIixcDQogICAgICAgICAgICAgICAiZXhwaXJ5X2RhdGUiOiIyMDE1LTA0LTA3VDAwOjAwOjAwLjAwMFoiLFwNCiAgICAgICAgICAgICAgICJpc3N1ZWRfYnkiOiJETVNVIlwNCiAgICAgICAgICAgIFx9XA0KICAgICAgICAgXSxcDQogICAgICAgICAicGhvbmVzIjpbXA0KICAgICAgICAgICAgXHtcDQogICAgICAgICAgICAgICAidHlwZSI6Ik1PQklMRSIsXA0KICAgICAgICAgICAgICAgIm51bWJlciI6IiszODA1MDM0MTA4NzAiXA0KICAgICAgICAgICAgXH1cDQogICAgICAgICBdXA0KICAgICAgXH0sXA0KICAgICAgInJlbmV3YWxfY29uc2VudCI6dHJ1ZSxcDQogICAgICAicGF0aWVudF9zaWduZWQiOnRydWUsXA0KICAgICAgImRpc2Nsb3N1cmVfY29uc2VudCI6dHJ1ZSxcDQogICAgICAicHJvY2Vzc19kYXRhX2NvbnNlbnQiOnRydWVcDQogICBcfSxcDQogICAiZW1wbG95ZWUiOlx7XA0KICAgICAgImlkIjoiZDI5MGYxZWUtNmM1NC00YjAxLTkwZTYtZDcwMTc0OGYwODUxIixcDQogICAgICAidGl0bGUiOiJcdWMwXHUxMDgzIFx1MTExMCBcdTEwODIgXHUxMDcyIFx1MTA4OCAiLFwNCiAgICAgICJwYXJ0eSI6XHtcDQogICAgICAgICAiaWQiOiJiMDc1ZjE0OC03ZjkzLTRmYzItYjJlYy0yZDgxYjE5YTliN2IiLFwNCiAgICAgICAgICJmaXJzdF9uYW1lIjoiXHVjMFx1MTA1NSBcdTEwNzcgXHUxMDkwIFx1MTA4OCBcdTEwODYgIixcDQogICAgICAgICAibGFzdF9uYW1lIjoiXHVjMFx1MTAzMCBcdTEwNzQgXHUxMDcyIFx1MTA4NSBcdTEwODYgXHUxMDc0ICIsXA0KICAgICAgICAgInNlY29uZF9uYW1lIjoiXHVjMFx1MTA1MiBcdTEwODAgXHUxMDgyIFx1MTA4NiBcdTEwODMgXHUxMDcyIFx1MTA4MSBcdTEwODYgXHUxMDc0IFx1MTA4MCBcdTEwOTUgIlwNCiAgICAgIFx9XA0KICAgXH0sXA0KICAgIm1zcCI6XHtcDQogICAgICAiaWQiOiJkMjkwZjFlZSIsXA0KICAgICAgIm5hbWUiOiJcdWMwXHUxMDUwIFx1MTA4MyBcdTExMTAgXHUxMDg1IFx1MTExMCBcdTEwODIgXHUxMDcyICBcdTEwNDEgXHUxMDg2IFx1MTA4OCBcdTEwODAgXHUxMDg5ICIsXA0KICAgICAgInNob3J0X05hbWUiOiJcdWMwXHUxMDQxIFx1MTA4NiBcdTEwODggXHUxMDgwIFx1MTA4OSAiLFwNCiAgICAgICJ0eXBlIjoiXHVjMFx1MTA2MCBcdTEwNTQgXHUxMDU1ICIsXA0KICAgICAgImVkcnBvdSI6IjU0MzIzNDU0MzIiXA0KICAgXH0sXA0KICAgInNjb3BlIjoiZmFtaWx5IGRvY3RvciIsXA0KICAgInBsYWludGV4dF9jb250ZW50IjoiRGVjbGFyYXRpb24gY29udGVudCJcDQpcfX2gggIuMIICKjCCAZOgAwIBAgIJANj0sC/v0hWYMA0GCSqGSIb3DQEBBQUAMBkxFzAVBgNVBAMUDlBLQ1MjNyBleGFtcGxlMB4XDTE3MDMyNzE0NTczM1oXDTE3MDQyNjE0NTczM1owGTEXMBUGA1UEAxQOUEtDUyM3IGV4YW1wbGUwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMuqrxE/0txT+ZVRKU1O85a8eaaUAOkbcAIy1mMoxQ+UBwcBeXt07Oxu32+p51HSY93Pp5AlDLKE48sjSNvMbTk5vtZ6g8sqMpZxlBVqHLkXLXYBMf2rmtE4hfV6yTP5YUJEs+a9cotsPN0r5KlI9g8aSpIj9Ie8mML5Vh1taQHNAgMBAAGjejB4MB0GA1UdDgQWBBTET2SwL5UfUMKDyhuBGCA+CaflnzBJBgNVHSMEQjBAgBTET2SwL5UfUMKDyhuBGCA+Cafln6EdpBswGTEXMBUGA1UEAxQOUEtDUyM3IGV4YW1wbGWCCQDY9LAv79IVmDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAF1uOGjUb6IVS28UqZ2qLc/kd2oNU2hOEuAp1YeaKRL2OaG4bTubJO1ejoxCJNfVj0FFw5PXIgjnw87JzkAy5KLDTiotQl8eknkd1bR3nIWINemck3GeGYkR8giG3gkNxz6ky1+63ZcoJkEiS46aneDhmS6BdH0V2G/3delos8+ZMYIBgDCCAXwCAQEwJjAZMRcwFQYDVQQDFA5QS0NTIzcgZXhhbXBsZQIJANj0sC/v0hWYMAkGBSsOAwIaBQCggbEwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTcwMzI4MTE1NDEwWjAjBgkqhkiG9w0BCQQxFgQU5NSvVRVYHz5tG1GW8gXrjHSnLj8wUgYJKoZIhvcNAQkPMUUwQzAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwDQYJKoZIhvcNAQEBBQAEgYCdqnN8gGXw9OUmtxOvQQgHK5Ni/4/2WQWj7rxERh5AI6rhXs/hh3DNS5Z5mN6wO8z47SQuedbsMQ5hf6+9BbKhXD7WKeU+DtGyfa1ner5/ubz6BeVvuT98D4PrzHlqNSpe/7AirrA70QVO9kPoFSmGtBG6JjaqaCZBYbvF9InPRw==` (string, required)
+        + `signed_content_encoding`: base64 (string, required)
+        
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
@@ -5049,6 +5257,7 @@ contractor_owner_id|true| підписант, зі сторони мед. зак
 contractor_base|true| на якій підставі діє підписант: закон/домовленість
 contractor_payment_details|true| об'єкт, що містить дані по рахунку, на який будуть здійснюватися виплати
 contractor_rmsp_amount|true| к-сть осіб, що обслуговувалися мед закладом (додаток 1.1 пункт 7)
+previous_request_id | false | опційне поле, яке вказує, що поточний запит на контракт є новою версією вказаного запиту
 contractor_divisions|true| масив id відділень мед. закладу, що включаються в договір
 contractor_employee_divisions|true| масив лікарів (на конкретних відділеннях), що входять да контракту та капітаційного звіту
 external_contractor_flag|true| наявність додатку 2 (підрядники, залучені до надання медичних послуг за Договором)
@@ -5112,7 +5321,7 @@ medical_service|true| послуга, що надається на відділ�
 {
   "contractor_owner_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_base": "на підставі статуту",
-  "previous_request": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
+  "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
     "bank_name": "Банк номер 1",
     "MFO": "351005",
@@ -5229,11 +5438,36 @@ This method is designed to get full information of contract request by id
         + urgent (object, required)
             + documents (array[`contract_media_content`], optional)
 
+### Private. Assign Contract Request by NHS Employee [PATCH /api/contract_requests/{id}/actions/assign]
+
+***Scope  contract_request:update***
+
+This WS is designed for NHS employees. Before rewieving contract request it must be assign to NHS employee who will be responsible for this request.
+To assign employee contract it must be in status NEW, IN_RPOCESS.
+After assigner was updated, contract request status will be changed to `IN_RPOCESS`.
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + employee_id:  `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - 
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + include `Contract_request_Details`
+
 ### Private. Update Contract Request by NHS Signer [PATCH /api/contract_requests/{id}]
 
 ***Scope  contract_request:update***
 
-This WS is designed to enrich conract request with information from NHS side. NHS Signer can change only contract requests in status NEW. NHS Signer can add only information from his side.
+This WS is designed to enrich conract request with information from NHS side. NHS Signer can change only contract requests in status IN_PROCESS. NHS Signer can add only information from his side.
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract request identifier
@@ -5256,7 +5490,7 @@ This WS is designed to enrich conract request with information from NHS side. NH
 
 ***Scope  contract_request:update***
 
-This WS is designed to approve contract request by NHS. Contract request only in status NEW could be approved.
+This WS is designed to approve contract request by NHS. Contract request only in status IN_RPOCESS could be approved.
 
 To approve contract next fields must be signed by NHS employee and sent by same NHS employee in base64 format (all fields below are required):
 ```
@@ -5296,7 +5530,7 @@ To approve contract next fields must be signed by NHS employee and sent by same 
 
 ***Scope  contract_request:update***
 
-This WS is designed to decline contract request by NHS. Contract request only in status NEW could be declined.
+This WS is designed to decline contract request by NHS. Contract request only in status IN_RPOCESS could be declined.
 To decline contract next fields must be signed by NHS employee and sent by same NHS employee in base64 format (all fields below are required):
 ```
 {
@@ -5412,7 +5646,7 @@ Get Contract Request Details and Get Contract Request Printout Content and sign 
 ***Scope  contract_request:sign***
 
 This WS is designed to sign contract request from NHS side. Contract request's status must be ='PENDING_NHS_SIGN'.
-Method receives signed message (pkcs7) including signed content, digital signature and signer public key in signed_content property. 
+Method receives signed message (pkcs7) including signed content, digital signature, digital stamp and signer public key in signed_content property. 
 All signature fields will be validated (including signer certificate authority).This service will store signed copy of Contract Request in Media Content Storage. Signed content MUST consists of JSON object with Contract Request data and printout template. 
 Object that need to be signed is returned by [Get Contract request details](https://uaehealthapi.docs.apiary.io/#reference/public.-contracts/contract-request/public.-get-contract-request-details) response, JSON.Path: $.data. 
 data.prinout content must be changed to Print out content taken from [Get Contract Request Printout Content](https://uaehealthapi.docs.apiary.io/#reference/public.-contracts/contract-request/public.-get-contract-request-printout-content)
@@ -5441,8 +5675,8 @@ data.prinout content must be changed to Print out content taken from [Get Contra
 ***Scope  contract_request:sign***
 
 This WS is designed to sign contract request from MSP side. Contract request's status must be in status ='NHS_SIGNED'.
-Tax_id in DS certeficate = contractor_owner_id.tax_id
-Method receives signed message (pkcs7) including signed content, digital signature of first signer, digital signature of second signer and signer public key in signed_content property. 
+EDRPOU in DS certeficate = contractor_owner_id.lega_entity.edrpou and suranme in DS=contractor_owner_id.party_id.last_name
+Method receives signed message (pkcs7) including signed content, digital signature of first signer, digital stamp of first signer, digital signature of second signer and signer public key in signed_content property. 
 All signature fields will be validated (including signer certificate authority). This service will store signed copy of Contract Request in Media Content Storage (will update previous version of file),created contract records and linked employees_divisions if signature is all checks is passed. 
 Object that need to be signed is returned by Get Contract request by ID, urgent, type='signed_content'. In response will be receive a link to download a file in pkcs7 format (signed by NHS side).
 This data must be signed.
@@ -5630,6 +5864,31 @@ This WS is designed to terminate contract. Contract must be in status 'VERIFIED'
             
     + Attributes (object)
         + `status_reason`: `Неправильний період контракту`(string, optional) - the reason of terminated status
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + include `Contract_Details`
+
+### Private. Prolongate Contract [PATCH /api/contracts/{id}/actions/update]
+
+***Scope  contract:update***
+
+This WS allows to update end_date for contracts in case legal entity was merged and can't sign new contract. Contract must be in status 'VERIFIED'
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            
+    + Attributes (object)
+        + `end_date`: `2018-12-31`(string, required) - new end date 
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -6551,7 +6810,7 @@ After contract request was signed by both sides signed contract request with pri
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - merged_from legal entity id
     + name: Клініка Ноунейм (string, required) - full official name of legal entity
     + edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
-+ base: на підставі наказу №1111 (string, required) - the legit documents which prove the relationship between legal entities
++ reason: на підставі наказу №1111 (string, required) - the legit documents which prove the relationship between legal entities
 + is_active: true (boolean, required) - whether relationship between legal entities is active
     - Default: true
 + inserted_at: `2005-10-30 10:45` (string, required) - timestamp
@@ -7338,6 +7597,69 @@ After contract request was signed by both sides signed contract request with pri
 + `package_qty`: 30 (number, required)
 + `package_min_qty`: 10 (number, required)
 
+## Complex FHIR Types
+### `Reference`
++ identifier (Identifier)
+
+### `Identifier`
++ `type`(Codeable_Concept, required) - Description of identifier
++ `value` : `9183a36b-4d45-4244-9339-63d81cd08d9c` (string, required)- The value that is unique
+
+### `Codeable_Concept`
++ `coding` (array, required, fixed-type)
+    + (object)
+        + include `Coding`
++ text (string, optional)
+
+### `Coding`
++ system : `eHealth/resources` (string, optional)
++ code : `patient` (string, required) - Symbol in syntax defined by the system
+
+### `Duration`
++ value: 10 (string, optional) - The value of the measured amount. The value includes an implicit precision in the presentation of the value
++ unit: `days` (string, optional) - A human-readable form of the unit
++ system: `http://unitsofmeasure.org` (string, optional) - The identification of the system that provides the coded form of the unit
++ code: d (string, optional) - A computer processable form of the unit in some unit representation system
+
+### `Period`
++ start : `2018-08-02T10:45:16.000Z`(string, required) - C? Starting time with inclusive boundary
++ end : `2018-08-02T11:00:00.000Z`(string, optional) - C? End time with inclusive boundary, if not ongoing
+
+### `Quantity`
++ value : `13,5` (number, required)
++ comparator : `>` (string, optional)
++ unit : `mg` (string, required)
++ system : `eHealth/units` (string, optional)
++ code: `mg` (string, optional)
+        
+
+### `Range`
++ low (Quantity, required)
++ high (Quantity, required)
+
+### Timing
++ event: `2017-04-20T19:14:13Z` (string, optional) - When the event occurs. ISO 8601 date and time in UTC timezone.
++ repeat (object, optional)
+    - One Of
+        + bounds_duration (Duration)
+        + bounds_range (Range)
+        + bounds_period (Period)
+    + count: 2 (number, optional) - Number of times to repeat
+    + count_max: 4 (number, optional) - Maximum number of times to repeat
+    + duration: 4 (number, optional) - How long when it happens
+    + duration_max: 6 (number, optional) - How long when it happens Max
+    + duration_unit: d (string, optional) - unit of time UCUM
+    + frequency: 1 (number, optional) - Event occurs frequency times per period
+    + frequency_max: 2 (number, optional) - Event occurs up to frequencyMax times per period
+    + period: 4 (number, optional) - Event occurs frequency times per period
+    + period_max: 6 (number, optional) - Upper limit of period
+    + period_unit: d (number, optional) - unit of time UCUM
+    + `day_of_week`: mon (array[string], optional) - day of week
+    + `time_of_day`: `2017-04-20T19:14:13Z` (string, optional) - Time of day for action
+    + when: WAKE (array[string], optional) - Regular life events the event is tied to
+    + offset: 4 (number, optional) - Minutes from event before or after
++ code (Codeable_Concept, optional)
+
 ## Medications
 ### `Innm_Request`
 + `sctid`: `52574003` (string, optional) - innm CNOMED code
@@ -7628,6 +7950,18 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Qualify_Medication_request_Request_List_program_post_data`
 + `id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string,required) - `Medical program Identifier`
+
+### `Dosage_Instruction`
++ sequence: 1 (number, optional) - The order of the dosage instructions
++ text: `0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day` (string, optional) - Free text dosage instructions e.g. SIG
++ `additional_instruction` (array, optional, fixed-type)
+    + (Codeable_Concept)
+        + coding (array, fixed-type)
+            + (Coding)
+             + system: `http://snomed.info/sct`(string)
+             + code: `418914006` (string)
++ `patient_instruction`: `0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day` (string, optional) - Patient or consumer oriented instructions
++ timing (Timing, optional)
 
 ### `Qualify_Medication_request_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
@@ -8012,6 +8346,10 @@ After contract request was signed by both sides signed contract request with pri
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
++ `nhs_signer` (object, optional) 
+    + include (`Person_Minimal_Contract`)
++ `nhs_legal_entity` (object)
+    + include (`contract_legal_entity_details`)
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
 + `nhs_contract_price`: `50000` (number, optional) - contract price
 + `nhs_payment_method`: `BACKWARD` (enum, optional) - payment method for contract
@@ -8024,7 +8362,8 @@ After contract request was signed by both sides signed contract request with pri
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `printout_content`: `Contract request content` (optional) - HTML document for contract request, is shown only for requests in `APPROVED`, `PENDING_NHS_SIGN`, `NHS_SIGNED`, `SIGNED` statuses.
-+ `previous_request`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - changed contract request id
++ `previous_request_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - changed contract request id
++ `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
 
 ### `Contract_request_Details_Full`
 + include `Contract_request_Details`
@@ -8118,6 +8457,7 @@ After contract request was signed by both sides signed contract request with pri
 + is_suspended: false (string, required) - whether the contract is active or temporary suspended
 + id_form: `PMD` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
 
 ### `Contract_Details`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID 
