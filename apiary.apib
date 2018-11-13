@@ -4231,8 +4231,7 @@ This method is used to pre-qualify data Medication request Request (possibility 
 
 ### Create Medication Request Request [POST /api/medication_request_requests]
 
-This method is used to create Medication request Request (as a part of Medication request creation process). 
-Fields description are listed in request Example view.
+This method is used to create Medication request Request (as a part of Medication request creation process)
 
 + Request (application/json)
 
@@ -7783,7 +7782,16 @@ After contract request was signed by both sides signed contract request with pri
 + unit : `mg` (string, required)
 + system : `eHealth/units` (string, optional)
 + code: `mg` (string, optional)
-        
+
+### `Simple_Quantity`
++ value : `13,5` (number, required)
++ unit : `mg` (string, required)
++ system : `eHealth/units` (string, optional)
++ code: `mg` (string, optional)
+
+### `Ratio`
++ numerator (Quantity, required)
++ denominator (Quantity, required)
 
 ### `Range`
 + low (Quantity, required)
@@ -7811,6 +7819,23 @@ After contract request was signed by both sides signed contract request with pri
     + when: WAKE (array[string], optional) - Regular life events the event is tied to
     + offset: 4 (number, optional) - Minutes from event before or after
 + code (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/timing_abbreviation` (string)
+
+### `Dose_and_Rate`
++ type (Codeable_Concept, optional)
+    + coding (array, fixed-type)
+        + (Coding)
+            + system: `eHealth/dose_and_rate` (string, required)
+            + code: 'ordered' (string, required)
+- One Of
+    + dose_range (Range)
+    + dose_quantity (Simple_Quantity)
+- One Of
+    + rate_ratio (Ratio)
+    + rate_range (Range)
+    + rate_quantity (Simple_Quantity)
 
 ## Medications
 ### `Innm_Request`
@@ -8061,12 +8086,6 @@ After contract request was signed by both sides signed contract request with pri
 ### `Medication_request_Request_post_data`
 + `person_id`: `585044f5-1272-4bca-8d41-8440eefe7d26` (string, required) - Person identifier
 + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Employee identifier with `type=DOCTOR` who issued Medication Request.
-+ `context`(Reference, required, fixed-type)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `encounter` (string)
 + `division_id`: `881d6dee-dd3d-43f3-8983-922354c0e6ce` (string, required) - Division identifier where issued Medication Request.
 + `created_at`: `2017-08-17` (string, required) - Medication request creation date, which is determined by the external system. Format *DATE '2017-09-07'*
 + `started_at`: `2017-08-17` (string, required) - Start date of a treatment period, which is determined by the external system. Greater or equal to **created_at**. Format *DATE '2017-09-07'*
@@ -8076,6 +8095,19 @@ After contract request was signed by both sides signed contract request with pri
 + `medication_id` : `1349a693-4db1-4a3f-9ac6-8c2f9e541982` (string, required) - `Medication (type INNM_DOSAGE) identifier`
 + `medication_qty`: 10 (number, required) - Medication quantity isuued by the doctor
 + `medical_program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string) - `Medical program Identifier`
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act.
+    - order - The request represents a request/demand and authorization for action.
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
++ `context`(Reference, required, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `dosage_instruction` (array, optional)
+    + (Dosage_Instruction)
 
 ### `Medication_request_Request_Qualify_post_data`
 + `person_id`: `585044f5-1272-4bca-8d41-8440eefe7d26` (string, required) - Person identifier
@@ -8127,6 +8159,16 @@ After contract request was signed by both sides signed contract request with pri
              + code: `418914006` (string)
 + `patient_instruction`: `0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day` (string, optional) - Patient or consumer oriented instructions
 + timing (Timing, optional)
+- One Of
+    + as_needed_boolean (boolean)
+    + as_needed_codeable_concept (Codeable_Concept)
++ site (Codeable_Concept) - Body site to administer to
++ route (Codeable_Concept) - How drug should enter body
++ method (Codeable_Concept) - Technique for administering medication
++ `dose_and_rate` (Dose_and_Rate, optional)
++ `max_dose_per_period` (Ratio, optional)
++ `max_dose_per_administration` (Simple_Quantity, optional)
++ `max_dose_per_lifetime` (Simple_Quantity, optional)
 
 ### `Qualify_Medication_request_Request_Responce`
 + `program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
