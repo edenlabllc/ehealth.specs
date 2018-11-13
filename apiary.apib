@@ -4109,7 +4109,7 @@ There are following age groups right now:
 
 ## Drugs [/apidrugs]
 
-### Get drugs list [GET /api/drugs{?innm_id,innm_name,innm_sctid,innm_dosage_form,innm_dosage_id,innm_dosage_name,medication_code_atc,page,page_size}]
+### Get drugs list [GET /api/drugs{?innm_id,innm_name,innm_sctid,innm_dosage_form,innm_dosage_id,innm_dosage_name,medication_code_atc,program_id,page,page_size}]
 
 Get drugs list by filters.
 
@@ -4123,6 +4123,7 @@ Get drugs list by filters.
     + `innm_dosage_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Innm_dosage identifier.
     + `innm_dosage_name`: `Аміодарон 200мг таблетки` (string, optional) - Innm_dosage name.
     + `medication_code_atc`: `С01BD01` (string, optional) - Medication code ATC..
+    + `program_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - medical program id.
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
