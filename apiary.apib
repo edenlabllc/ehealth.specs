@@ -4274,6 +4274,153 @@ Invoke Get Medication request Request by ID to obtain seed - Hash of previous bl
 **Signed object example:**
 ```
 {
+    "status": "NEW",
+    "started_at": "2018-11-13",
+    "request_number": "0000-K8K5-5MTE-352H",
+    "person": {
+        "second_name": "Іванович",
+        "last_name": "Іванов",
+        "id": "4e709925-4bd9-432c-973a-c98976cb901d",
+        "first_name": "Іван",
+        "age": 18
+    },
+    "medication_info": {
+        "medication_qty": 10,
+        "medication_name": "Амідарон",
+        "medication_id": "538713df-55cd-479d-b25c-4b1359bbe7ca",
+        "form": "COATED_TABLET",
+        "dosage": {
+            "numerator_value": 300,
+            "numerator_unit": "MG",
+            "denumerator_value": 1,
+            "denumerator_unit": "PILL"
+        }
+    },
+    "medical_program": {
+        "updated_by": "8341b7d6-f9c7-472a-960c-7da953cc4ea4",
+        "updated_at": "2018-03-30T15:14:55.564897",
+        "name": "Тестова програма",
+        "is_active": true,
+        "inserted_by": "8341b7d6-f9c7-472a-960c-7da953cc4ea4",
+        "inserted_at": "2018-03-30T15:14:55.564888",
+        "id": "6f6b3971-a5db-4e2a-99a8-7fdffd8d0d9a"
+    },
+    "legal_entity": {
+        "type": "MSP",
+        "status": "ACTIVE",
+        "short_name": "Ноунейм Медікал",
+        "public_name": "Ноунейм Медікал",
+        "name": "Клініка Ноунейм Медікал",
+        "id": "a0f2f598-aa0b-486d-b8ee-7bc4fd284564",
+        "edrpou": "11111111"
+    },
+    "id": "fda6839c-7c17-4b45-bc18-14b1039fe702",
+    "ended_at": "2018-12-13",
+    "employee": {
+        "position": "P1",
+        "party": {
+            "second_name": "Петрович",
+            "phones": [
+                {
+                    "type": "MOBILE",
+                    "number": "+380501234567"
+                }
+            ],
+            "no_tax_id": false,
+            "last_name": "Петров",
+            "id": "642f9f9a-24dc-4447-a4df-4bb0648bcf0a",
+            "first_name": "Петро"
+        },
+        "id": "c677954a-2d46-4a30-9314-1c20b31e6909"
+    },
+    "division": {
+        "working_hours": {
+            "wed": [
+                [
+                    "08.00",
+                    "12.00"
+                ],
+                [
+                    "14.00",
+                    "17.00"
+                ]
+            ],
+            "tue": [
+                [
+                    "08.00",
+                    "12.00"
+                ],
+                [
+                    "14.00",
+                    "17.00"
+                ]
+            ],
+            "thu": [
+                [
+                    "08.00",
+                    "12.00"
+                ],
+                [
+                    "14.00",
+                    "17.00"
+                ]
+            ],
+            "mon": [
+                [
+                    "08.00",
+                    "12.00"
+                ],
+                [
+                    "14.00",
+                    "17.00"
+                ]
+            ],
+            "fri": [
+                [
+                    "08.00",
+                    "12.00"
+                ],
+                [
+                    "14.00",
+                    "16.00"
+                ]
+            ]
+        },
+        "type": "CLINIC",
+        "status": "ACTIVE",
+        "phones": [
+            {
+                "type": "MOBILE",
+                "number": "+380501234567"
+            }
+        ],
+        "name": "Відділення Клініки Ноунейм",
+        "mountain_group": false,
+        "location": null,
+        "legal_entity_id": "a0f2f598-aa0b-486d-b8ee-7bc4fd284564",
+        "id": "f180f85a-a55e-4ba9-b49d-e4d00338fc57",
+        "external_id": "3213213",
+        "email": "example@email.com",
+        "addresses": [
+            {
+                "zip": "02090",
+                "type": "RESIDENCE",
+                "street_type": "STREET",
+                "street": "вул. Ніжинська",
+                "settlement_type": "CITY",
+                "settlement_id": "707dbc55-cb6b-4aaa-97c1-2a1e03476100",
+                "settlement": "СОРОКИ-ЛЬВІВСЬКІ",
+                "region": "ПУСТОМИТІВСЬКИЙ",
+                "country": "UA",
+                "building": "15",
+                "area": "ЛЬВІВСЬКА",
+                "apartment": "23"
+            }
+        ]
+    },
+    "dispense_valid_to": "2018-12-13",
+    "dispense_valid_from": "2018-11-13",
+    "created_at": "2018-11-13"
 }
 ```
 + Parameters
@@ -8107,7 +8254,7 @@ After contract request was signed by both sides signed contract request with pri
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
-+ `dosage_instruction` (array, optional)
++ `dosage_instruction` (array, optional, fixed-type)
     + (Dosage_Instruction)
 
 ### `Medication_request_Request_Qualify_post_data`
