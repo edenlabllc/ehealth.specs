@@ -5539,7 +5539,7 @@ This web service allows to initialize contract request creation by generating li
         + data (object)
             + include `Init_contract_request_response`
 
-### Pubic. Create Contract Request [POST /api/contract_requests/{id}]
+### Public. Create Contract Request [POST /api/contract_requests/{id}]
 
 ***Scope  contract_request:create***
 
@@ -5547,6 +5547,8 @@ This web service allows to create contract request, using contract_request_id, g
 As an input parameters should be transfered signed data in PKCS7 format. Digital signiture should be applied to data filled by legal entity owner and MD5 HASH of provided files (statuste and equipment agreement).
 #### Contract_request object scheme to be signed
 The following tables describes contract_request object fields and it`s child objects.
+
+There are two types of schemas depending on contract_type - capitation version and reimbursement version
 #####Capitation Contract_request
 
 Attribute |Is required| Description
@@ -5633,9 +5635,10 @@ medical_service|true| послуга, що надається на відділ�
     > 2.2 In case you don't have external_contractors - external_contractors_flag should be set as FALSE and external_contractors array must empty.
 
 ####JSON example
-
+Capitation version:
 ```
 {
+  "contract_type": "capitation",
   "contractor_owner_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_base": "на підставі статуту",
   "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
@@ -5682,6 +5685,33 @@ medical_service|true| послуга, що надається на відділ�
   "consent_text": "Погоджуюсь з публічними правилами"
 }
 ```
+Reimbursement version:
+```
+{
+  "contract_type": "reimbursement",
+  "contractor_owner_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
+  "contractor_base": "на підставі статуту",
+  "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
+  "contractor_payment_details": {
+    "bank_name": "Банк номер 1",
+    "MFO": "351005",
+    "payer_account": "32009102701026"
+  },
+
+  "contractor_divisions": [
+    "id: `2922a240-63db-404e-b730-09222bfeb2dd`"
+  ],
+  
+  "start_date": "2017-04-20",
+  "end_date": "2017-04-20",
+  "id_form": "PMD_1",
+  "contract_number": "0000-9EAX-XT7X-3115",
+  "statute_md5": "db218b04eff70f86f40c1572ce8ca16a",
+  "additional_document_md5": "ac642b04eff40f86f40c1572ce8ca16a",
+  "medical_program_id": "3922a240-63db-404e-b730-09222bfeb2d1"
+  "consent_text": "Погоджуюсь з публічними правилами"
+}
+```
 
 
 + Request (application/json)
@@ -5720,6 +5750,7 @@ This method is designed to obtain list of contract request with filters. This me
         - TERMINATED
         - NHS_SIGNED
     + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+    + program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of reimbursement contract
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -5785,7 +5816,7 @@ After assigner was updated, contract request status will be changed to `IN_RPOCE
 ***Scope  contract_request:update***
 
 This WS is designed to enrich conract request with information from NHS side. NHS Signer can change only contract requests in status IN_PROCESS. NHS Signer can add only information from his side.
-
+In case of reimbursement contract, nhs_contract_price shouldn`t be filled.
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract request identifier
 
@@ -6041,6 +6072,7 @@ This method is designed to obtain list of contracts with filters. This mothod re
     + date_from_end_date: `2018-01-01` (string, optional)
     + date_to_end_date: `2019-01-01` (string, optional)
     + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+    + program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of reimbursement contract
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -8672,7 +8704,7 @@ After contract request was signed by both sides signed contract request with pri
 + `signed_content_encoding`: `base64` (string, required)
 
 ### `Contract_request_Request`
-+ `contract_type`: `capitation`(string, optional)
++ `contract_type`: `CAPITATION`(string,required)
 + `contractor_owner_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - person which represent legal entity
 + `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
 + `contractor_payment_details` (object, required)
@@ -8694,7 +8726,7 @@ After contract request was signed by both sides signed contract request with pri
 
 
 ### `Contract_request_Request_reimbursement`
-+ `contract_type`: `capitation`(string, optional)
++ `contract_type`: `REIMBURSEMENT`(string, required)
 + `contractor_owner_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - person which represent legal entity
 + `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
 + `contractor_payment_details` (object, required)
@@ -8708,7 +8740,8 @@ After contract request was signed by both sides signed contract request with pri
 + `medical_program_id`: `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - id of a medical program that is a subject of reimbursment contract
 
 ### `Contract_request_list`
-+ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract_request ID 
++ id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract_request ID
++ `contract_type`: `CAPITATION`(string, required)
 + `contractor_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - legal entity ID which make contract request
 + `contractor_owner_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - person which represent legal entity
 + `contractor_base`: `на підставі закону про Медичне обслуговування населення` (string, required) - documents which allows to represent clinic
@@ -8725,9 +8758,10 @@ After contract request was signed by both sides signed contract request with pri
 + `parent_contract_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - parent contract id
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
-+ `end_date`: `2017-04-20` (string, required) - contract end date
++ `medical_program_id`: `12e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject for reimbursement contract
 
 ### `Contract_request_Update`
++ `contract_type`: `CAPITATION`
 + `nhs_signer_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - id of signer from nhs side 
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
 + `nhs_contract_price`: `50000` (number, optional) - contract price
@@ -8737,6 +8771,7 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Contract_request_Details`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract_request ID 
++ `contract_type`: `CAPITATION`(string,required)
 + `contractor_legal_entity`(object, required)
     + include (`contract_legal_entity_details`)
 + `contractor_owner` (object, required)
@@ -8776,6 +8811,7 @@ After contract request was signed by both sides signed contract request with pri
 + `printout_content`: `Contract request content` (optional) - HTML document for contract request, is shown only for requests in `APPROVED`, `PENDING_NHS_SIGN`, `NHS_SIGNED`, `SIGNED` statuses.
 + `previous_request_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - changed contract request id
 + `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
++ `medical_program_id`: `12e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject for reimbursement contract
 
 ### `Contract_request_Details_Full`
 + include `Contract_request_Details`
@@ -8847,6 +8883,7 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Contracts_list`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID 
++ `contract_type`: `CAPITATION` (string, required)
 + `contractor_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - legal entity ID which make contract request
 + `contractor_owner` (object, required)
     + include (`Person_Minimal_Contract`)
@@ -8870,9 +8907,11 @@ After contract request was signed by both sides signed contract request with pri
 + id_form: `PMD` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
 + `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
++ `program_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject of a reimbursement contract
 
 ### `Contract_Details`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract ID 
++ `contract_type`: `CAPITATION` (string, required)
 + `start_date`: `2017-04-20` (string, required) - contract start date 
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `contractor_legal_entity`(object, required)
@@ -8909,6 +8948,7 @@ After contract request was signed by both sides signed contract request with pri
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + id_form: `PMD` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
++ `program_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject of a reimbursement contract
 
 ### `Capitation_report`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
