@@ -2228,7 +2228,7 @@ Exposed client credentials may be blocked for a security reasons, you will need 
 
     + Attributes (object)
         + token (object)
-            + client_id: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
+            + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
             + client_secret: `msp-001-secret-key` (string, required) - Medical Information System secret key issued upon integration request. Used to identify application developer.
             + code: 299383828 (string, required) - oAuth code grant.
             + `grant_type`: authorization_code (string, fixed, required) - oAuth Grant Type. Currently only `authorization_code` is supported.
@@ -2241,7 +2241,7 @@ Exposed client credentials may be blocked for a security reasons, you will need 
             + code: 201 (number)
         + data (Access_Token)
 
-### Use Refresh Token for Access Token extension [POST /api/oauth/tokens]
+### Use Refresh Token for Access Token extension [POST /oauth/tokens]
 
 Currently `access_token` and `refresh_token` are configured to have same lifetime, so we don't expect you to refresh it. 
 
@@ -2256,7 +2256,7 @@ In future, you will be able to refresh access tokens to extend `access_token` li
 
     + Attributes (object)
         + token (object)
-            + client_id: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
+            + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
             + client_secret: `msp-001-secret-key` (string, required) - Medical Service provider secret key issued upon integration request. Used to identify MSP.
             + refresh_token: `my-oauth-refresh-token` (string, required) - oAuth refresh token.
             + `grant_type`: refresh_token (string, fixed) - oAuth Grant Type. Currently only `authorization_code` is supported.
