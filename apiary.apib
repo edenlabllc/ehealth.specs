@@ -3426,6 +3426,8 @@ List consists of legal entities with parameter `is_active = true`.
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
             + security (object)
                 + `secret_key`: `secret_key` (string, required)
@@ -3566,6 +3568,8 @@ Signed content MUST consists of JSON object with Legal Entity data:
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
             + security (object)
                 + `secret_key`: `secret_key` (string, required)
@@ -3585,6 +3589,8 @@ Signed content MUST consists of JSON object with Legal Entity data:
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
             + is_active: true (boolean, required)
             + inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
             + inserted_at: `2005-10-30 10:45` (string, required) - timestamp
@@ -4217,6 +4223,13 @@ This method is used to pre-qualify data Medication request Request (possibility 
         
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, optional)
         + meta (Response__Meta)
         +  data (array[`Qualify_Medication_request_Request_Responce`]))
 
@@ -8060,7 +8073,7 @@ After contract request was signed by both sides signed contract request with pri
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 
 ### `Duration`
-+ value: 10 (string, optional) - The value of the measured amount. The value includes an implicit precision in the presentation of the value
++ value: 10 (number, optional) - The value of the measured amount. The value includes an implicit precision in the presentation of the value
 + unit: `days` (string, optional) - A human-readable form of the unit
 + system: `http://unitsofmeasure.org` (string, optional) - The identification of the system that provides the coded form of the unit
 + code: d (string, optional) - A computer processable form of the unit in some unit representation system
@@ -8091,7 +8104,7 @@ After contract request was signed by both sides signed contract request with pri
 + high (Quantity, required)
 
 ### Timing
-+ event: `2017-04-20T19:14:13Z` (string, optional) - When the event occurs. ISO 8601 date and time in UTC timezone.
++ event: `2017-04-20T19:14:13Z` (array[string], optional) - When the event occurs. ISO 8601 date and time in UTC timezone.
 + repeat (object, optional)
     - One Of
         + bounds_duration (Duration)
@@ -8106,9 +8119,9 @@ After contract request was signed by both sides signed contract request with pri
     + frequency_max: 2 (number, optional) - Event occurs up to frequencyMax times per period
     + period: 4 (number, optional) - Event occurs frequency times per period
     + period_max: 6 (number, optional) - Upper limit of period
-    + period_unit: d (number, optional) - unit of time UCUM
+    + period_unit: d (string, optional) - unit of time UCUM
     + `day_of_week`: mon (array[string], optional) - day of week
-    + `time_of_day`: `2017-04-20T19:14:13Z` (string, optional) - Time of day for action
+    + `time_of_day`: `2017-04-20T19:14:13Z` (array[string], optional) - Time of day for action
     + when: WAKE (array[string], optional) - Regular life events the event is tied to
     + offset: 4 (number, optional) - Minutes from event before or after
 + code (Codeable_Concept, optional)
@@ -8285,12 +8298,22 @@ After contract request was signed by both sides signed contract request with pri
 + `medical_program_id`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required) -  Medical program Identifier
 + `reimbursement` (object, required)
     + include `Reimbursement`
++ `wholesale_price`: 148.50 (string, required) - factory gate price for package of medications
++ `consumer_price`: 150.00 (string, required) - consumer price for package of medications
++ `daily_dosage`: 200  (string, required) - recommended daily dosage of medication
++ `reimbursement_daily_dosage`: 10.4858 (string, required) - reimbuersement amount for recommended daily dosage of medication
++ `estimated_payment_amount`: 34.50 (string, required) - the estimatied amount which patient should pay for package of medications after reimbursment  
 
 ### `Program_medications_Update_Request`
 + `is_active`: true (boolean, optional)
 + `medication_request_allowed`: true (boolean, optional)
 + `reimbursement` (object, optional)
     + include `Reimbursement`
++ `wholesale_price`: 148.50 (string, required) - factory gate price for package of medications
++ `consumer_price`: 150.00 (string, required) - consumer price for package of medications
++ `daily_dosage`: 200  (string, required) - recommended daily dosage of medication
++ `reimbursement_daily_dosage`: 10.4858 (string, required) - reimbuersement amount for recommended daily dosage of medication
++ `estimated_payment_amount`: 34.50 (string, required) - the estimatied amount which patient should pay for package of medications after reimbursment  
 
 ### `Reimbursement`
 + `type`: `fixed` (string, required) - fixed or external type of reimbursement (Dictionary REIMBURSEMENT_TYPE)
@@ -8303,7 +8326,12 @@ After contract request was signed by both sides signed contract request with pri
 + `medication_request_allowed`: true (boolean, required) - indicator whether medication is allowed to use in new medication request
 + `reimbursement` (object, required)
     + include `Reimbursement`
-+ `is_active` : true (boolean, required) - flag for activation/deactiovation
++ `wholesale_price`: 148.50 (string, required) - factory gate price for package of medications
++ `consumer_price`: 150.00 (string, required) - consumer price for package of medications
++ `daily_dosage`: 200  (string, required) - recommended daily dosage of medication
++ `reimbursement_daily_dosage`: 10.4858 (string, required) - reimbuersement amount for recommended daily dosage of medication
++ `estimated_payment_amount`: 34.50 (string, required) - the estimatied amount which patient should pay for package of medications after reimbursment  
++ `is_active` : true (boolean, required) - flag for activation/deactivation
 + include `System_Logging`
 
 ### `Program_medications_List`
@@ -8317,6 +8345,11 @@ After contract request was signed by both sides signed contract request with pri
 + `innm_id`: `5052fcaf-58a0-461b-9e98-d60243a1773e` (string, required) - INNM Identifier
 + `innm_name`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - INNM name
 + `reimbursement_amount`: 15 (number, optional) - Amount to reimburse for one medication_unit by medical_program
++ `wholesale_price`: 148.50 (string, required) - factory gate price for package of medications
++ `consumer_price`: 150.00 (string, required) - consumer price for package of medications
++ `daily_dosage`: 200  (string, required) - recommended daily dosage of medication
++ `reimbursement_daily_dosage`: 10.4858 (string, required) - reimbuersement amount for recommended daily dosage of medication
++ `estimated_payment_amount`: 34.50 (string, required) - the estimatied amount which patient should pay for package of medications after reimbursment  
 
 ### `Program_medications_ID`
 + `id` : `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - program_medications_id
@@ -8341,6 +8374,11 @@ After contract request was signed by both sides signed contract request with pri
             + `is_primary` : true (boolean, required) 
 + `medical_program` (`Medical_Program_Response`, required)
 + `reimbursement` (`Reimbursement`, required)
++ `wholesale_price`: 148.50 (string, required) - factory gate price for package of medications
++ `consumer_price`: 150.00 (string, required) - consumer price for package of medications
++ `daily_dosage`: 200  (string, required) - recommended daily dosage of medication
++ `reimbursement_daily_dosage`: 10.4858 (string, required) - reimbuersement amount for recommended daily dosage of medication
++ `estimated_payment_amount`: 34.50 (string, required) - the estimatied amount which patient should pay for package of medications after reimbursment  
 + `is_active` : true (boolean, required) - flag for activation/deactiovation
 + `medication_request_allowed`: true (boolean, required) - flag whether medications are allowed to be dispensed by the program
 
@@ -8383,8 +8421,6 @@ After contract request was signed by both sides signed contract request with pri
 + `created_at`: `2017-08-17` (string, required) - Medication request creation date, which is determined by the external system. Format *DATE '2017-09-07'*
 + `started_at`: `2017-08-17` (string, required) - Start date of a treatment period, which is determined by the external system. Greater or equal to **created_at**. Format *DATE '2017-09-07'*
 + `ended_at`: `2017-09-16` (string, required) - End date of a treatment period, which is determined by the external system. Greater or equal to **started_at**. Format *DATE '2017-10-07'*
-+ `dispense_valid_from`: `2017-08-17` (string, required) - Start date of dispense period, which is determined by the external system. Format *DATE '2017-09-07'*
-+ `dispense_valid_to`: `2017-09-16` (string, required) - End date of dispense period, which is determined by the external system. Greater or equal to **dispense_valid_from**. Format *DATE '2017-10-07'*
 + `medication_id` : `1349a693-4db1-4a3f-9ac6-8c2f9e541982` (string, required) - `Medication (type INNM_DOSAGE) identifier`
 + `medication_qty`: 10 (number, required) - Medication quantity isuued by the doctor
 + `medical_program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string) - `Medical program Identifier`
@@ -8409,10 +8445,21 @@ After contract request was signed by both sides signed contract request with pri
 + `created_at`: `2017-08-17` (string, required) - Medication request creation date, which is determined by the external system. Format *DATE '2017-09-07'*
 + `started_at`: `2017-08-17` (string, required) - Start date of a treatment period, which is determined by the external system. Greater or equal to **created_at**. Format *DATE '2017-09-07'*
 + `ended_at`: `2017-09-16` (string, required) - End date of a treatment period, which is determined by the external system. Greater or equal to **started_at**. Format *DATE '2017-10-07'*
-+ `dispense_valid_from`: `2017-08-17` (string, required) - Start date of dispense period, which is determined by the external system. Format *DATE '2017-09-07'*
-+ `dispense_valid_to`: `2017-09-16` (string, required) - End date of dispense period, which is determined by the external system. Greater or equal to **dispense_valid_from**. Format *DATE '2017-10-07'*
 + `medication_id` : `1349a693-4db1-4a3f-9ac6-8c2f9e541982` (string, required) - Medication identified
 + `medication_qty`: 10 (number, required) - Medication quantity isuued by the doctor
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act.
+    - order - The request represents a request/demand and authorization for action.
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
++ `context`(Reference, required, fixed-type)
+    + identifier (Identifier)
+        + type (Codeable_Concept)
+            + coding (array, fixed-type)
+                + (Coding)
+                    + code: `encounter` (string)
++ `dosage_instruction` (array, optional, fixed-type)
+    + (Dosage_Instruction)
 
 
 ### `Medication_request_Request_Public_Response`
