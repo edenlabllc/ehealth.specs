@@ -4156,7 +4156,7 @@ After Medication request Request is signed it will be automatically moved to [Me
 
 > **Important:** Dispense of Medications under this Medication Request is possible in period between dispense_valid_from and dispense_valid_to
 
-### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,page,page_size}]
+### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,intent,page,page_size}]
 
 Use this method to obtain list of Medication request Requests an `employee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -4172,6 +4172,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         - SIGNED
         - EXPIRED
         - REJECTED
+    + intent: order (string, optional) - Medication request request intent
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -4519,7 +4520,7 @@ Use this method to obtain full information of Medication request an `id`.
         + data (object)
             + include `Medication_request_Public_Response`
 
-### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,page,page_size}]
+### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,page,page_size}]
 
 Use this method to obtain list of Medication request an `employee_id` or/and `person_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -4540,6 +4541,7 @@ Method returns shortened details, to obtain full information - get Medication re
     + `created_from`: `2017-08-17` (string, optional) - Medication request creation date period start, which is determined by the external system. Format *DATE '2017-08-17'*
     + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
     + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
+    + intent: order (string, optional) - Medication request intent
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -4729,7 +4731,8 @@ Invoke Get Medication request by ID to obtain previously created medication requ
 
 ### Resend Medication Request [PATCH /api/medication_requests/{id}/actions/resend]
 
-Use this method to resend SMS for person with info medication request number & verification code.
+Use this method to resend SMS to person with medication request number & verification code. This could be done only for medication request with type **order**
+
 
 + Parameters
     + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
