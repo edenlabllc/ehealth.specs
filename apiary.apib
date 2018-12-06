@@ -4558,8 +4558,15 @@ Method returns shortened details, to obtain full information - get Medication re
 ### Reject Medication Request [PATCH /api/medication_requests/{id}/actions/reject]
 
 Use this method to reject previously created and signed Medication request.
+
 **Important**
-Invoke Get Medication request by ID to obtain previously created medication request. In order to reject medication request `reason` should be added. 
+
+Invoke Get Medication request by ID to obtain previously created medication request. In order to reject medication request `reason` should be added.
+
+**Note!** that medication request with intent *plan* and *order* has different structure.
+
+* *Medical program* is required for *order*
+* *Medical program* is absent in *plan*
 
 **Signed object example:**
 ```
