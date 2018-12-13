@@ -4116,7 +4116,7 @@ There are following age groups right now:
 
 ### Get drugs list [GET /api/drugs{?innm_id,innm_name,innm_sctid,innm_dosage_form,innm_dosage_id,innm_dosage_name,medication_code_atc,medical_program_id,page,page_size}]
 
-Get drugs list by filters.
+This endpoint returns list of drugs. Each drug contains all allowed package forms and related innm.
 
 **Scopes required:** `drug:read`
 
@@ -4734,7 +4734,9 @@ Invoke Get Medication request by ID to obtain previously created medication requ
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
         + data (`Medication_request_Public_Response`)
-            + include (`Medication_request_Reject_Public_Response`)
+            + `rejected_at`: `2017-04-20T19:14:13Z` (string, required) - Reject date - ISO 8601 date and time in UTC timezone.
+            + `rejected_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - Rejected user identifier
+            + `reject_reason` : `Помилка призначення. Несумісні препарати.` (string, required) - Medication request reject reason 
 
 ### Resend Medication Request [PATCH /api/medication_requests/{id}/actions/resend]
 
@@ -8085,7 +8087,7 @@ After contract request was signed by both sides signed contract request with pri
 ### `Duration`
 + value: 10 (number, optional) - The value of the measured amount. The value includes an implicit precision in the presentation of the value
 + unit: `days` (string, optional) - A human-readable form of the unit
-+ system: `http://unitsofmeasure.org` (string, optional) - The identification of the system that provides the coded form of the unit
++ system: `eHealth/ucum/units` (string, optional) - The identification of the system that provides the coded form of the unit
 + code: d (string, optional) - A computer processable form of the unit in some unit representation system
 
 ### `Period`
@@ -8096,22 +8098,22 @@ After contract request was signed by both sides signed contract request with pri
 + value : `13,5` (number, required)
 + comparator : `>` (string, optional)
 + unit : `mg` (string, required)
-+ system : `eHealth/units` (string, optional)
++ system : `eHealth/ucum/units` (string, optional)
 + code: `mg` (string, optional)
 
 ### `Simple_Quantity`
 + value : `13,5` (number, required)
 + unit : `mg` (string, required)
-+ system : `eHealth/units` (string, optional)
++ system : `eHealth/ucum/units` (string, optional)
 + code: `mg` (string, optional)
 
 ### `Ratio`
-+ numerator (Quantity, required)
-+ denominator (Quantity, required)
++ numerator (Simple_Quantity, required)
++ denominator (Simple_Quantity, required)
 
 ### `Range`
-+ low (Quantity, required)
-+ high (Quantity, required)
++ low (Simple_Quantity, required)
++ high (Simple_Quantity, required)
 
 ### Timing
 + event: `2017-04-20T19:14:13Z` (array[string], optional) - When the event occurs. ISO 8601 date and time in UTC timezone.
@@ -8137,7 +8139,7 @@ After contract request was signed by both sides signed contract request with pri
 + code (Codeable_Concept, optional)
     + coding (array, fixed-type)
         + (Coding)
-            + system: `eHealth/timing_abbreviation` (string)
+            + system: `TIMING_ABBREVIATIONS` (string)
 
 ### `Dose_and_Rate`
 + type (Codeable_Concept, optional)
@@ -8433,7 +8435,7 @@ After contract request was signed by both sides signed contract request with pri
 + `ended_at`: `2017-09-16` (string, required) - End date of a treatment period, which is determined by the external system. Greater or equal to **started_at**. Format *DATE '2017-10-07'*
 + `medication_id` : `1349a693-4db1-4a3f-9ac6-8c2f9e541982` (string, required) - `Medication (type INNM_DOSAGE) identifier`
 + `medication_qty`: 10 (number, required) - Medication quantity isuued by the doctor
-+ `medical_program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string) - `Medical program Identifier`
++ `medical_program_id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, optional) - `Medical program Identifier`
 + intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
     - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act.
     - order - The request represents a request/demand and authorization for action.
@@ -8487,13 +8489,20 @@ After contract request was signed by both sides signed contract request with pri
 + `employee` (Employee_Minimal, required)
 + `person` (`Person_Medication_Request`)            
 + `medication_info` (`Innm_Dosage_for_Medication_request_Responce`, required)
-+ `medical_program` (`Medical_Program_Response`, required)
++ `medical_program` (`Medical_Program_Response`, optional)
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act.
+    - order - The request represents a request/demand and authorization for action.
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
 + `context`(Reference, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ `dosage_instruction` (array, optional, fixed-type)
+    + (Dosage_Instruction)
 
 ### `Qualify_Medication_request_Request_List_program_post_data`
 + `id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string,required) - `Medical program Identifier`
@@ -8597,13 +8606,23 @@ After contract request was signed by both sides signed contract request with pri
 + `employee` (Employee_Minimal, required)
 + `person` (`Person_Medication_Request`)            
 + `medication_info` (`Innm_Dosage_for_Medication_request_Responce`, required)
-+ `medical_program` (`Medical_Program_Response`, required)
++ `medical_program` (`Medical_Program_Response`, optional)
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act.
+    - order - The request represents a request/demand and authorization for action.
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
 + `context`(Reference, required, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
                 + (Coding)
                     + code: `encounter` (string)
++ `dosage_instruction` (array, optional, fixed-type)
+    + (Dosage_Instruction)
++ `rejected_at`: `2017-04-20T19:14:13Z` (string, optional) - Reject date - ISO 8601 date and time in UTC timezone.
++ `rejected_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, optional) - Rejected user identifier
++ `reject_reason` : `Помилка призначення. Несумісні препарати.` (string, optional) - Medication request reject reason 
 
 ### `Medication_request_Reject_Public_Response`
 + `rejected_at`: `2017-04-20T19:14:13Z` (string, required) - Reject date - ISO 8601 date and time in UTC timezone.
