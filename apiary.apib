@@ -2563,6 +2563,14 @@ Clients can use signed URL's to directly access Minio storage and upload files v
             + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
 
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `This doctor has X declarations and could not sign more` (string, required)
+
 ### Reject Declaration Request [PATCH /api/declaration_requests/{id}/actions/reject]
 
 Use this method to reject previously created Declaration Request.
@@ -2984,6 +2992,8 @@ Response structure differs depending on employee type:
 * Employee info
 * User Info
 * Doctor info
+
+`Declaration_limit` and `declaration_count` are mooved to approve declaration request error, temporary are left in response with `0` value. 
 
 + Parameters
     + employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -4284,6 +4294,13 @@ This method is used to create Medication request Request (as a part of Medicatio
             + code: 201 (number)
         + data (object)
             + include `Medication_request_Request_Public_Response`
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -6957,8 +6974,8 @@ After contract request was signed by both sides signed contract request with pri
 + phones (array[Phone], optional)
 + working_experience: 10 (number, optional) - full years of working experience
 + about_myself: `Закінчив всі можливі курси` (string, optional) - field for medical employee to describe the most important statements.
-+ declaration_limit: `2000` (number) - TO BE DEPRECATED, always zero! maximum number of declaration with a doctor.
-+ declaration_count: `1578` (number) - TO BE DEPRECATED, always zero! current number of declaration with a doctor.
++ declaration_limit: `0` (number) - TO BE DEPRECATED, always zero! maximum number of declaration with a doctor.
++ declaration_count: `0` (number) - TO BE DEPRECATED, always zero! current number of declaration with a doctor.
 
 ### `Party_Update`
 + include `Party_Short`
