@@ -2568,7 +2568,7 @@ Clients can use signed URL's to directly access Minio storage and upload files v
         + meta (Response__Meta)
             + code: 422
         + error
-            + type: unverified (string, required)
+            + type: request_malformed (string, required)
             + message: `This doctor has X declarations and could not sign more` (string, required)
 
 ### Reject Declaration Request [PATCH /api/declaration_requests/{id}/actions/reject]
@@ -7142,8 +7142,8 @@ After contract request was signed by both sides signed contract request with pri
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
     + no_tax_id: true (boolean, optional) - true if employee doesn't have tax_id and false otherwise
     + include `Party_Short`
-    + declaration_limit: `2000` (number) - TO BE DEPRECATED, always zero! maximum number of declaration with a doctor.
-    + declaration_count: `1578` (number) - TO BE DEPRECATED, always zero! current number of declaration with a doctor.
+    + declaration_limit: `0` (number) - TO BE DEPRECATED, always zero! maximum number of declaration with a doctor.
+    + declaration_count: `0` (number) - TO BE DEPRECATED, always zero! current number of declaration with a doctor.
 + division (`Division_Short`)
 + `legal_entity` (`Legal_Entity_Short`)
 + doctor (DoctorNew_Short)
