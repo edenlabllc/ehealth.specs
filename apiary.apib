@@ -3049,7 +3049,10 @@ Employee_Request consist of the three mandatory parts:
 * Employee info
 * User Info
 
-Additionally to register/update Physician the `Doctor info` should be passed.
+**For DOCTOR or PHARMACIST:**
+* Doctor ot Pharmacist info
+
+Additionally to register/update Physician the `Doctor info` for Doctors and `Pharmacist info` for Pharmacist should be passed.
 
 When the `Employee_Request` will be posted the Invitation e-mail with a request
 secret token will be sent to the User specified in the request.
