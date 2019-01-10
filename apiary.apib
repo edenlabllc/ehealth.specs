@@ -3088,7 +3088,10 @@ Employee_Request consist of the three mandatory parts:
 * Employee info
 * User Info
 
-Additionally to register/update Physician the `Doctor info` should be passed.
+**For DOCTOR or PHARMACIST:**
+* Doctor ot Pharmacist info
+
+Additionally to register/update Physician the `Doctor info` for Doctors and `Pharmacist info` for Pharmacist should be passed.
 
 When the `Employee_Request` will be posted the Invitation e-mail with a request
 secret token will be sent to the User specified in the request.
@@ -8605,10 +8608,12 @@ After contract request was signed by both sides signed contract request with pri
 ## `medical_programs`
 ### `medical_programs_request`
 + `name`: `Доступні ліки` (string, required) - medical program name that is used on govermental level
++ `same_mnn_in_treatment_period`: true (boolean, required) - Allow to create new medication request with the same mnn in one treatment period
 
 ### `medical_programs_response`
 + `id`: `c7d52544-0bd4-4129-97b0-2d72633e0490` (string, required) - Internal medical program ID, a UUID string.
 + `name`: `Доступні ліки` (string, required) - medical program name that is used on govermental level
++ `same_mnn_in_treatment_period`: true (boolean, required) - Allow to create new medication request with the same mnn in one treatment period
 + `is_active`: `true` (boolean, required) - Is medical program active or not. True - Active; False - Inactive
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
