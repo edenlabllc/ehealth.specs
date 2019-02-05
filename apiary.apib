@@ -6713,8 +6713,12 @@ After contract request was signed by both sides signed contract request with pri
     + tax_id: 3126509816 (string, optional)
     + secret: secret (string, required)
     + documents (array, required)
-        + (Document)
-            + expiration_date: `1991-08-19` (string, optional)
+        + include
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
+            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
     + addresses (array[Address], required)
     + phones (array[Phone], optional)
     + `authentication_methods` (array[Authentication_Method], required)
