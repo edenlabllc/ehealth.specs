@@ -2527,7 +2527,7 @@ In case if authentication_method is OTP, request example:
   "verification_code": 3748
 }
 ```
-In case if authentication_method is OFFLINE, request body should be empty. 
+In case if authentication_method is OFFLINE or N/A, request body should be empty. 
 Before approve patient's scanned documents should be uploaded to the ([Signed URL's](https://cloud.google.com/storage/docs/access-control/create-signed-urls-program))
 as well as scanned signed declaration (with type person.DECLARATION_FORM).
 All links are generated for one one-page document in jpeg format. Document should be no more than 10MB.
