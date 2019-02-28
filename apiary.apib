@@ -5741,6 +5741,7 @@ In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
 The following tables describes contract_request object fields and it`s child objects.
 
 There are two types of schemas depending on contract_type - capitation version and reimbursement version
+For reimbursement version only documents are optional.ci
 #####Capitation Contract_request
 
 Attribute |Is required| Description
@@ -5762,7 +5763,6 @@ statute_md5|true| хеш завантаженого документу (стат
 additional_document_md5|true| хеш завантаженого документу (додатковий документ)
 consent_text|true|
 
-The following tables describes contract_request object fields and it`s child objects.
 #####Reimbursement Contract_request
 
 Attribute |Is required| Description
@@ -5776,8 +5776,8 @@ start_date|false| пункт 9.2 - цей договір діє з (рік ма�
 end_date|false| пункт 9.2 - цей договір діє по (рік має співпадати з роком у start_date)
 id_form|true| словник `CONTRACT_TYPE`, поки що лише один вид Договір на ПМД
 contract_number|false| human-redable номер контракту
-statute_md5|true| хеш завантаженого документу (статуту)
-additional_document_md5|true| хеш завантаженого документу (додатковий документ)
+statute_md5|false| хеш завантаженого документу (статуту)
+additional_document_md5|false| хеш завантаженого документу (додатковий документ)
 medical_program_id|true| ідентифікатор державної програми компенсації, що є субєктом договору
 consent_text|true|
 
