@@ -3221,8 +3221,6 @@ Method returns only **requested** parameters, birth place and second name in add
     + tax_id: 3126509816 (string, optional)
     + phone_number: `+380508887700` (string, optional)
     + `birth_certificate`: 123456 (string, optional) - birth_certificate is optional parameter for search
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 + Request (application/json)
 
     + Headers
@@ -3230,7 +3228,7 @@ Method returns only **requested** parameters, birth place and second name in add
             Authorization: Bearer mF_9.B5f-4.1JqM
 
 + Response 200 (application/json)
-    + Attributes (Response_Collection)
+    + Attributes (Response__Process_OK)
         + data (array[`Person_Short`])
 
 + Response 403 (application/json)
