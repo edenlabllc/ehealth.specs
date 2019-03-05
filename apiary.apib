@@ -5258,6 +5258,10 @@ Reimbursement Report combines information about Medication Dispenses and corresp
 
 Event Manager is used to collect different events (like `ATTRIBUTE_CHANGED`, `OBJECT_ADDED` etc) from different sources and store them in one place. At the moment only statuses are monitored. All changed statuses are stored to EventDB.
 
+Event types
+- StatusChangeEvent
+- FlagChangeEvent
+
 List of events that are stored to EventDB:
 - employee request status changed
 - employee status changed
@@ -5267,6 +5271,7 @@ List of events that are stored to EventDB:
 - contract_request status change
 - contract status change
 - person status change
+- contract flag is_suspended change
 
 Entity_type variants:
 - Declaration
