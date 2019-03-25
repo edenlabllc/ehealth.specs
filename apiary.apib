@@ -3425,6 +3425,7 @@ List consists of legal entities with parameter `is_active = true`.
                     - NOT_VERIFIED
                     - VERIFIED
                 + `nhs_verified`: false (boolean, required)
+                + `edr_verified`: false (boolean, required)
 
 ### Get Legal Entity by ID [GET /api/legal_entities/{id}]
 
@@ -3449,6 +3450,7 @@ List consists of legal entities with parameter `is_active = true`.
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `edr_verified`: false (boolean, required)
             + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
             + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
@@ -3591,6 +3593,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `edr_verified`: false (boolean, required)
             + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
             + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
@@ -3659,6 +3662,7 @@ There is a [**dummy method Create/Update legal entity V2**](https://uaehealthapi
                 - NOT_VERIFIED
                 - VERIFIED
             + `nhs_verified`: false (boolean, required)
+            + `edr_verified`: false (boolean, required)
             + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
             + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
@@ -7489,7 +7493,6 @@ After contract request was signed by both sides signed contract request with pri
     - AMBULANT_CLINIC
     - FAP
 + external_id: `3213213` (string, optional)
-+ dls_id: `2872985` (string, required)
 + location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
 
 ### workinghours
@@ -7511,6 +7514,8 @@ After contract request was signed by both sides signed contract request with pri
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
 + `legal_entity_id`: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
 + include Division
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
 
 ### `Division_Declaration`
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -7524,6 +7529,8 @@ After contract request was signed by both sides signed contract request with pri
     - AMBULANT_CLINIC
     - FAP
 + external_id: `3213213` (string, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
 
 
 ### `Division_Details_Cabinet`
@@ -7544,6 +7551,8 @@ After contract request was signed by both sides signed contract request with pri
 + status: ACTIVE (enum, required)
     - ACTIVE
     - INACTIVE
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
 
 ### `Division_Short`
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -7557,6 +7566,8 @@ After contract request was signed by both sides signed contract request with pri
     - ACTIVE
     - INACTIVE
 + mountain_group: false (boolean, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
 
 ### `crud_division_post`
 + include `Division`
@@ -7568,6 +7579,8 @@ After contract request was signed by both sides signed contract request with pri
     - ACTIVE
     - INACTIVE
 + mountain_group: false (boolean, optional)
++ dls_id: `2872985` (string, optional)
++ dls_verified: true (boolean, optional)
 
 ## `Owners`
 ### `Owner`
