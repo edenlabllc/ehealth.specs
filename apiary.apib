@@ -2555,7 +2555,7 @@ Clients can use signed URL's to directly access Minio storage and upload files v
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + seed: hash (string, required)
             + include `Declaration_Request_Public_Response`
-            + status: `REJECTED` (string, required)
+            + status: `APPROVED` (string, required)
             + employee (Employee_Minimal, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
@@ -2592,7 +2592,7 @@ Use this method to reject previously created Declaration Request.
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + seed: hash (string, required)
             + include `Declaration_Request_Public_Response`
-            + status: `APPROVED` (string, required)
+            + status: `REJECTED` (string, required)
             + employee (Employee_Minimal, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
@@ -8833,7 +8833,7 @@ After contract request was signed by both sides signed contract request with pri
     + `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + `division` (`Division_Details`, required)
 + `employee` (Employee_Minimal, required)
-+ `person` (`Person_Medication_Request`)            
++ `person` (`Person_Medication_Request`, required)          
 + `medication_info` (`Innm_Dosage_for_Medication_request_Responce`, required)
 + `medical_program` (`Medical_Program_Response`, optional)
 + intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT 
