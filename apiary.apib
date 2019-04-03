@@ -3459,6 +3459,83 @@ List consists of legal entities with parameter `is_active = true`.
                 + `client_id`: `client_id` (string, required)
                 + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
 
+### Get Legal Entities V3 [GET /api/legal_entities{?edrpou,legal_entity_id,settlement_id,owner_property,status,mis_verified,nhs_verified,page,page_size}]
+
+Use this method to get list of legal entities filtering by parameters.
+List consists of legal entities with parameter `is_active = true`.
+
++ Parameters
+    + `edrpou`: `341086` (string, optional)
+    + `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+    + settlement_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+    + owner_property: state (enum, optional)
+        - state
+        - private
+    + status: ACTIVE (enum, optional)
+        - ACTIVE
+        - CLOSED
+    + mis_verified: VERIFIED (enum, optional)
+        - VERIFIED
+        - NOT_VERIFIED 
+    + `nhs_verified`: false (boolean, optional)
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+                + include `Legal_Entity_Response_Public_V3`
+                + status: ACTIVE (enum, required)
+                    - ACTIVE
+                    - CLOSED
+                + `mis_verified`: NOT_VERIFIED (enum, required)
+                    - NOT_VERIFIED
+                    - VERIFIED
+                + `nhs_verified`: false (boolean, required)
+                + `edr_verified`: false (boolean, required)
+                + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+                + nhs_comment: `comment` (string, optional) - nhs's comment
+
+### Get Legal Entity by ID V3 [GET /api/legal_entities/{id}]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include `Legal_Entity_Response_Public_V3`
+            + status: ACTIVE (enum, required)
+                - ACTIVE
+                - CLOSED
+            + `mis_verified`: NOT_VERIFIED (enum, required)
+                - NOT_VERIFIED
+                - VERIFIED
+            + `nhs_verified`: false (boolean, required)
+            + `edr_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
+
 ### Create/Update Legal Entity [PUT]
 
 Use this method to register a new Legal Entity or update existing one.
@@ -3698,6 +3775,143 @@ There is a [**dummy method Create/Update legal entity V2**](https://uaehealthapi
                 + `client_id`: `client_id` (string, required)
                 + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
             + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
+### Create/Update Legal Entity V3 [PUT /api/v3/legal_entities]
+
+Key features and main differences from V1 and V2:
+
+* *create/update legal entity only without type and licences*
+
+There is a [**dummy method Create/Update legal entity V3**](https://uaehealthapi.docs.apiary.io/#reference/dummy.-create-legal-entity/dummy-for-legal-entity/create/update-legal-entity-v3) that describes the latest legal entity data model and can be used as documentation.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + `signed_data`: `...` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include `Legal_Entity_Response_Public_V3`
+            + status: ACTIVE (enum, required)
+                - ACTIVE
+                - CLOSED
+            + `mis_verified`: NOT_VERIFIED (enum, required)
+                - NOT_VERIFIED
+                - VERIFIED
+            + `nhs_verified`: false (boolean, required)
+            + `edr_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
+            + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include `Legal_Entity_Response_Public_V3`
+            + status: ACTIVE (enum, required)
+                - ACTIVE
+                - CLOSED
+            + `mis_verified`: NOT_VERIFIED (enum, required)
+                - NOT_VERIFIED
+                - VERIFIED
+            + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
+            + is_active: true (boolean, required)
+            + inserted_by: `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
+            + inserted_at: `2005-10-30 10:45` (string, required) - timestamp
+            + created_by_mis_client_id:  `A65C8369-CE3A-44D6-839B-8856E3DC4CA3` (string, required)
+            + updated_at: `1991-08-19T00:00:00.000Z` (string, required)
+            + updated_by: `userid` (string, required)
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
+            + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
+### Submit activity type package [PUT /api/legal_entities/{id}/activity_types]
+
+This method is implemented to create new activity type or update existing one.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + `signed_data`: `...` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (Activity_Type_Response)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (Activity_Type_Response)
+
+### Get activity types [GET /api/legal_entities/{id}/activity_types]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[Activity_Type_Response])
+
+### Get activity type by ID [GET /api/legal_entities/{id}/activity_types/{activity_type_id}]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (Activity_Type_Response)
+
+### Get licenses [GET /api/legal_entities/{id}/licenses]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + include MSP_License
+                + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
+### Get license by ID [GET /api/legal_entities/{id}/licenses/{license_id}]
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (MSP_License)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 
 ### Verify Legal Entity by MIS [PATCH /api/legal_entities/{id}/actions/mis_verify]
 
@@ -5420,6 +5634,68 @@ This method is used to abtain list of events with filters.
                 + `client_id`: `client_id` (string, required)
                 + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
             + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
+### Create/Update Legal Entity V3 [PUT /dummy/legal_entities/v3]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + include Legal_Entity_Request_Public_V3
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include `Legal_Entity_Response_Public_V3`
+            + status: VERIFIED (enum, required)
+                - VERIFIED
+                - DECLINED
+                - VERIFICATION_EXP
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
+            + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + include `Legal_Entity_Response_Public_V3`
+            + status: VERIFIED (enum, required)
+                - VERIFIED
+                - DECLINED
+                - VERIFICATION_EXP
+        + urgent (object, optional)
+            + security (object)
+                + `secret_key`: `secret_key` (string, required)
+                + `client_id`: `client_id` (string, required)
+                + `redirect_uri`: `redirect_uri` (string, required, fixed) - Redirect uri
+            + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
+
+### Submit activity type package [PUT /dummy/legal_entities/{id}/activity_types]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+
+    + Attributes (object)
+        + include `Activity_Type_Request`
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (Activity_Type_Response)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (Activity_Type_Response)
 
 # Group Public. Patient Cabinet
 
@@ -7408,6 +7684,29 @@ After contract request was signed by both sides signed contract request with pri
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
 
+### `Legal_Entity_Request_Public_V3`
++ name: Клініка Ноунейм (string, required) - full official name of legal entity also the name to show on public sources [as map, portal etc]
++ short_name: Ноунейм (string, optional) - short name of legal entity
++ public_name: Ноунейм (string, optional) 
++ `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE` State or private type of legal entity
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`  - business form [as ТОВ/ФОП/ДП/КП]
++ edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ kveds: 86.10 (array, required) - Ukrainian Industry Classification System, there is a check that at least one of next kveds is input: 86.10, 86.21, 47.73.
++ addresses (array[Address], required) - The max items of array is 2: REGISTRATION - required, RESIDENCE - optional. DIVISION is exception: REGISTRATION - optional, RESIDENCE - required
++ phones (array[Phone], required)
++ email: email@example.com (string, required) - email to contact person in charge from legal entity
++ website: `www.msp.com.ua` (string, optional) - legal entity website
++ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
++ owner(`Owner`,required)
++ accreditation (MSP_Accreditation, optional)
++ `archive`(array[Archive], optional) 
++ security (object, fixed-type)
+    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
++ public_offer(object, fixed-type)
+    + `consent_text`: `Consent text` (string, required)
+    + `consent`: `true` (boolean, required)
+
 ### `Legal_Entity_Response_Public`
 + name: Клініка Ноунейм (string, required) - full official name of legal entity also the name to show on public sources [as map, portal etc]
 + short_name: Ноунейм (string, optional) - short name of legal entity
@@ -7436,6 +7735,28 @@ After contract request was signed by both sides signed contract request with pri
             + what_licensed: реалізація наркотичних засобів (string, optional)
             + order_no: ВА43234 (string, required) - номер наказу
     + accreditation (MSP_Accreditation, optional)
++ `archive`(array[Archive], optional) 
++ security (object, fixed-type)
+    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
++ public_offer(object, fixed-type)
+    + `consent_text`: `Consent text` (string, required)
+    + `consent`: `true` (boolean, required)
+
+### `Legal_Entity_Response_Public_V3`
++ name: Клініка Ноунейм (string, required) - full official name of legal entity also the name to show on public sources [as map, portal etc]
++ short_name: Ноунейм (string, optional) - short name of legal entity
++ public_name: Ноунейм (string, optional) 
++ `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE` State or private type of legal entity
++ `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`  - business form [as ТОВ/ФОП/ДП/КП]
++ edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ kveds: 86.10 (array, required) - Ukrainian Industry Classification System, there is a check that at least one of next kveds is input: 86.10, 86.21, 47.73.
++ addresses (array[Address], required) - The max items of array is 2: REGISTRATION - required, RESIDENCE - optional. DIVISION is exception: REGISTRATION - optional, RESIDENCE - required
++ phones (array[Phone], required)
++ email: email@example.com (string, required) - email to contact person in charge from legal entity
++ website: `www.msp.com.ua` (string, optional) - legal entity website
++ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
++ accreditation (MSP_Accreditation, optional)
 + `archive`(array[Archive], optional) 
 + security (object, fixed-type)
     + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
@@ -7480,6 +7801,43 @@ After contract request was signed by both sides signed contract request with pri
     - Default: true
 + inserted_at: `2005-10-30 10:45` (string, required) - timestamp
 + inserted_by: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - user id
+
+## `Activity_Type`
+### `Activity_Type_Request`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ type: PRIMARY_CARE (string, required) - Dictionary ACTIVITY_TYPES
++ license (object, required)
+    - One of
+        + (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + license_number: fd123443 (string, optional)
+            + issued_by: Кваліфікацйна комісія (string, required)
+            + issued_date: `2017-02-28` (string, required)
+            + expiry_date: `2017-02-28` (string, optional)
+            + `active_from_date`: `2017-02-28` (string, required)
+            + what_licensed: реалізація наркотичних засобів (string, optional)
+            + order_no: ВА43234 (string, required) - номер наказу
+        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ legal_entity (object, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - merged_from legal entity id
+    + edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
+
+### `Activity_Type_Response`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ type: PRIMARY_CARE (string, required) - Dictionary ACTIVITY_TYPES
++ license (MSP_License, optional)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ legal_entity (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - merged_from legal entity id
+    + edrpou: 5432345432 (string, required) -  Unified Register of Businesses and Organizations
++ status: ACTIVE (string, required)
++ status_reason (string, optional)
++ nhs_verified: true (boolean, required)
++ is_active: true (boolean, required)
++ inserted_at: `2019-08-19T00:00:00.000Z` (string, required)
++ inserted_by: `3ff33ced-69dc-415a-b231-c6446898335a` (string, required)
++ updated_at: `2019-08-19T00:00:00.000Z` (string, required)
++ updated_by: `3ff33ced-69dc-415a-b231-c6446898335a` (string, required)
 
 ## `Divisions`
 ### `Division`
@@ -8781,13 +9139,13 @@ After contract request was signed by both sides signed contract request with pri
 + `medication_name`: `Амлодипін-КВ ` (string, required) - Medication name
 + `form` :  PILL (string, optional) - `Dictionary MEDICATION_FORM`
 + `manufacturer` (`Manufacturer`, optional)
-+ `innm_id`: `5052fcaf-58a0-461b-9e98-d60243a1773e` (string, required) - INNM Identifier
-+ `innm_name`: `Амлодипін` (string, required) - INNM name
 + `reimbursement_amount`: 15 (number, optional) - Amount to reimburse for one medication_unit by medical_program
 + wholesale_price: 25.14 (number, optional) - Wholesale pricing per package, UAH
 + consumer_price: 34.03 (number, optional) - Retail price for packaging, UAH
 + `reimbursement_daily_dosage`: 1.4438 (number, optional) - The amount of the compensation of the daily dose of the medical product, UAH
 + `estimated_payment_amount`: 5.15 (number, optional) - Amount of additional payment for packing, UAH
++ `package_min_qty`: 20 (number, optional) - indivisible part of medicine pacage
++ `package_qty`: 20 (number, optional) - quantity of medicine in a pacage
 
 ### `Qualify_by_ID_Request_for_Medication_request_Responce`
 + include `Qualify_Medication_request_Request_Responce`
