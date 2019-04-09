@@ -2249,11 +2249,6 @@ In future, you will be able to refresh access tokens to extend `access_token` li
 
 + Request (application/json)
 
-    + Headers
-
-            X-CSRF-Token: my-csrf-token
-            Authorization: Bearer mF_9.B5f-4.1JqM
-
     + Attributes (object)
         + token (object)
             + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
@@ -2265,7 +2260,7 @@ In future, you will be able to refresh access tokens to extend `access_token` li
     + Attributes (Response_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (Access_Token)
+        + data (Access_Token_1)
 
 ## Dictionaries [/api/dictionaries]
 
@@ -8029,7 +8024,7 @@ After contract request was signed by both sides signed contract request with pri
 
 ## `Access_Tokens`
 ### `Access_Token`
-+ value: `my-oauth-token` (string, required) - oAuth access token.
++ value: `SnNRdCtvU0tTOENBV2dLRUZwNmIzZz09` (string, required) - oAuth access token.
 + user_id: `3ff33ced-69dc-415a-b231-c6446898335a` (string, required) - User identifier
 + name: `access_token` (string, required) - oAuth token name
 + id: `3ff33ced-69dc-415a-b231-c6446898335a` - oAuth token identifier
@@ -8042,15 +8037,14 @@ After contract request was signed by both sides signed contract request with pri
     + client_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Client ID of authorized user.
 
 ### `Access_Token_1`
-+ value: `my-oauth-token` (string, required) - oAuth access token.
++ value: `SnNRdCtvU0tTOENBV2dLRUZwNmIzZz09` (string, required) - oAuth access token.
 + user_id: `3ff33ced-69dc-415a-b231-c6446898335a` (string, required) - User identifier
 + name: `change_password_token` (string, required) - oAuth token name
 + id: `3ff33ced-69dc-415a-b231-c6446898335a` - oAuth token identifier
 + expires_at: 1498749591 (number, required) - expiration date-time timestamp
 + details (object)
-    + scope: `user:change_password` (string, required) - List of scopes that is required in application business logic, separated by space
-    + redirect_uri: `http://example.com/` (string, required) - Redirect URI
-    + `grant_type`: `change_password` 
+    + scope: `capitation_contracts:view capitation_contracts:create patients:view patients:create` (string, required) - List of scopes that is required in application business logic, separated by space
+    + `grant_type`: `refresh_token` 
     + client_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Client ID of authorized user.
 
 
