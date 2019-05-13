@@ -4279,6 +4279,50 @@ There are following age groups right now:
         + data (array)
             + (`Capitation_report_detail`)
 
+# Group Public. Medical Programs
+
+## Medical Program [/apimedicalprogram]
+
+### Get Medical Programs list [GET /api/medical_programs]
+
+This endpoint returns list of medical programs, such as reimbursement program or fee-for-service program. 
+
+**Scopes required:** `medical_program:read`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Medical_Program_Response`])
+
+
+### Get Medical Program by id [GET /api/medical_programs/id]
+
+This endpoint returns medical program by id. 
+
+**Scopes required:** `medical_program:read`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Medical_Program_Response`)
+        
+
 # Group Public. Reimbursement
 
 ## Drugs [/apidrugs]
@@ -4313,6 +4357,7 @@ This endpoint returns list of drugs. Each drug contains all allowed package form
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[Drug_Response])
+
 
 ## Medication Request Requests [/api/medication_request_requests]
 
@@ -4350,10 +4395,12 @@ Method returns shortened details, to obtain full information - Get Medication re
     + Headers
 
             Authorization: Bearer mF_9.B5f-4.1JqM
-
+            
 + Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + data (array[`Medication_request_Request_Public_Response`]) 
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Request_Public_Response`
  
 
 ### Get Medication Request Request by ID [GET /api/medication_request_requests/{id}]
@@ -8419,6 +8466,21 @@ After contract request was signed by both sides signed contract request with pri
 + `created_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 
+## Medical programs
+### `Medical_Program_Response`
++ id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ is_active: true (boolean, required)
++ name: `Fee-For-Service` (string, required)
++ inserted_at: `2019-04-20T19:14:13Z` (string, required)
++ inserted_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ updated_at: `2019-04-20T19:14:13Z` (string, required)
++ updated_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ same_mnn_in_treatment_period: null (string, optional)
++ type: `service_program` (string, required)
++ legal_entity_types (array[string], required)
+    + `MSP`
+    
+
 ## Drugs
 ### `Drug_Response`
 + `id`: `ae9bf68e-3c98-4027-9211-535f7dad7a87` (string, required)
@@ -8669,9 +8731,7 @@ After contract request was signed by both sides signed contract request with pri
 + `form` :  PILL (string, required) - `Dictionary MEDICATION_FORM`
 + `container` (`Dosage_container`, required)
 
-### `Medical_Program_Response`
-+ `id`: `59781de0-2e64-4359-b716-bcc05a32c10f` (string, required) - `Medical program Identifier`
-+ `name`: `program 'DOSTUPNI LIKI'` (string, required) - `Medical program name`
+
 
 
 ### `Program_medications_Request`
