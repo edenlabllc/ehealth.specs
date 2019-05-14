@@ -268,13 +268,6 @@ This method to update the declaration status.
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + data (`crud_Declaration_get`)
-        + urgent (object, required)
-            + `authentication_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - NA
-                + number: `+38093*****85` (string, required)
                 
 
 ### Get Declarations List [GET /declarations{?person_id,employee_id,legal_entity_id,division_id,status,page,page_size}]
@@ -2888,7 +2881,7 @@ Method returns shortened details, to obtain full information - get Declaration D
         + data (array[`nhs_declaration_list_Public`])
 
 ### Get Declaration by ID [GET /api/declarations/{id}]
-
+blo
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
 
@@ -2904,6 +2897,13 @@ Method returns shortened details, to obtain full information - get Declaration D
             + code: 200 (number)
         + data (object)
             + include `Declaration_Details`
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
 
 ### Verify declaration  [PATCH /api/declarations/{id}/actions/approve]
 
