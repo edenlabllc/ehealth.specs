@@ -4380,6 +4380,23 @@ This endpoint returns service program member by id.
         + data (`Program_Service_Response`)
         
 
+### Get Services Dictionary [GET /api/services]
+
+This web service returns a catalog of services that could be submitted in eHealth. The catalog has a tree data structure. Each node represents group of services (or sub-group), except end-node, that represents services themselves. Maximum nesting level is 4.
+
++ Request (application/json)
+
+     + Headers
+
+             Authorization: Bearer mF_9.B5f-4.1JqM
+            api-key: aFBLVTZ6Z2dON1V
+
+ + Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Service_in_group`)
+
 # Group Public. Reimbursement
 
 ## Drugs [/apidrugs]
