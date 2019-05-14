@@ -4337,6 +4337,49 @@ This endpoint returns medical program by id.
         + data (`Medical_Program_Response`)
         
 
+### Get Program services list [GET /api/program_services]
+
+This endpoint returns list of service program members.
+
+**Scopes required:** `program_service:read`
++ Parameters
+    + program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[`Program_Service_Response`])
+
+
+
+### Get Program service by id [GET /api/program_services/id]
+
+This endpoint returns service program member by id. 
+
+**Scopes required:** `program_service:read`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer mF_9.B5f-4.1JqM
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en 
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Program_Service_Response`)
+        
+
 # Group Public. Reimbursement
 
 ## Drugs [/apidrugs]
@@ -8494,6 +8537,57 @@ After contract request was signed by both sides signed contract request with pri
 + legal_entity_types (array[string], required)
     + `MSP`
     
+
+### `Program_Service_Response`
++ id: `c290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ program_id: `b290f1ee-6c54-4b01-90e6-d701748f0852` (string, required)
+- One Of
+    + service_id: `d290f1ee-6c54-4b01-90e6-d701748f0853` (string, optional)
+    + `service_group_id`:  `f290f1ee-6c54-4b01-90e6-d701748f0854`(string, optional)
++ consumer_price: 15 (number, required)
++ description: `text` (string, optional)
++ request_allowed: true (boolean, required)
++ is_active: true (boolean, required)
++ inserted_at: `2019-04-20T19:14:13Z` (string, required)
++ inserted_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ updated_at: `2019-04-20T19:14:13Z` (string, required)
++ updated_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+
+## `Service_dictionary`
+### `Service`
++ id: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ name: `Ультразвукове дослідження черевного відділу стравоходу' (string, required)
++ code: `JF2 01` (string, required)
++ is_active: true (boolean, required)
++ parent_id: null (string, optional)
++ category: `imaging` (string, required)
++ is_composition: false (boolean, required)
++ request_allowed: true (boolean, required)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Service_group`
++ id: `e5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
++ name: `Ультразвукові дослідження' (string, required)
++ code: `FJ` (string, required)
++ is_active: true (boolean, required)
++ request_allowed: false (boolean, required)
++ `inserted_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `inserted_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
++ `updated_at`: `2018-08-02T10:45:16.000Z` (string, required)
++ `updated_by`: `d5a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required) - id of user who has inserted record
+
+### `Service_in_group`
++ include (Service_group)
++ groups (array, optional, fixed-type)
+    + (Service_group)
+        + id: `75a5d991-0bf7-476f-b3cf-bec73f044b2e` (string, required)
+        + name: `Ультразвукові дослідження в гастроентерології' (string, required)
+        + code: `2FJ` (string, required)
+        + services (array, optional, fixed-type)
+             + (`Service`)
 
 ## Drugs
 ### `Drug_Response`
