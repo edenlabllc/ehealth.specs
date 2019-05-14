@@ -1875,6 +1875,13 @@ By defaut the result is sorted by start_date:desc
             + code: 200 (number)
         + data (object)
             + include `Nhs_Declaration_v2`
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
 
 ### Terminate declaration  [PATCH /api/nhs_admin/declarations/{id}/actions/terminate]
 NHS admin can terminate active declaration using this method. 
