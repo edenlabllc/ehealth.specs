@@ -5943,8 +5943,8 @@ contractor_payment_details|true| об'єкт, що містить дані по 
 contractor_rmsp_amount|true| к-сть осіб, що обслуговувалися мед закладом (додаток 1.1 пункт 7)
 previous_request_id | false | опційне поле, яке вказує, що поточний запит на контракт є новою версією вказаного запиту
 contractor_divisions|true| масив id відділень мед. закладу, що включаються в договір
-contractor_employee_divisions|true| масив лікарів (на конкретних відділеннях), що входять да контракту та капітаційного звіту
-external_contractor_flag|true| наявність додатку 2 (підрядники, залучені до надання медичних послуг за Договором)
+contractor_employee_divisions|false| масив лікарів (на конкретних відділеннях), що входять да контракту та капітаційного звіту
+external_contractor_flag|false| наявність додатку 2 (підрядники, залучені до надання медичних послуг за Договором)
 external_contractors|false|масив об'єктів типу external_contractor objects - підрядники, залучені до надання медичних послуг за Договором
 start_date|false| пункт 9.2 - цей договір діє з (рік має бути поточний або настпуний)
 end_date|false| пункт 9.2 - цей договір діє по (рік має співпадати з роком у start_date)
@@ -7644,6 +7644,7 @@ After contract request was signed by both sides signed contract request with pri
 ### `Legal_Entity_Response_Public_V2`
 + `edr` (edr_data, required)
 + edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
++ type: PRIMARY_CARE (string, required) - type of legal entity [PRIMARY_CARE/OUTPATIENT/PHARMACY]. MIS can't be created using this WS.
 + residence_address (Address, optional) - address where the legal entity is physically located
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
@@ -7720,6 +7721,7 @@ After contract request was signed by both sides signed contract request with pri
         + code: `86.10` (string, required)
         + is_primary: true (boolean, required)
 + `registration_address` (`registration_address`, required)
++ state: 1 (number, required)
 
 ### `registration_address`
 + zip: `02090`
@@ -8542,17 +8544,7 @@ After contract request was signed by both sides signed contract request with pri
 ## Medical programs
 ### `Medical_Program_Response`
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-+ is_active: true (boolean, required)
 + name: `Fee-For-Service` (string, required)
-+ inserted_at: `2019-04-20T19:14:13Z` (string, required)
-+ inserted_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-+ updated_at: `2019-04-20T19:14:13Z` (string, required)
-+ updated_by: `f290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
-+ same_mnn_in_treatment_period: null (string, optional)
-+ type: `service_program` (string, required)
-+ legal_entity_types (array[string], required)
-    + `MSP`
-    
 
 ### `Program_Service_Response`
 + id: `c290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -9186,7 +9178,6 @@ After contract request was signed by both sides signed contract request with pri
 ### `Medication_request_Reject_Public_Response`
 + `rejected_at`: `2017-04-20T19:14:13Z` (string, required) - Reject date - ISO 8601 date and time in UTC timezone.
 + `rejected_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - Rejected user identifier
-+ `reject_reason` : `Помилка призначення. Несумісні препарати.` (string, required) - Medication request reject reason 
 
 
 ## `Medication Dispense`
@@ -9265,7 +9256,9 @@ After contract request was signed by both sides signed contract request with pri
         + `position`: `P6` (string, required) - `Dictionary POSITION`
         + `employee_type`: `DOCTOR` (string) - `Dictionary: EMPLOYEE_TYPE`
     + `medical_program` (`Medical_Program_Response`, required)
-+ `medication_dispense`(object, optional)
+    + `medication` (`Medication_Short`, required) - Identifier of brand medications 
+    + `medication_qty`: 10 (number, required) - qnty of medication_unit (pill/ampoule/container/bottle/vial/aerosol) which provides to the patient
+    + `medication_dispense`(object, optional)
     + `id`: `f08ba3a3-157a-4adc-b65d-737f24f3a1f4` (string, optional) - Medication dispense Identifier
     + `dispensed_at`: `2017-08-17` (string, optional) - date of dispense
     + `dispensed_by`: `Аннова Анна Анновна` (string, required) - in case pharmacist uses owner's token this field should be filled with pharmacist's name
