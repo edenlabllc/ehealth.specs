@@ -7000,6 +7000,7 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Declaration_Request_Public`
 + person(`Person_Request`, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + person_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - person id, that should be changed.
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
