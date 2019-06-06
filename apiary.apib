@@ -3526,7 +3526,6 @@ List consists of legal entities with parameter `is_active = true`.
                 - CLOSED
                 - SUSPENDED
             + `nhs_verified`: false (boolean, required)
-            + `edr_verified`: false (boolean, required)
             + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
             + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
@@ -3738,7 +3737,6 @@ There is a [**dummy method Create/Update legal entity V2**](https://uaehealthapi
                 - CLOSED
                 - SUSPENDED
             + `nhs_verified`: false (boolean, required)
-            + `edr_verified`: false (boolean, required)
             + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
             + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
@@ -5092,6 +5090,8 @@ Medication Dispense - Indicates that a medication product has been dispensed for
 This method is used to dispense medications to patient
 Full list of all validations can be found [here](https://edenlab.atlassian.net/wiki/x/-Jcz)
 
+**Important** In case medications are dispensed to patient under specific medical program, program participant id must be provided also
+
 + Parameters
     + `code`: `3114` (string, optional)
 
@@ -5555,6 +5555,10 @@ This method is used to abtain list of events with filters.
             + status: ACTIVE (enum, required)
                 - ACTIVE
                 - CLOSED
+                - SUSPENDED
+            + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
             + security (object)
                 + `secret_key`: `secret_key` (string, required)
@@ -5582,6 +5586,9 @@ This method is used to abtain list of events with filters.
                 - ACTIVE
                 - CLOSED
                 - SUSPENDED
+            + `nhs_verified`: false (boolean, required)
+            + `nhs_reviewed`: false (boolean, required) - flag that shows whether legal entity was reviewed by nhs
+            + nhs_comment: `comment` (string, optional) - nhs's comment
         + urgent (object, optional)
             + security (object)
                 + `secret_key`: `secret_key` (string, required)
@@ -7571,7 +7578,7 @@ After contract request was signed by both sides signed contract request with pri
 + owner(`Owner`,required)
 + `medical_service_provider` (MSP)
 + `archive`(array[Archive], optional) 
-+ security (object, fixed-type)
++ security (object, required, fixed-type)
     + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type)
     + `consent_text`: `Consent text` (string, required)
@@ -7602,7 +7609,7 @@ After contract request was signed by both sides signed contract request with pri
     + license (object, required)
         + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + `archive`(array[Archive], optional) 
-+ security (object, fixed-type)
++ security (object, required, fixed-type)
     + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type)
     + `consent_text`: `Consent text` (string, required)
@@ -7665,8 +7672,6 @@ After contract request was signed by both sides signed contract request with pri
     + what_licensed: реалізація наркотичних засобів (string, optional)
     + order_no: ВА43234 (string, required) - номер наказу
 + `archive`(array[Archive], optional) 
-+ security (object, fixed-type)
-    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
@@ -9101,6 +9106,7 @@ After contract request was signed by both sides signed contract request with pri
 + `rejection_reason` : ` Innm not on the list of approved innms for program 'DOSTUPNI LIKI' !` (string) - Reason to fetch invalid status
 
 ### `Program_medications_for_Qualify`
++ id: `0f2fbf93-3041-4c0d-a3cf-ff558c861df8` (string, required) - Program participant identifier
 + `medication_id`: `59781de0-2e64-4359-b716-bcc05a32c10f`(string, required) -  Medication Identifier
 + `medication_name`: `Амлодипін-КВ ` (string, required) - Medication name
 + `form` :  PILL (string, optional) - `Dictionary MEDICATION_FORM`
@@ -9112,6 +9118,9 @@ After contract request was signed by both sides signed contract request with pri
 + `estimated_payment_amount`: 5.15 (number, optional) - Amount of additional payment for packing, UAH
 + `package_min_qty`: 20 (number, optional) - indivisible part of medicine pacage
 + `package_qty`: 20 (number, optional) - quantity of medicine in a pacage
++ start_date: `2019-01-01` (string, optional) - Active from date
++ end_date: `2019-06-30` (string, optional) - Active to date
++ registry_number: `REG-1111` (string, optional) - Registry number
 
 ### `Qualify_by_ID_Request_for_Medication_request_Responce`
 + include `Qualify_Medication_request_Request_Responce`
@@ -9214,6 +9223,7 @@ After contract request was signed by both sides signed contract request with pri
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 ### `Medication_Dispense_Detail_Request`
++ `program_participant_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
 + `medication_id`: `787b6ef1-1d3a-4129-849c-87716c9a2130` (string, required) - Identifier of brand medications 
 + `medication_qty`: 10 (number, required) - qnty of medication_unit (pill/ampoule/container/bottle/vial/aerosol) which provides to the patient
 + `sell_price`: 18.65 (number, required) - pharmacy's price for one nondivisible medication_unit (pill/ampoule/container/bottle/vial/aerosol)
@@ -9221,7 +9231,8 @@ After contract request was signed by both sides signed contract request with pri
 + `discount_amount`: 150 (number, required) - pharmacy's expected price of dicsount for the requested medication quantity
 
 ### `Medication_Dispense_Detail_Response`
-+ `medication` (`Medication_Short`, required) - Identifier of brand medications 
++ `medication` (`Medication_Short`, required) - Identifier of brand medications
++ `program_participant_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
 + `medication_qty`: 10 (number, required) - qnty of medication_unit (pill/ampoule/container/bottle/vial/aerosol) which provides to the patient
 + `sell_price`: 18.65 (number, required) - pharmacy's price for one nondivisible medication_unit (pill/ampoule/container/bottle/vial/aerosol)
 + `sell_amount`: 186.5 (number, required) - total pharmacy's price for the requested medication quantity
