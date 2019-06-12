@@ -8617,6 +8617,13 @@ After contract request was signed by both sides signed contract request with pri
 + `container_dosage` (`Dosage_container`, required)
 + `package_qty`: 30 (number, required)
 + `package_min_qty`: 10 (number, required)
++ `program_medications` (array [`Drugs_program_medication`], required)
+
+### `Drugs_program_medication`
++ id: `e477a845-972b-47a1-8ca3-1c71e4fd00c2` (string, required) - Program medication id
++ start_date: `2019-01-01` (string, optional) - Active from date
++ end_date: `2019-06-30` (string, optional) - Active to date
++ registry_number: `REG-1111` (string, optional) - Registry number
 
 ## Complex FHIR Types
 ### `Reference`
