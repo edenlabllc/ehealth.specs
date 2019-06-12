@@ -9230,7 +9230,7 @@ After contract request was signed by both sides signed contract request with pri
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 ### `Medication_Dispense_Detail_Request`
-+ `program_participant_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
++ `program_medication_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
 + `medication_id`: `787b6ef1-1d3a-4129-849c-87716c9a2130` (string, required) - Identifier of brand medications 
 + `medication_qty`: 10 (number, required) - qnty of medication_unit (pill/ampoule/container/bottle/vial/aerosol) which provides to the patient
 + `sell_price`: 18.65 (number, required) - pharmacy's price for one nondivisible medication_unit (pill/ampoule/container/bottle/vial/aerosol)
@@ -9239,7 +9239,7 @@ After contract request was signed by both sides signed contract request with pri
 
 ### `Medication_Dispense_Detail_Response`
 + `medication` (`Medication_Short`, required) - Identifier of brand medications
-+ `program_participant_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
++ `program_medication_id`: `64c06ebc-0266-4645-85f0-7a6900d7dfbe` (string, optional) - Program participant id
 + `medication_qty`: 10 (number, required) - qnty of medication_unit (pill/ampoule/container/bottle/vial/aerosol) which provides to the patient
 + `sell_price`: 18.65 (number, required) - pharmacy's price for one nondivisible medication_unit (pill/ampoule/container/bottle/vial/aerosol)
 + `sell_amount`: 186.5 (number, required) - total pharmacy's price for the requested medication quantity
