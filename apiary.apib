@@ -7982,14 +7982,14 @@ After contract request was signed by both sides signed contract request with pri
 ### Address
 + type: RESIDENCE (string, required) - `Dictionary ADDRESS_TYPE`. As for now Regisrtration and Residence types
 + country: UA (enum[string], required) - `Dictionary COUNTRY`
-+ area: Житомирська (string) - one of Ukraianian area 
++ area: Житомирська (string, required) - one of Ukraianian area 
 + region: Бердичівський (string, optional) - district of area
-+ settlement: Київ (string) - city name
-+ `settlement_type`: CITY (string) - `Dictionary SETTLEMENT_TYPE` - type of settlement as city/town/village etc
++ settlement: Київ (string, required) - city name
++ `settlement_type`: CITY (string, required) - `Dictionary SETTLEMENT_TYPE` - type of settlement as city/town/village etc
 + settlement_id: 43432432 (string, required) - settlement identificator from uaadresses 
 + `street_type`: STREET (string, optional) - `Dictionary STREET_TYPE` - type of street as street/road/line etc
 + street: `вул. Ніжинська` (string, optional) - street name
-+ building: 15 (string, required) - number of building
++ building: 15 (string, optional) - number of building
 + apartment: 23 (string, optional) - number of appartment
 + zip: 02090 (string, optional) - system of postal codes 
 
