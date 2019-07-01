@@ -7549,7 +7549,7 @@ After contract request was signed by both sides signed contract request with pri
 ### `Legal_Entity_Request_Public_V2`
 + edrpou: 32323454 (string, required) - Unified Register of Businesses and Organizations
 + type: PRIMARY_CARE (string, required) - type of legal entity
-+ residence_address (Address, optional) - address where the legal entity is physically located
++ residence_address (Address, optional, required) - address where the legal entity is physically located
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
@@ -7558,21 +7558,21 @@ After contract request was signed by both sides signed contract request with pri
 + owner(`Owner_V2`,required)
 + accreditation (MSP_Accreditation, optional)
 - One of
-    + license (object, required)
-        + type: MSP (string, required) - License type `Dictionary LICENSE_TYPE`
+    + license (object)
+        + type: MSP (string) - License type `Dictionary LICENSE_TYPE`
         + license_number: fd123443 (string, optional)
-        + issued_by: Кваліфікацйна комісія (string, required)
-        + issued_date: `2017-02-28` (string, required)
+        + issued_by: Кваліфікацйна комісія (string)
+        + issued_date: `2017-02-28` (string)
         + expiry_date: `2017-02-28` (string, optional)
-        + `active_from_date`: `2017-02-28` (string, required)
+        + `active_from_date`: `2017-02-28` (string)
         + what_licensed: реалізація наркотичних засобів (string, optional)
-        + order_no: ВА43234 (string, required) - номер наказу
-    + license (object, required)
-        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+        + order_no: ВА43234 (string) - номер наказу
+    + license (object)
+        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string)
 + `archive`(array[Archive], optional) 
 + security (object, required, fixed-type)
     + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
-+ public_offer(object, fixed-type)
++ public_offer(object, fixed-type, required)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
 
@@ -7622,18 +7622,18 @@ After contract request was signed by both sides signed contract request with pri
 + receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + accreditation (MSP_Accreditation, optional)
-+ license (object, required)
-    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ license (object)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string)
     + type: MSP (string, optional) - License type `Dictionary LICENSE_TYPE`
     + license_number: fd123443 (string, optional)
-    + issued_by: Кваліфікацйна комісія (string, required)
-    + issued_date: `2017-02-28` (string, required)
-    + expiry_date: `2017-02-28` (string, optional)
-    + `active_from_date`: `2017-02-28` (string, required)
+    + issued_by: Кваліфікацйна комісія (string)
+    + issued_date: `2017-02-28` (string)
+    + expiry_date: `2017-02-28` (string)
+    + `active_from_date`: `2017-02-28` (string)
     + what_licensed: реалізація наркотичних засобів (string, optional)
-    + order_no: ВА43234 (string, required) - номер наказу
+    + order_no: ВА43234 (string) - номер наказу
 + `archive`(array[Archive], optional) 
-+ public_offer(object, fixed-type)
++ public_offer(object, fixed-type, required)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
 
