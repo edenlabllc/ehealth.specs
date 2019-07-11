@@ -2415,7 +2415,7 @@ Method returns shortened details, to obtain full information - get Declaration R
                 + number: `+38093*****85` (string, required)
             + documents (array[`media_content`], optional)
 
-### Create Declaration Request [POST]
+### Create Declaration Request - Deprecated[POST]
 
 This method is used to create Declaration Request (as part of Declaration creation process). Fields descriptions are listed in request Example view.
 
@@ -2472,8 +2472,11 @@ After sign new declaration all previously created pending (status one of the fol
 ### Create Declaration Request V2 [POST /api/v2/declaration_requests]
 
 This method is used to create Declaration Request (as part of Declaration creation process) via new api. New version changes person search and adds new fields to request.
-Two version are available temporary, in the future only this version will exist.
 
+This method makes it possible to update person data.
+When you filled `person.id`, you can update person data (for example, last name). If you give `person.id` and get an error, so you are trying to update another person and you need to create a new person (do not send `person.id`)
+
+If declaration_request without field `person.id`, a new person is created. But if such a person is already there, then there is an error that it is necessary to update the person.
 + Request (application/json)
 
     + Headers
