@@ -4712,6 +4712,7 @@ Invoke Get Medication request Request by ID to obtain seed - Hash of previous bl
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (`Medication_request_Public_Response`)
+            + printout_form: `HTML` (string, required) - Generated printout form
 
 ### Reject Medication Request Request [PATCH /api/medication_request_requests/{id}/actions/reject]
 
