@@ -2095,6 +2095,58 @@ JWT_token:
                 + tax_id: 3000080053 (string, required)
             + acess_token: `my-oauth-token` (string, required) - access token
 
+### Patient Registration via JWT [POST /private/cabinet/registration/jwt]
+This WS allows to register the patient via id.gov.ua with JWT
+
+JWT:
+```
+{
+  "user_request_id": "125f31fc-5014-497e-8a9a-79f1b98e14e9"
+}
+```
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer JWT
+
+    + Attributes (object)
+        + first_name: `Микола` (string, required)
+        + last_name: `Івченко` (string, required)
+        + second_name: `Степанович` (string, optional)
+        + birth_date: `1968-04-23` (string, optional)
+        + birth_country: `Ukraine` (string, optional)
+        + birth_settlement: `Chernigiv` (string, optional)
+        + gender: `MALE` (string, optional)
+        + tax_id: `1002003040` (string, required)
+        + unzr: `12345678-54321` (string, optional)
+        + password: `passWoRd1` (string, required)
+        + otp: `1234` (string, required)
+        + addresses: (array[Address], required)
+        + documents: (array[Document], required)
+        + phones: (array[Phone], optional)
+        + `authentication_methods` (array[Authentication_Method], required)
+        + `emergency_contact`: (`Emergency_Contact`, required)
+        + `process_disclosure_data_consent`: `true` (boolean, required)
+
+
++ Response 201 (application/json)
+    + Attributes (`Response_OK`)
+        + meta (`Response__Meta`)
+            + code: 201 (number)
+        + data (object, required)
+            + patient (object, required)
+                + include `Person`
+                + emergency_contact (object, required)
+                    + include `Emergency_Contact`
+            + factor (object, required)
+                + type: `SMS` (string, required)
+                + factor: `+380671111111`(string, required)
+                + is_active: true (boolean, required)
+            + user (object, required)
+                +  tax_id: 3000080053 (string, required)
+                + `email`: `example@gmail.com` (string, optional)
+            + access_token: `my-oauth-token` (string, required) - access token
+
 ### Get Nonce [GET /oauth/nonce]
 ```
 {
