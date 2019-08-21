@@ -4460,7 +4460,7 @@ After Medication request Request is signed it will be automatically moved to [Me
 
 > **Important:** Dispense of Medications under this Medication Request is possible in period between dispense_valid_from and dispense_valid_to
 
-### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,intent,page,page_size}]
+### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,intent,encounter_id,page,page_size}]
 
 Use this method to obtain list of Medication request Requests an `employee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -4477,6 +4477,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         - EXPIRED
         - REJECTED
     + intent: order (string, optional) - Medication request request intent
+    + encounter_id: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - Encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -4833,7 +4834,7 @@ Use this method to obtain full information of Medication request an `id`.
         + data (object)
             + include `Medication_request_Public_Response`
 
-### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,page,page_size}]
+### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,encounter_id,page,page_size}]
 
 Use this method to obtain list of Medication request an `employee_id` or/and `person_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -4855,6 +4856,7 @@ Method returns shortened details, to obtain full information - get Medication re
     + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
     + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
     + intent: order (string, optional) - Medication request intent
+    + encounter_id: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - Encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -6001,9 +6003,10 @@ consent_text|true|
 ####Contractor_payment_details
 Attribute |Is required| Description
 ----------|-----------|-------------
-bank_name|true| назва банку
-MFO|true| МФО
-payer_account|true| розрахунковий рахунок
+bank_name|false| назва банку
+MFO|false| МФО
+payer_account|false| розрахунковий рахунок
+iban|false| міжнародний номер рахунку
 ####Contractor_employee_division
 Attribute |Is required| Description
 ----------|-----------|------------
@@ -6051,9 +6054,7 @@ Capitation version:
   "contractor_base": "на підставі статуту",
   "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
-    "bank_name": "Банк номер 1",
-    "MFO": "351005",
-    "payer_account": "32009102701026"
+    "iban": "UA3412345678901234567890"
   },
   "contractor_rmsp_amount": 50000,
   "contractor_divisions": [
@@ -6100,9 +6101,7 @@ Reimbursement version:
   "contractor_base": "на підставі статуту",
   "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
-    "bank_name": "Банк номер 1",
-    "MFO": "351005",
-    "payer_account": "32009102701026"
+    "iban": "UA3412345678901234567890"
   },
   "contractor_divisions": [
     "adeac295-0d39-4a8e-8e16-9526787de3f1"
@@ -6820,7 +6819,7 @@ Assuming that all required business processes and validations is implemented on 
     + date_from_end_date: `2018-01-01` (string, optional)
     + date_to_end_date: `2019-01-01` (string, optional)
     + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
-    + program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of reimbursement contract
+    + medical_program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of reimbursement contract
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -6904,11 +6903,12 @@ Assuming that all required business processes and validations is implemented on 
             + code: 200 (number)
         + data (`Contract_divisions_CRUD_response`)
 
-### Private. Get contract divisions [GET /api/admin/contract_divisions/{?id,contract_id,page,page_size}]
+### Private. Get contract divisions [GET /api/admin/contract_divisions/{?id,contract_id,division_id,page,page_size}]
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
     + contract_id: `82286646-ee07-4d89-929d-29287c367e8a` (string, optional) - Contract identifier
+    + division_id: `f93ac873-b999-47d2-a945-32e7f582eed0` (string, optional) - Division identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -9931,7 +9931,8 @@ Assuming that all required business processes and validations is implemented on 
 ### `Payment_details`
 + `bank_name`: `Банк номер 1` (string, required) - bank name
 + MFO: `351005` (string, required) - bank code
-+ `payer_account`: `32009102701026` (string, required) - Номер банківського рахунку
++ `payer_account`: `32009102701026` (string, required) - Account number
++ iban: UA3412345678901234567890 (string, required) - International Bank Account Number
 
 ### `External_contractors`
 + `legal_entity_id`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - external_contractor ID
