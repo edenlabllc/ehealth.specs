@@ -6007,8 +6007,7 @@ Attribute |Is required| Description
 ----------|-----------|-------------
 bank_name|false| назва банку
 MFO|false| МФО
-payer_account|false| розрахунковий рахунок
-iban|false| міжнародний номер рахунку
+payer_account|true| розрахунковий рахунок або міжнародний номер рахунку
 ####Contractor_employee_division
 Attribute |Is required| Description
 ----------|-----------|------------
@@ -6056,7 +6055,8 @@ Capitation version:
   "contractor_base": "на підставі статуту",
   "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
-    "iban": "UA3412345678901234567890"
+    "payer_account": "UA3412345678901234567890",
+    "bank_name": "Банк №1"
   },
   "contractor_rmsp_amount": 50000,
   "contractor_divisions": [
@@ -6103,7 +6103,8 @@ Reimbursement version:
   "contractor_base": "на підставі статуту",
   "previous_request_id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
   "contractor_payment_details": {
-    "iban": "UA3412345678901234567890"
+    "payer_account": "UA3412345678901234567890",
+    "bank_name": "Банк №1"
   },
   "contractor_divisions": [
     "adeac295-0d39-4a8e-8e16-9526787de3f1"
@@ -9930,7 +9931,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Payment_details`
 + `bank_name`: `Банк номер 1` (string, required) - bank name
-+ MFO: `351005` (string, optional) - bank code
++ MFO: `351005` (string, optional) - bank code, required for account number
 + `payer_account`: `32009102701026` (string, required) - Account number or International Bank Account Number
 
 ### `External_contractors`
