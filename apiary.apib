@@ -2823,7 +2823,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
         }
       ],
       "accreditation": {
-        "category": "Друга категорія",
+        "category": "SECOND",
         "issued_date": "2017-02-28",
         "expiry_date": "2017-02-28",
         "order_no": "fd123443",
@@ -3670,7 +3670,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
       }
     ],
     "accreditation": {
-      "category": "Друга категорія",
+      "category": "SECOND",
       "issued_date": "2017-02-28",
       "expiry_date": "2017-02-28",
       "order_no": "fd123443",
@@ -8347,11 +8347,11 @@ Assuming that all required business processes and validations is implemented on 
     - Терапія
 
 ### `MSP_Accreditation`
-+ category: Друга категорія (enum, required)
-    - Друга категорія
-    - Перша категорія
-    - Вища категорія
-    - Без аккредитації
++ category: SECOND (enum, required)
+    - SECOND
+    - FIRST
+    - HIGHEST
+    - NO_ACCREDITATION
 + issued_date: `2017-02-28` (string, optional) - дата видачі
 + expiry_date: `2017-02-28` (string, optional)
 + order_no: fd123443 (string, required) - номер наказу МОЗ
