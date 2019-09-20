@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://ehealth.edenlabllc.com/
+HOST: https://ehealth.edenlabllc.com/
 
 # eHealth API
 
@@ -20,7 +20,7 @@ Project development is fully transparent, you can find it's source code on GitHu
 
 <!-- * [Reference Implementation of Hospital Information System UI](https://github.com/edenlabllc/prm.web) -->
 
-This API design in based on [Nebo #15 API Design Manifest](http://docs.apimanifest.apiary.io/).
+This API design in based on [Nebo #15 API Design Manifest](https://docs.apimanifest.apiary.io/).
 
 ## Docs Structure
 
@@ -2259,7 +2259,7 @@ For security purposes, we will set `X-Frame-Options: deny` header that will disa
 
 + Parameters
     + `client_id`: `6498d88e-97fb-47e2-85a5-99e884f888aa` (string, required) - Medical Service provider ID issued after legal_entity registration. Used to identify the context of the MSP/Pharmacy.
-    + `redirect_uri`: http://example.com/ (string, required) - URL where user will be redirected after authentification. This url will receive `code` and `state` parameters in query string.
+    + `redirect_uri`: https://example.com/ (string, required) - URL where user will be redirected after authentification. This url will receive `code` and `state` parameters in query string.
     + scope: `capitation_contracts:view capitation_contracts:create patients:view patients:create` (string, required) - List of scopes that is required in application business logic, separated by space. Different login forms will be shown based on scopes that you requested.
     + email: email@example.com
 
@@ -2292,7 +2292,7 @@ Exposed client credentials may be blocked for a security reasons, you will need 
             + client_secret: `msp-001-secret-key` (string, required) - Medical Information System secret key issued upon integration request. Used to identify application developer.
             + code: 299383828 (string, required) - oAuth code grant.
             + `grant_type`: authorization_code (string, fixed, required) - oAuth Grant Type. Currently only `authorization_code` is supported.
-            + redirect_uri: http://example.com/ (string, required) - URL where user will be redirected after authentification. This url will receive `code` and `state` parameters in query string.
+            + redirect_uri: https://example.com/ (string, required) - URL where user will be redirected after authentification. This url will receive `code` and `state` parameters in query string.
             + scope: `capitation_contracts:view capitation_contracts:create patients:view patients:create` (string, required) - List of scopes that is required in application business logic, separated by space. Different login forms will be shown based on scopes that you requested.
 
 + Response 201 (application/json)
@@ -2590,7 +2590,7 @@ Before approve patient's scanned documents should be uploaded to the ([Signed UR
 as well as scanned signed declaration (with type person.DECLARATION_FORM).
 All links are generated for one one-page document in jpeg format. Document should be no more than 10MB.
 If make declaration request via cabinet then nothing must be uploaded to URL.
-Clients can use signed URL's to directly access Minio storage and upload files via API
+Clients can use signed URL's to directly access s3 storage and upload files via API
 ([Minio](https://docs.minio.io/docs/upload-files-from-browser-using-pre-signed-urls))
 
 + Parameters
@@ -2722,7 +2722,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
           "region": "Бердичівський",
           "settlement": "Київ",
           "settlement_type": "CITY",
-          "settlement_id": "43432432",
+          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
           "street_type": "STREET",
           "street": "вул. Ніжинська",
           "building": "15",
@@ -2825,7 +2825,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
         }
       ],
       "accreditation": {
-        "category": "друга",
+        "category": "Друга категорія",
         "issued_date": "2017-02-28",
         "expiry_date": "2017-02-28",
         "order_no": "fd123443",
@@ -2839,7 +2839,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
           "region": "Бердичівський",
           "settlement": "Київ",
           "settlement_type": "CITY",
-          "settlement_id": "43432432",
+          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
           "street_type": "STREET",
           "street": "вул. Ніжинська",
           "building": "15",
@@ -2868,7 +2868,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
           "region": "Бердичівський",
           "settlement": "Київ",
           "settlement_type": "CITY",
-          "settlement_id": "43432432",
+          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
           "street_type": "STREET",
           "street": "вул. Ніжинська",
           "building": "15",
@@ -3342,7 +3342,7 @@ Entity data:
         "region": "Бердичівський",
         "settlement": "Київ",
         "settlement_type": "CITY",
-        "settlement_id": "43432432",
+        "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
         "street_type": "STREET",
         "street": "вул. Ніжинська",
         "building": "15",
@@ -3617,7 +3617,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
       "region": "Бердичівський",
       "settlement": "Київ",
       "settlement_type": "CITY",
-      "settlement_id": "43432432",
+      "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
       "street_type": "STREET",
       "street": "вул. Ніжинська",
       "building": "15",
@@ -3633,7 +3633,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
   ],
   "email": "email@example.com",
   "website": "www.msp.com.ua",
-  "receiver_funds_code": "AB12345",
+  "receiver_funds_code": "12345",
   "beneficiary": "Борисов Борис Борисович",
   "owner": {
     "first_name": "Петро",
@@ -3672,7 +3672,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
       }
     ],
     "accreditation": {
-      "category": "друга",
+      "category": "Друга категорія",
       "issued_date": "2017-02-28",
       "expiry_date": "2017-02-28",
       "order_no": "fd123443",
@@ -3686,7 +3686,7 @@ Signed content MUST consists of JSON object with Legal Entity data:
     }
   ],
   "security": {
-    "redirect_uri": "http://example.com"
+    "redirect_uri": "https://example.com"
   },
   "public_offer": {
     "consent_text": "Consent text",
@@ -4213,7 +4213,7 @@ Only redirect uri can be updated using this method
             API-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + redirect_uri: `http://example3.com` (string, required)
+        + redirect_uri: `https://example3.com` (string, required)
 
 + Response 200 (application/json)
     + Attributes (`Response_OK`)
@@ -5018,7 +5018,7 @@ Invoke Get Medication request by ID to obtain previously created medication requ
                     "region": "Бердичівський",
                     "settlement": "Київ",
                     "settlement_type": "CITY",
-                    "settlement_id": "43432432",
+                    "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
                     "street_type": "STREET",
                     "street": "вул. Ніжинська",
                     "building": "15",
@@ -5183,7 +5183,7 @@ Invoke Get Medication dispanse details to obtain previously created medication d
             "region": "Бердичівський",
             "settlement": "Київ",
             "settlement_type": "CITY",
-            "settlement_id": "43432432",
+            "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
             "street_type": "STREET",
             "street": "вул. Ніжинська",
             "building": "15",
@@ -5705,7 +5705,7 @@ Entity data:
         "region": "Бердичівський",
         "settlement": "Київ",
         "settlement_type": "CITY",
-        "settlement_id": "43432432",
+        "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
         "street_type": "STREET",
         "street": "вул. Ніжинська",
         "building": "15",
@@ -7079,11 +7079,11 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Response__Meta`
 + code: 200 (number) - HTTP response code.
-+ url: http://example.com/resource (string) - URL to requested resource.
++ url: https://example.com/resource (string) - URL to requested resource.
 + type (enum) - Type of data that is located in `data` attribute.
     - object (string) - `data` attribute is a JSON object.
     - list (string) - `data` attribute is a list.
-+ `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
++ `request_id`: `req-adasdoijasdojsda` (string) - [Request ID](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/request-id). Send it with `X-Request-ID` header.
 
 ### `Response__Error`
 + type: type_atom (string) - Atom that represents error type.
@@ -7095,12 +7095,12 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Response__Error_ValidationFailed`
 + type: validation_failed (string) - type of an error.
-+ message: Validation failed. You can find validators description at our API Manifest: http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
++ message: Validation failed. You can find validators description at our API Manifest: https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors. (string)
 + invalid (array)
     + `entry_type`: `json_data_proprty` (string) - Type of error.
     + entry: $.cvv (string) - JSON Path to an invalid property.
     + rules (array)
-        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](http://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
+        + rule: required (string) - String constant that represents validation rule type. List of all types can be found in [API Manifest](https://docs.apimanifest.apiary.io/#introduction/interacting-with-api/errors).
         + params (array) - Validation Parameters.
 
 ### `Response__Pagination`
@@ -7741,7 +7741,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Employee_Request`
 + division_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - employees division, mandatory for Doctors
-+ `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
++ `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
 + position: P8 (string, required) - `Dictionary POSITION`
 + start_date: `2017-03-02T10:45:16.000Z` (string, required)
 + end_date: `2018-03-02T10:45:16.000Z` (string, optional)
@@ -7878,13 +7878,13 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
-+ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + owner(`Owner`,required)
 + `medical_service_provider` (MSP)
 + `archive`(array[Archive], optional)
 + security (object, required, fixed-type)
-    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
+    + `redirect_uri`: `https://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
@@ -7896,7 +7896,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
-+ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + owner(`Owner_V2`,required)
 + accreditation (MSP_Accreditation, optional)
@@ -7914,7 +7914,7 @@ Assuming that all required business processes and validations is implemented on 
         + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string)
 + `archive`(array[Archive], optional)
 + security (object, required, fixed-type)
-    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
+    + `redirect_uri`: `https://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type, required)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
@@ -7932,7 +7932,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
-+ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + `medical_service_provider` (object, required)
     + licenses (array, required, fixed)
@@ -7949,7 +7949,7 @@ Assuming that all required business processes and validations is implemented on 
     + accreditation (MSP_Accreditation, optional)
 + `archive`(array[Archive], optional)
 + security (object, fixed-type)
-    + `redirect_uri`: `http://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
+    + `redirect_uri`: `https://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
 + public_offer(object, fixed-type)
     + `consent_text`: `Consent text` (string, required)
     + `consent`: `true` (boolean, required)
@@ -7962,7 +7962,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
-+ receiver_funds_code: `AB12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ receiver_funds_code: `12345` (string, optional) - treasury registration code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + accreditation (MSP_Accreditation, optional)
 + license (object)
@@ -7993,7 +7993,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - email to contact person in charge from legal entity
 + website: `www.msp.com.ua` (string, optional) - legal entity website
-+ receiver_funds_code: `AB12345` (string, optional) - treasure code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
++ receiver_funds_code: `12345` (string, optional) - treasure code [Код одержувача/розпорядника бюджетних коштів для Казначейства. Вказується за наявності.]
 + beneficiary: `Борисов Борис Борисович` (string, optional) - legal owner of legal entity [нформація про власника ЗОЗ, для ФОП не заповнюється]
 + `medical_service_provider` (MSP)
 + `archive`(array[Archive], optional)
@@ -8164,7 +8164,6 @@ Assuming that all required business processes and validations is implemented on 
 + position (string, required): `P6`- `Dictionary POSITION`
 
 ### `Owner_V2`
-+ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional)
 + first_name: Петро (string, required)
 + last_name: Іванов (string, required)
 + second_name: Миколайович (string, optional)
@@ -8260,7 +8259,7 @@ Assuming that all required business processes and validations is implemented on 
 + details (object)
     + scope: `capitation_contracts:view capitation_contracts:create patients:view patients:create` (string, required) - List of scopes that is required in application business logic, separated by space
     + refresh_token: `my-oauth-refresh-token` (string, required) - oAuth refresh token
-    + redirect_uri: `http://example.com/` (string, required) - Redirect URI
+    + redirect_uri: `https://example.com/` (string, required) - Redirect URI
     + `grant_type`: `authorization_code`
     + client_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Client ID of authorized user.
 
@@ -8291,7 +8290,7 @@ Assuming that all required business processes and validations is implemented on 
 + region: Бердичівський (string, optional) - district of area
 + settlement: Київ (string, required) - city name
 + `settlement_type`: CITY (string, required) - `Dictionary SETTLEMENT_TYPE` - type of settlement as city/town/village etc
-+ settlement_id: 43432432 (string, required) - settlement identificator from uaadresses
++ settlement_id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, required) - settlement identificator from uaadresses
 + `street_type`: STREET (string, optional) - `Dictionary STREET_TYPE` - type of street as street/road/line etc
 + street: `вул. Ніжинська` (string, optional) - street name
 + building: 15 (string, optional) - number of building
@@ -8350,10 +8349,11 @@ Assuming that all required business processes and validations is implemented on 
     - Терапія
 
 ### `MSP_Accreditation`
-+ category: друга (enum, required)
-    - друга
-    - перша
-    - не акредитований
++ category: Друга категорія (enum, required)
+    - Друга категорія
+    - Перша категорія
+    - Вища категорія
+    - Без аккредитації
 + issued_date: `2017-02-28` (string, optional) - дата видачі
 + expiry_date: `2017-02-28` (string, optional)
 + order_no: fd123443 (string, required) - номер наказу МОЗ
@@ -8694,7 +8694,7 @@ Assuming that all required business processes and validations is implemented on 
 ### `nhs_declaration`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + include `Declaration_Request_Details_Public`
-+ `media_content`: `http://cs5.pikabu.ru/post_img/big/2015/12/04/5/1449210847155432089.jpg`,`http://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg`  (array, required)
++ `media_content`: `https://cs5.pikabu.ru/post_img/big/2015/12/04/5/1449210847155432089.jpg`,`https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg`  (array, required)
 
 ## NHS Portal v2
 
@@ -9691,7 +9691,7 @@ Assuming that all required business processes and validations is implemented on 
 + id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique client id
 + name: `Аптека 199` (string, required) - Client name
 + secret: `ZlFOaHBTR0d3Q0hQcDEraHVYdXBVZz09` (string, required)
-+ redirect_uri: `http://example2.com` (string, required)
++ redirect_uri: `https://example2.com` (string, required)
 + settings (object)
 + priv_settings (object)
 
@@ -9711,7 +9711,7 @@ Assuming that all required business processes and validations is implemented on 
 + id: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, required) - Unique connection id
 + client_id: `c4a6d45f-2cf2-4e6d-909a-5962604ad63b` (string, required) - Unique connection id
 + consumer_id: `25c03af6-69bd-439e-b0dd-f1669b3dbbfd` (string, required) - Unique connection id
-+ redirect_uri: `http://example2.com` (string, required)
++ redirect_uri: `https://example2.com` (string, required)
 
 ## Events
 ### `Get_events`
