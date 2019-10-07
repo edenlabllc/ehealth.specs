@@ -4428,7 +4428,7 @@ All other attributes are immutable
             + code: 201 (number)
         + data (`Employee_role_response`)
 
-### Get employee roles [GET /api/healthcare_services/{?employee_id,healthcare_service_id}]
+### Get employee roles [GET /api/employee_roles/{?employee_id,healthcare_service_id}]
 
 At least one query parameter must be provided
 
@@ -4440,7 +4440,7 @@ At least one query parameter must be provided
     + Attributes (Response_Collection_V2)
         + data (array[`Employee_role_response`])
 
-### Get employee role by ID [GET /api/healthcare_services/{id}]
+### Get employee role by ID [GET /api/employee_roles/{id}]
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee role identifier
@@ -4448,6 +4448,16 @@ At least one query parameter must be provided
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (`Employee_role_response`)
+
+### Deactivate employee role [PATCH /api/employee_roles/{id}/actions/deactivate]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee role identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Employee_role_response`)
+            - status: INACTIVE
 
 # Group Public. Medical Programs
 
