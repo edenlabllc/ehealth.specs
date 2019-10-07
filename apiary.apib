@@ -4315,6 +4315,140 @@ There are following age groups right now:
         + data (array)
             + (`Capitation_report_detail`)
 
+## Healthcare services [/api/healthcare_services]
+
+### Create healthcare service [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
+        + `speciality_type`: `FAMILY_DOCTOR` (string, required) - `Dictionary SPECIALITY_TYPE`
+        + `providing_conditions`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
+        + category (array, optional)
+            - `0742d949-1492-4864-9494-60fd7102abfd` (string)
+        + type (array, optional)
+            - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + coverage_area (array, optional)
+            - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + available_time (workinghours, optional)
+        + `restricted_periods` (array[`Restricted_period`], optional)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Healthcare_service_response`)
+
+### Update healthcare service [PATCH /api/healthcare_services/{id}]
+
+This method must be used to update existing Healthcare service
+
+There are some mutable attributes in Healthcare service:
+* category
+* type
+* available_time
+* not_available
+
+All other attributes are immutable
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Healthcare service identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + category (array, optional)
+            - `0742d949-1492-4864-9494-60fd7102abfd` (string)
+        + type (array, optional)
+            - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + available_time (workinghours, optional)
+        + `restricted_periods` (array[`Restricted_period`], optional)
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+
+### Get healthcare services [GET /api/healthcare_services/{?division_id,speciality_type,providing_conditions,status}]
+
++ Parameters
+    + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Division identifier
+    + `speciality_type`: `FAMILY_DOCTOR` (string, optional) - `Dictionary SPECIALITY_TYPE`
+    + `providing_conditions`: OUTPATIENT (string, optional) - `Dictionary PROVIDING_CONDITION`
+    + status: ACTIVE (string, optional) - Entity status
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`Healthcare_service_response`])
+
+### Get healthcare service details by ID [GET /api/healthcare_services/{id}]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Healthcare service identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Healthcare_service_response`)
+
+### Deactivate healthcare service [PATCH /api/healthcare_services/{id}/actions/deactivate]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Healthcare service identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Healthcare_service_response`)
+            - status: INACTIVE
+
+## Employee roles [/api/employee_roles]
+
+### Add employee role [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (`Employee_role_base`)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Employee_role_response`)
+
+### Get employee roles [GET /api/healthcare_services/{?employee_id,healthcare_service_id}]
+
+At least one query parameter must be provided
+
++ Parameters
+    + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee identifier
+    + `healthcare_service_id`: `c4de7c6e-8c6e-4d4f-8843-6bc122977227` (string, optional) - Healthcare service identifier
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`Employee_role_response`])
+
+### Get employee role by ID [GET /api/healthcare_services/{id}]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee role identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Employee_role_response`)
+
 # Group Public. Medical Programs
 
 ## Medical Program [/api/medical_program]
@@ -8065,19 +8199,19 @@ Assuming that all required business processes and validations is implemented on 
 + location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
 
 ### workinghours
-+ mon (array)
++ mon (array, optional)
     - 08.00,12.00 (array[string])
     - 14.00,18.00 (array[string])
-+ tue (array)
++ tue (array, optional)
     - 08.00,12.00 (array[string])
-+ wed (array)
++ wed (array, optional)
     - 08.00,12.00 (array[string])
-+ thu (array)
++ thu (array, optional)
     - 08.00,12.00 (array[string])
-+ fri (array)
++ fri (array, optional)
     - 08.00,12.00 (array[string])
-+ sat (array)
-+ sun (array)
++ sat (array, optional)
++ sun (array, optional)
 
 ### `Division_Details`
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -10223,6 +10357,56 @@ Assuming that all required business processes and validations is implemented on 
 ### `Contract_employees_CRUD_response`
 + id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Unique record identifier
 + include `Contract_employees_CRUD_request`
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+## `Healthcare_service`
+
+### `Healthcare_service_base`
++ division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
++ `speciality_type`: `FAMILY_DOCTOR` (string, required) - `Dictionary SPECIALITY_TYPE`
++ `providing_conditions`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
++ category (array, optional)
+    - `0742d949-1492-4864-9494-60fd7102abfd` (string)
++ type (array, optional)
+    - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
++ comment: `Заведено випадково` (string, optional)
++ coverage_area (array, optional)
+    - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
++ available_time (workinghours, optional)
++ `restricted_periods` (array[`Restricted_period`], optional)
+
+### `Healthcare_service_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
++ include `Healthcare_service_base`
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `Restricted_period`
++ description: `Санітарний день` (string, required) - Reason presented to the user explaining why time not available
++ during (Period, required) - Service not available from this date
+
+### `Employee_role_base`
++ `healthcare_service_id`: `98b6ed10-17b4-44f1-892c-7514f66bf505` (string, required) - reference to healthcare service
++ `employee_id`: `9d229fcb-6a77-4574-99a5-30729aa518fd` (string, required) - reference to employee
+
+### `Employee_role_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
++ include `Employee_role_base`
++ start_date: `2019-04-20T19:14:13Z` (string, required)
++ end_date: `2017-12-20T19:14:13Z` (string, optional)
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
 + is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
