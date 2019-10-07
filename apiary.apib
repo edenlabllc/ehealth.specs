@@ -3901,7 +3901,10 @@ Use this method to get the list of child legal entities which are related to cur
 
 ### Update division [PATCH /api/divisions/{id}]
 
-This method to update the division info by ID.
+This method must be used to update existing division in the system
+
+Note that different legal entity types can register specific division types and address types accordingly
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw)
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -3915,7 +3918,10 @@ This method to update the division info by ID.
 
 ### Create division [POST]
 
-This method to create the division info by ID.
+This method must be used to create new division in the system
+
+Note that different legal entity types can register specific division types and address types accordingly
+More details can be found [here](https://e-health-ua.atlassian.net/wiki/x/GQB7Iw)
 
 + Request (application/json)
     + Attributes (`crud_division_post`)
@@ -8054,10 +8060,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - division's email
 + working_hours (`workinghours`) - optional field, business hours by each day weekly, doesn't make any influence on business process and will be shown on portal and map.
-+ type: clinic (enum, required) - division type
-    - CLINIC
-    - AMBULANT_CLINIC
-    - FAP
++ type: CLINIC (enum, required) - `Dictionary GENDER`
 + external_id: `3213213` (string, optional)
 + location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
 
