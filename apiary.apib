@@ -4319,6 +4319,11 @@ There are following age groups right now:
 
 ### Create healthcare service [POST]
 
+The following attributes added to specification for future use. Do not submit this fields in request
+* category
+* type
+* coverage_area
+
 + Request (application/json)
 
     + Headers
@@ -4329,14 +4334,14 @@ There are following age groups right now:
     + Attributes (object)
         + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
         + `speciality_type`: `FAMILY_DOCTOR` (string, required) - `Dictionary SPECIALITY_TYPE`
-        + `providing_conditions`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
-        + category (array, optional)
+        + `providing_condition`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
+        + category (array, optional) - Not implemented yet. Reserved for future use
             - `0742d949-1492-4864-9494-60fd7102abfd` (string)
-        + type (array, optional)
+        + type (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
-        + coverage_area (array, optional)
+        + coverage_area (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
-        + available_time (workinghours, optional)
+        + `available_time` (array[`Available_time`], optional)
         + `restricted_periods` (array[`Restricted_period`], optional)
 
 + Response 201 (application/json)
@@ -4350,8 +4355,6 @@ There are following age groups right now:
 This method must be used to update existing Healthcare service
 
 There are some mutable attributes in Healthcare service:
-* category
-* type
 * available_time
 * not_available
 
@@ -4368,23 +4371,27 @@ All other attributes are immutable
             API-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + category (array, optional)
+        + category (array, optional) - Not implemented yet. Reserved for future use
             - `0742d949-1492-4864-9494-60fd7102abfd` (string)
-        + type (array, optional)
+        + type (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
-        + available_time (workinghours, optional)
+        + coverage_area (array, optional) - Not implemented yet. Reserved for future use
+            - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + `available_time` (array[`Available_time`], optional)
         + `restricted_periods` (array[`Restricted_period`], optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
 
-### Get healthcare services [GET /api/healthcare_services/{?division_id,speciality_type,providing_conditions,status}]
+### Get healthcare services [GET /api/healthcare_services/{?division_id,speciality_type,providing_condition,status,page,page_size}]
 
 + Parameters
     + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Division identifier
     + `speciality_type`: `FAMILY_DOCTOR` (string, optional) - `Dictionary SPECIALITY_TYPE`
-    + `providing_conditions`: OUTPATIENT (string, optional) - `Dictionary PROVIDING_CONDITION`
+    + `providing_condition`: OUTPATIENT (string, optional) - `Dictionary PROVIDING_CONDITION`
     + status: ACTIVE (string, optional) - Entity status
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
@@ -4409,6 +4416,16 @@ All other attributes are immutable
         + data (`Healthcare_service_response`)
             - status: INACTIVE
 
+### Activate healthcare service [PATCH /api/healthcare_services/{id}/actions/activate]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Healthcare service identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Healthcare_service_response`)
+            - status: ACTIVE
+
 ## Employee roles [/api/employee_roles]
 
 ### Add employee role [POST]
@@ -4428,13 +4445,15 @@ All other attributes are immutable
             + code: 201 (number)
         + data (`Employee_role_response`)
 
-### Get employee roles [GET /api/employee_roles/{?employee_id,healthcare_service_id}]
+### Get employee roles [GET /api/employee_roles/{?employee_id,healthcare_service_id,page,page_size}]
 
 At least one query parameter must be provided
 
 + Parameters
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee identifier
     + `healthcare_service_id`: `c4de7c6e-8c6e-4d4f-8843-6bc122977227` (string, optional) - Healthcare service identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
@@ -10377,8 +10396,9 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Healthcare_service_base`
 + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
++ `legal_entity_id`: `483af06f-d4c6-4c9e-8d9b-680b5ef7270d` (string, required) - Legal entity identifier
 + `speciality_type`: `FAMILY_DOCTOR` (string, required) - `Dictionary SPECIALITY_TYPE`
-+ `providing_conditions`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
++ `providing_condition`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
 + category (array, optional)
     - `0742d949-1492-4864-9494-60fd7102abfd` (string)
 + type (array, optional)
@@ -10389,7 +10409,7 @@ Assuming that all required business processes and validations is implemented on 
 + comment: `Заведено випадково` (string, optional)
 + coverage_area (array, optional)
     - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
-+ available_time (workinghours, optional)
++ `available_time` (array[`Available_time`], optional)
 + `restricted_periods` (array[`Restricted_period`], optional)
 
 ### `Healthcare_service_response`
@@ -10404,6 +10424,13 @@ Assuming that all required business processes and validations is implemented on 
 ### `Restricted_period`
 + description: `Санітарний день` (string, required) - Reason presented to the user explaining why time not available
 + during (Period, required) - Service not available from this date
+
+### `Available_time`
++ `days_of_week` (array, required) - Days of week
+    - mon (string)
++ all_day: true (boolean, optional)
++ `available_start_time`: `08:30:00` (string, optional)
++ `available_end_time`: `19:00:00` (string, optional)
 
 ### `Employee_role_base`
 + `healthcare_service_id`: `98b6ed10-17b4-44f1-892c-7514f66bf505` (string, required) - reference to healthcare service
