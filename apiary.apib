@@ -4339,6 +4339,7 @@ The following attributes added to specification for future use. Do not submit th
             - `0742d949-1492-4864-9494-60fd7102abfd` (string)
         + type (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + comment: `Новий сервіс` (string, optional)
         + coverage_area (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
         + `available_time` (array[`Available_time`], optional)
@@ -4355,6 +4356,7 @@ The following attributes added to specification for future use. Do not submit th
 This method must be used to update existing Healthcare service
 
 There are some mutable attributes in Healthcare service:
+* comment
 * available_time
 * not_available
 
@@ -4375,6 +4377,7 @@ All other attributes are immutable
             - `0742d949-1492-4864-9494-60fd7102abfd` (string)
         + type (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
+        + comment: `Заведено помилково` (string, optional)
         + coverage_area (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
         + `available_time` (array[`Available_time`], optional)
@@ -10406,7 +10409,7 @@ Assuming that all required business processes and validations is implemented on 
 + status: ACTIVE (string, required)
     - ACTIVE
     - INACTIVE
-+ comment: `Заведено випадково` (string, optional)
++ comment: `Заведено помилково` (string, optional)
 + coverage_area (array, optional)
     - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
 + `available_time` (array[`Available_time`], optional)
