@@ -2459,8 +2459,8 @@ If patient_request without field `person.id`, a new person is created. But if su
             + status: `NEW` (string, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-            + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
-            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + channel: `MIS` (enum, required) - channel that invoke patient request create service
             + `preferred_way_communication`: email (enum, optional)
                 - email
                 - phone
@@ -2520,7 +2520,7 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + status: `APPROVED` (string, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-            + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
 + Response 422 (application/json)
@@ -2555,23 +2555,23 @@ Use this method to reject previously created Patient Request.
             + status: `REJECTED` (string, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-            + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
-### Sign Declaration Request [PATCH /api/patient_requests/{id}/actions/sign]
+### Sign Patient Request [PATCH /api/patient_requests/{id}/actions/sign]
 
 This method is used to sign Patient Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
 All signature fields will be validated (including signer certificate authority).
 
-This service will store signed copy of Patient Request in Media Content Storage, created or update MPI records and create declaration if signature is all checks is passed.
+This service will store signed copy of Patient Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with Declaration Request data and printout template. Object that need to be signed is returned by `Get Declaration request by ID` response, `JSON.Path: $.data`.
-Patient must re-read and sign declaration print form and after that `patient_signed` should be changed to TRUE.
+Signed content MUST consists of JSON object with Patient Request data and printout template. Object that need to be signed is returned by `Get Patient request by ID` response, `JSON.Path: $.data`.
+Patient must re-read and sign patient request print form and after that `patient_signed` should be changed to TRUE.
 
 Patient request can be signed either by doctor or admin (user with scope `patient_request:sign`) from legal entity as in patient request.
 
 **Important**
-Invoke Get Patient Request by ID to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration
+Invoke Get Patient Request by ID to obtain seed - Hash of previous block in patient chain or other random component that should be signed with patient request
 
 **Signed object example:**
 ```
@@ -2580,7 +2580,7 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in decl
     "start_date": "2017-03-02",
     "end_date": "2017-03-02",
     "person": {
-      "id": "3b1d9e46-1c47-4ce8-89f9-15658f77d784"
+      "id": "b993201f-a3ab-492e-b58b-fcc0826a500d"
       "first_name": "Петро",
       "last_name": "Іванов",
       "second_name": "Миколайович",
@@ -2722,7 +2722,7 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in decl
       "email": "email@example.com",
       "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b"
     },
-    "content": "Declaration content",
+    "content": "Person content",
     "seed": "ghTjh409dnhHUkdi4jdh6hded"
   }
 }
@@ -8091,7 +8091,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Patient_Request_Public`
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
-    + id: `3b1d9e46-1c47-4ce8-89f9-15658f77d784` (string, optional) - person id, that should be changed.
+    + id: `b993201f-a3ab-492e-b58b-fcc0826a500d` (string, optional) - person id, that should be changed.
     + first_name: Петро (string, required)
     + last_name: Іванов (string, required)
     + second_name: Миколайович (string, optional)
