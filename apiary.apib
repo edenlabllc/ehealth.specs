@@ -4744,7 +4744,7 @@ The following attributes added to specification for future use. Do not submit th
         + coverage_area (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
         + `available_time` (array[`Available_time`], optional)
-        + `restricted_periods` (array[`Restricted_period`], optional)
+        + `not_available` (array[`Restricted_period`], optional)
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -4759,7 +4759,7 @@ This method must be used to update existing Healthcare service
 There are some mutable attributes in Healthcare service:
 * comment
 * available_time
-* restricted_periods
+* not_available
 
 All other attributes are immutable
 
@@ -4782,7 +4782,7 @@ All other attributes are immutable
         + coverage_area (array, optional) - Not implemented yet. Reserved for future use
             - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
         + `available_time` (array[`Available_time`], optional)
-        + `restricted_periods` (array[`Restricted_period`], optional)
+        + `not_available` (array[`Restricted_period`], optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -4881,6 +4881,28 @@ At least one query parameter must be provided
     + Attributes (Response__Process_OK)
         + data (`Employee_role_response`)
             - status: INACTIVE
+
+## User details [/api/users/]
+
+
+### Get user details [GET /api/users/{id}]
+
+Returns information about user which ID is in the token.
+
+**Scopes required:** `user:read`
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - User identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`User_details_response`)
 
 # Group Public. Medical Programs
 
@@ -10899,7 +10921,7 @@ Assuming that all required business processes and validations is implemented on 
 + coverage_area (array, optional)
     - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
 + `available_time` (array[`Available_time`], optional)
-+ `restricted_periods` (array[`Restricted_period`], optional)
++ `not_available` (array[`Restricted_period`], optional)
 
 ### `Healthcare_service_response`
 + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
@@ -10938,3 +10960,14 @@ Assuming that all required business processes and validations is implemented on 
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+### `User_details_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
++ email: example@gmail.com (string, required) - User's email
++ is_blocked: `false` (string, required) - whether the user is marked as fraud
++ block_reason: `User has fakes data` (string, optional) - the reason to block
++ person_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MPI ID of a patient.
++ tax_id: 3126509816 (string, optional)
++ settings (object) - User settings
++ inserted_at: `2017-05-05T14:09:59.232112` (string, required)
++ updated_at: `2017-05-05T14:09:59.232112` (string, required)
