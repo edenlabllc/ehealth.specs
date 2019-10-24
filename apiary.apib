@@ -4882,10 +4882,10 @@ At least one query parameter must be provided
         + data (`Employee_role_response`)
             - status: INACTIVE
 
-## User details [/api/users/]
+## User details [/api/oauth/users]
 
 
-### Get user details [GET /api/users/{id}]
+### Get user details by ID [GET /api/oauth/users/{id}]
 
 Returns information about user which ID is in the token.
 
@@ -4893,6 +4893,22 @@ Returns information about user which ID is in the token.
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - User identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`User_details_response`)
+
+### Get my user details [GET /api/oauth/user]
+
+Returns my user details based on user in access_token
+
+**Scopes required:** `user:read`
 
 + Request (application/json)
 
