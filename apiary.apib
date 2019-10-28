@@ -2701,7 +2701,6 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in pati
       "patient_signed": false,
       "process_disclosure_data_consent": true
     },
-    "scope": "family doctor",
     "legal_entity": {
       "name": "Клініка НоуНейм",
       "short_name": "Ноунейм",
@@ -8211,8 +8210,6 @@ Assuming that all required business processes and validations is implemented on 
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + legal_entity_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider identifier.
-+ scope (enum, required)
-    - family_doctor
 
 ### `Patient_Request_Public_Response`
 + start_date: `2019-10-10` (string, required) - Should be defined on the client side.
@@ -8225,8 +8222,7 @@ Assuming that all required business processes and validations is implemented on 
     + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
     + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
-+ scope (enum, required)
-    - family doctor
+
 
 ### `Patient_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
@@ -8237,8 +8233,6 @@ Assuming that all required business processes and validations is implemented on 
     - active
     - pending_verification
     - terminated
-+ scope (enum, required)
-    - family doctor
 + `patient_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 + `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
