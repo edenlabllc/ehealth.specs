@@ -1554,6 +1554,29 @@ Method returns participants(medications) of medical programs details by ID.
         + data (object)
             + include `Program_medications_Response`
 
+
+## User details [/api/oauth/users]
+
+
+### Get user details by ID [GET /api/oauth/users/{id}]
+
+Returns information about user which ID is in the token.
+
+**Scopes required:** `user:read`
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - User identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`User_details_response`)
+
 ## Black list users [/black_list_users]
 
 ### Create Black list user [POST]
@@ -4884,25 +4907,6 @@ At least one query parameter must be provided
 ## User details [/api/oauth/users]
 
 
-### Get user details by ID [GET /api/oauth/users/{id}]
-
-Returns information about user which ID is in the token.
-
-**Scopes required:** `user:read`
-
-+ Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - User identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + data (`User_details_response`)
-
 ### Get my user details [GET /api/oauth/user]
 
 Returns my user details based on user in access_token
@@ -4914,6 +4918,7 @@ Returns my user details based on user in access_token
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: c2778f3064753ea70de870a53795f5c9
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -8744,7 +8749,7 @@ Assuming that all required business processes and validations is implemented on 
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - division's email
 + working_hours (`workinghours`) - optional field, business hours by each day weekly, doesn't make any influence on business process and will be shown on portal and map.
-+ type: CLINIC (enum, required) - `Dictionary GENDER`
++ type: CLINIC (enum, required) - `Dictionary DIVISION_TYPE`
 + external_id: `3213213` (string, optional)
 + location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
 
