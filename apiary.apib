@@ -8594,17 +8594,17 @@ Assuming that all required business processes and validations is implemented on 
 + owner(`Owner_V2`,required)
 + accreditation (MSP_Accreditation, optional)
 - One of
-    + license (object)
-        + type: MSP (string) - License type `Dictionary LICENSE_TYPE`
+    + license (object, required)
+        + type: MSP (string, required) - License type `Dictionary LICENSE_TYPE`
         + license_number: fd123443 (string, optional)
-        + issued_by: Кваліфікацйна комісія (string)
-        + issued_date: `2017-02-28` (string)
+        + issued_by: Кваліфікацйна комісія (string, required)
+        + issued_date: `2017-02-28` (string, required)
         + expiry_date: `2017-02-28` (string, optional)
-        + `active_from_date`: `2017-02-28` (string)
+        + `active_from_date`: `2017-02-28` (string, required)
         + what_licensed: реалізація наркотичних засобів (string, optional)
-        + order_no: ВА43234 (string) - номер наказу
-    + license (object)
-        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string)
+        + order_no: ВА43234 (string, required) - номер наказу
+    + license (object, required)
+        + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + `archive`(array[Archive], optional)
 + security (object, required, fixed-type)
     + `redirect_uri`: `https://example.com` (string, required, fixed) - Redirect uri is used in oauth2.0 flow
