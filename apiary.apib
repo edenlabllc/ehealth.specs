@@ -8208,11 +8208,12 @@ Assuming that all required business processes and validations is implemented on 
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + `confidant_person` (array, optional) - Should be set if this Person is disabled, underage, etc.
-        + relation_type: PRIMARY (enum, required)
-            - PRIMARY
-            - SECONDARY
-        + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
+    + confidant_person (array, optional) - Should be set if this Person is disabled, underage, etc.
+        + include
+            + relation_type: PRIMARY (enum, required) 
+                - PRIMARY
+                - SECONDARY
+            + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + legal_entity_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider identifier.
@@ -8223,7 +8224,7 @@ Assuming that all required business processes and validations is implemented on 
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + `confidant_person` (array, optional) - Should be set if this Person is disabled, underage, etc.
+    + confidant_person (array, optional) - Should be set if this Person is disabled, underage, etc.
         + relation_type: PRIMARY (enum, required)
             - PRIMARY
             - SECONDARY
