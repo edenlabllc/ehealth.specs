@@ -8225,10 +8225,11 @@ Assuming that all required business processes and validations is implemented on 
     + emergency_contact (object, required)
         + include `Emergency_Contact`
     + confidant_person (array, optional) - Should be set if this Person is disabled, underage, etc.
-        + relation_type: PRIMARY (enum, required)
-            - PRIMARY
-            - SECONDARY
-        + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
+         + include
+            + relation_type: PRIMARY (enum, required) 
+                - PRIMARY
+                - SECONDARY
+            + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
     + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
