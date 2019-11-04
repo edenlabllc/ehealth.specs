@@ -2489,10 +2489,7 @@ Method returns shortened details, to obtain full information - get Patient Reque
 This method is used to create Patient Request (as part of Patient creation w/o declaration process).
 Patient request is similar to declaration request, but person is created w/o declaration.
 
-This method makes it possible to update person data.
-When you filled `person.id`, you can update person data (for example, last name). If you give `person.id` and get an error, so you are trying to update another person and you need to create a new person (do not send `person.id`)
-
-If patient_request without field `person.id`, a new person is created. But if such a person is already there, then there is an error that it is necessary to update the person.
+If such a person is already there, then there is an error that it is necessary to update the person.
 + Request (application/json)
 
     + Headers
@@ -4907,7 +4904,7 @@ At least one query parameter must be provided
 ## User details [/oauth/users]
 
 
-### Get my user details [GEDele/oauth/user]
+### Get my user details [GET /oauth/user]
 
 Returns my user details based on user in access_token
 
@@ -8204,35 +8201,39 @@ Assuming that all required business processes and validations is implemented on 
             + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
     + addresses (array[Address], required)
     + phones (array[Phone], optional)
-    + `authentication_methods` (array[Authentication_Method_Patient_Request], required)
+    + `authentication_methods` (array[Authentication_Method], required)
     + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
         - email
         - phone
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + `confidant_person` (array, optional) - Should be set if this Person is disabled, underage, etc.
+        + relation_type: PRIMARY (enum, required)
+            - PRIMARY
+            - SECONDARY
+        + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + legal_entity_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Registered Medical Service Provider identifier.
 
 ### `Patient_Request_Public_Response`
-+ start_date: `2019-10-10` (string, required) - Should be defined on the client side.
-+ end_date: `2019-10-10` (string, required) - Will be defined on eHealth side if it's not set.
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
     + include `Person`
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + `confidant_person` (array, optional) - Should be set if this Person is disabled, underage, etc.
+        + relation_type: PRIMARY (enum, required)
+            - PRIMARY
+            - SECONDARY
+        + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
     + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 
 ### `Patient_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
-+ start_date: `2017-03-02` (string, required)
-+ end_date: `2017-03-02` (string, required)
 + signed_at: `2017-03-02T00:00:00.000Z` (string, required)
 + status (enum, required)
     - active
@@ -8247,8 +8248,6 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Patient_Request_Short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
-+ start_date: `2017-03-02` (string, required)
-+ end_date: `2025-03-02` (string, required)
 + status (enum, required)
     - active
     - pending_verification
