@@ -6796,6 +6796,7 @@ To approve contract next fields must be signed by NHS employee and sent by same 
 In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
 
 
+to_approve content for Capitation contract type
 ```
 {
 "id":"09106b70-18b0-4726-b0ed-6bda1369fd52",
@@ -6805,6 +6806,20 @@ In DS EDRPOU/DRFO must be equal to contractor_legal_entity.edrpou
       "edrpou": "32323454"
     },
 "next_status": "APPROVED",
+"text": "consent_text"
+}
+```
+
+to_approve content for Reimbursement contract type
+```
+{
+"id":"09106b70-18b0-4726-b0ed-6bda1369fd52",
+"contractor_legal_entity": {
+      "id": "df9f70ee-4b12-4740-b0f5-bb5aea116863",
+      "name": "Аптека Ноунейм",
+      "edrpou": "32323454"
+    },
+"next_status": "PENDING_NHS_SIGN",
 "text": "consent_text"
 }
 ```
