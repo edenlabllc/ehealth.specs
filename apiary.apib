@@ -4846,6 +4846,101 @@ Returns my user details based on user in access_token
     + Attributes (Response__Process_OK)
         + data (`User_details_response`)
 
+        
+## Equipment [/api/equipments]
+
+### Create equipment [POST]
+
+This method allows to register equipment and bind it with division of legal entity
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
+        + include `Equipment_base`
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Equipment_response`)
+
+### Update equipment [PATCH /api/equipments/{id}]
+
+This method used for update equipment data, except link with division and status. You can send only those fields you want to change
+
+Immutable parameters:
+ - division_id
+ - status
+ 
+ All the other parameters are mutable.
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
+
++ Request (application/json)
+
+    + Headers
+
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (Equipment_base)
+        + type: `23143534` (string, optional)- `code from dictionary -  eHealth/equipment_types`  
+        + external_id: `123-ASD-#1` (string, optional) - Identifier from external system
+       
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+
+### Get equipments [GET /api/equipments{?division_id,type,external_id,status,page,page_size}]
+
++ Parameters
+    + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Division identifier
+    + type: `43235435` (string, optional) - `Code from dictionary eHealth/equipment_types`
+    + external_id: `123-ASD-1` (string, optional) - `Identifier from external system`
+    + status: ACTIVE (string, optional) - Entity status
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`Equipment_response`])
+
+### Get equipment details by ID [GET /api/equipments/{id}]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Equipment_response`)
+
+### Deactivate equipment [PATCH /api/equipments/{id}/actions/deactivate]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Equipment_response`)
+            - status: INACTIVE
+
+### Activate equipment [PATCH /api/equipments/{id}/actions/activate]
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Equipment_response`)
+            - status: ACTIVE
+            
+
 # Group Public. Medical Programs
 
 ## Medical Program [/api/medical_program]
@@ -10949,3 +11044,34 @@ Assuming that all required business processes and validations is implemented on 
 + settings (object) - User settings
 + inserted_at: `2017-05-05T14:09:59.232112` (string, required)
 + updated_at: `2017-05-05T14:09:59.232112` (string, required)
+
+## `Equipment`
+### `Equipment_base`
++ type: `23143534` (string, required)- `code from dictionary -  eHealth/equipment_types`            
++ external_id: `123-ASD-#1` (string, required) - Identifier from external system
++ udi (array, optional) - A set of unique identifiers assigned to the asset by the manufacturer 
+    - `0742d949-1492-4864-9494-60fd7102abfd` (string)
++ lot_number: `RZ12345678` (string, optional)
++ manufacturer: `GlobalMed, Inc` (string, optional)
++ manufacture_date: `1999-01-01T00:00:00.000Z` (string, optional)
++ expiration_date: `2020-01-01T00:00:00.000Z` (string, optional)
++ model_number: `NSPX30` (string, optional)
++ part_number: `#e30-SD` (string, optional)
++ version: `v1.0.1` (string, optional)
++ name: `Рентген апарат флюрографічній` (string, optional)
++ serial_number: `S/N234554` (string, optional)
++ note: `Технічний огляд раз на рік` (string, optional)
+
+### `Equipment_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - Equipment identifier
++ division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Division identifier
++ `legal_entity_id`: `483af06f-d4c6-4c9e-8d9b-680b5ef7270d` (string, required) - Legal entity identifier
++ include `Equipment_base`
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
++ is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
