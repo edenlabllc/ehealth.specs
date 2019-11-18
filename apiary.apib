@@ -4847,7 +4847,7 @@ Returns my user details based on user in access_token
         + data (`User_details_response`)
 
         
-## Equipment [/api/equipments]
+## Equipment [/api/equipment]
 
 ### Create equipment [POST]
 
@@ -4870,7 +4870,7 @@ This method allows to register equipment and bind it with division of legal enti
             + code: 201 (number)
         + data (`Equipment_response`)
 
-### Update equipment [PATCH /api/equipments/{id}]
+### Update equipment [PATCH /api/equipment/{id}]
 
 This method used for update equipment data, except link with division and status. You can send only those fields you want to change
 
@@ -4897,7 +4897,7 @@ scription
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
 
-### Get equipments [GET /api/equipments{?division_id,type,external_id,status,page,page_size}]
+### Get equipment list [GET /api/equipment{?division_id,type,external_id,status,page,page_size}]
 
 + Parameters
     + division_id: `8be63914-a278-470b-b868-1af5b9087332` (string, optional) - Division identifier
@@ -4911,7 +4911,7 @@ scription
     + Attributes (Response_Collection_V2)
         + data (array[`Equipment_response`])
 
-### Get equipment details by ID [GET /api/equipments/{id}]
+### Get equipment details by ID [GET /api/equipment/{id}]
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
@@ -4920,7 +4920,7 @@ scription
     + Attributes (Response__Process_OK)
         + data (`Equipment_response`)
 
-### Deactivate equipment [PATCH /api/equipments/{id}/actions/deactivate]
+### Deactivate equipment [PATCH /api/equipment/{id}/actions/deactivate]
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
@@ -4930,7 +4930,7 @@ scription
         + data (`Equipment_response`)
             - status: INACTIVE
 
-### Activate equipment [PATCH /api/equipments/{id}/actions/activate]
+### Activate equipment [PATCH /api/equipment/{id}/actions/activate]
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
