@@ -10116,7 +10116,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Dosage_Instruction`
 + sequence: 1 (number, optional) - The order of the dosage instructions
-+ text: `0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day` (string, optional) - Free text dosage instructions e.g. SIG
++ text: `0.25mg PO every 6-12 hours as needed for menses from Jan 15-20, 2015.  Do not exceed more than 4mg per day` (string, required) - Free text dosage instructions e.g. SIG
 + `additional_instruction` (array, optional, fixed-type)
     + (Codeable_Concept)
         + coding (array, fixed-type)
@@ -10148,8 +10148,8 @@ Assuming that all required business processes and validations is implemented on 
             + system: `eHealth/SNOMED/administration_methods` (string)
             + code: `419747000` (string)
 + `dose_and_rate` (Dose_and_Rate, optional)
-+ `max_dose_per_period` (Ratio, optional)
-+ `max_dose_per_administration` (Simple_Quantity, optional)
++ `max_dose_per_period` (Ratio, required)
++ `max_dose_per_administration` (Simple_Quantity, required)
 + `max_dose_per_lifetime` (Simple_Quantity, optional)
 
 ### `Qualify_Medication_request_Request_Responce`
