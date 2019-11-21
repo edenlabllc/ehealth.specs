@@ -4881,7 +4881,7 @@ Immutable parameters:
  All the other parameters are mutable.
 
 + Parameters
-    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
 
 + Request (application/json)
 scription 
@@ -4896,6 +4896,9 @@ scription
        
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Equipment_response`)
 
 ### Get equipment list [GET /api/equipment{?division_id,type,external_id,status,page,page_size}]
 
