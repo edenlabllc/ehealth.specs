@@ -2489,7 +2489,7 @@ Patient request is similar to declaration request, but person is created w/o dec
 
 If such a person is already there, then there is an error that it is necessary to update the person.
 
-A new authentication type `confidant` is added. If person have confidant, then in authentification method type = `confidant`
+A new authentication type `third_person` is added. If person have confidant, then in authentification method type = `third_person`
 + Request (application/json)
 
     + Headers
@@ -2718,7 +2718,7 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in pati
         + data (`Patient_short`)
         
 
-### Resend Authorization OTP on Patient Request [POST /api/patient_requests/{id}/actions/resend_otp]
+### Resend Authorization OTP on Patient Request [PATCH /api/patient_requests/{id}/actions/resend_otp]
 
 Use this method to resend sms on previously created Patient Request.
 
@@ -2730,6 +2730,10 @@ Use this method to resend sms on previously created Patient Request.
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (object)
+        + phone_source: SECONDARY (string, optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
