@@ -2516,7 +2516,7 @@ A new authentication type `confidant` is added. If person have confidant, then i
                 + type: `OTP` (enum, required)
                     - OTP
                     - OFFLINE
-                    - CONFIDANT
+                    - THIRD_PERSON
                     - NA
                 + number: `+38095*****95` (string, required)
             + documents (array[`media_content`], optional)
@@ -2535,7 +2535,7 @@ A new authentication type `confidant` is added. If person have confidant, then i
 
 Use this method to approve previously created Patient Request.
 
-In case if authentication_method is OTP or CONFIDANT, request example:
+In case if authentication_method is OTP or THIRD_PERSON, request example:
 ```
 {
   "verification_code": 6598
@@ -7914,7 +7914,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Authentication_Method_Patient_Request`
 + type (enum, required)
-    - CONFIDANT
+    - THIRD_PERSON
     - OTP
     - OFFLINE
     - NA
