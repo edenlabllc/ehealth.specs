@@ -752,22 +752,8 @@ Methods returns ukr_med_registry details by ID.
 
 ### Get Main Stats [GET /reports/stats/]
 
-Methods returns agregated numbers of declarations, doctors and msp.
+Methods returns agregated numbers of declarations, doctors, msp, pharmacies,pharmacists. Also returns counts of Active and Completed medication requests.
 Total statistis are calculated on the date that is transmitted in the current date
-
-**Detailed spec:**
-
-```json
-{
-    "data": {
-      "declarations": 100, -- select count(*) from declarations where inserted_at <= to_date and status in('active', 'pending_verification')
-      "msps": 2, -- select count(*) from legal_entities where type ='MSP' and inserted_at between start_date and to_date and is_active = true and status='ACTIVE'
-      "doctors": 15 -- select count(*) from employees where inserted_at between start_date and to_date and is_active = 'true' and employee_type = 'DOCTOR' and status = 'APPROVED'
-      "pharmacies": 2 -- select count(*) from legal_entities where type ='PHARMACY' inserted_at between start_date and to_date and is_active = 'true' and status='ACTIVE'
-      "pharmacists": 6 -- select count(*) from employees where inserted_at between start_date and to_date and is_active = 'true' and employee_type = 'PHARMACIST' and status = 'APPROVED'
-    },
-}
-```
 
 
 + Request (application/json)
@@ -783,20 +769,10 @@ Total statistis are calculated on the date that is transmitted in the current da
 
 ### Get Main Stats by Regions [GET /reports/stats/regions/]
 
-Methods returns agregated numbers of declarations, MSP, PHARMACIES, doctors and pharmacists grouped by region.
+Methods returns agregated numbers of declarations, MSP, PHARMACIES, doctors, pharmacists, active MR and completed MR grouped by region.
 Total statistis are calculated on the date that is transmitted in the current dste
 The service returns statistics for all regions
 
-**Detailed spec**
-
-```
-  "declarations": 100, --> declarations.division.addreses['RESIDENCE'].region_ID and status in('active', 'pending_verification')
-  "msps": 2, --> legal_entities.[type='MSP' and status='ACTIVE'].addreses['REGISTRATION'].region_ID
-  "doctors": 15 --> employees.[employee_type='DOCTOR' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['RESIDENCE'].region_ID
-  "pharmacies": 2, --> legal_entities.[type='PHARMACY' and status='ACTIVE'].addreses['REGISTRATION'].region_ID
-  "pharmacists": 15 --> employees.[employee_type='PHARMACIST' & is_active=true and status='APPROVED'].division_id-->divisions.addreses['RESIDENCE'].region_ID
-  "medication_requests": 30 -->medication_requests.employee_id-->division_id-->divisions.addreses['REGISTRATION'].region_ID
-```
 
 + Request (application/json)
 
