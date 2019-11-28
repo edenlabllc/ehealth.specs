@@ -781,7 +781,7 @@ The service returns statistics for all regions
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
-        + data (array[StatsByRegion], optional)
+        + data (array[StatsByRegionadd], optional)
 
 
 
@@ -9134,8 +9134,6 @@ Assuming that all required business processes and validations is implemented on 
 ## Dashboards
 
 ### StatsByRegion
-+ from_date: `2017-09-01` (string, optional)
-+ to_date: `2017-09-02` (string, optional)
 + regions (array, required)
     + (object)
         + include (`StatsByRegionadd`)
@@ -9143,10 +9141,9 @@ Assuming that all required business processes and validations is implemented on 
 ### StatsByRegionadd
 + `region` (object, required)
     + include `Region`
-+ `period` (object, required)
++ `stats` (object, required)
     + include `RegionStats`
-+ `total` (object, required)
-    + include `RegionStats`
+
 
 ### RegionStats
 + declarations_total: 100 (number, required)
