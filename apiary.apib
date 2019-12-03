@@ -2419,16 +2419,11 @@ Method is used to verify that provided in declarartion request phone number is v
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + include `Patient_Request_Public_Response`
-            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient request create service
                 - MIS
         + urgent (object, required)
-            + `authentication_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - NA
-                + number: `+38095*****95` (string, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
             + documents (array[`media_content`], optional)
 
 ### Get Patient Requests List [GET /api/patient_requests{?legal_entity_id,status,page,page_size}]
@@ -2468,7 +2463,7 @@ Patient request is similar to declaration request, but person is created w/o dec
 
 If such a person is already there, then there is an error that it is necessary to update the person.
 
-A new authentication type `third_person` is added. If person have confidant, then in authentification method type = `third_person`
+A new authentication type `third_person` is added. If person < 14, then in authentification method type = `third_person`
 + Request (application/json)
 
     + Headers
@@ -2485,19 +2480,9 @@ A new authentication type `third_person` is added. If person have confidant, the
         + data (object)
             + include `Patient_Request_Public_Response`
             + status: `NEW` (string, required)
-            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient request create service
-            + `preferred_way_communication`: email (enum, optional)
-                - email
-                - phone
         + urgent (object, required)
-            + `authentication_method_current` (object, required)
-                + type: `OTP` (enum, required)
-                    - OTP
-                    - OFFLINE
-                    - THIRD_PERSON
-                    - NA
-                + number: `+38095*****95` (string, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
             + documents (array[`media_content`], optional)
 
 + Response 422 (application/json)
@@ -2578,7 +2563,7 @@ Use this method to reject previously created Patient Request.
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + include `Patient_Request_Public_Response`
             + status: `REJECTED` (string, required)
-            + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
 
@@ -2589,13 +2574,11 @@ All signature fields will be validated (including signer certificate authority).
 
 This service will store signed copy of Patient Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with Patient Request data and printout template. Object that need to be signed is returned by `Get Patient request by ID` response, `JSON.Path: $.data`.
+Signed content MUST consists of JSON object with Patient Request data and printout template. Object that need to be signed is returned by `Get Patient request by ID` or `Approve Patient request` response, `JSON.Path: $.data`.
 Patient must re-read and sign patient request print form and after that `patient_signed` should be changed to TRUE.
 
 Patient request can be signed either by doctor or admin (user with scope `patient_request:sign`) from legal entity as in patient request.
 
-**Important**
-Invoke Get Patient Request by ID to obtain seed - Hash of previous block in patient chain or other random component that should be signed with patient request
 
 **Signed object example:**
 ```
@@ -2658,9 +2641,25 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in pati
         ]
       },
       "confidant_person": [
-        {
+       {
           "relation_type": "PRIMARY",
-          "id": "27a4723a-242b-4a7a-89c0-d79753fbb687",
+          "first_name": "Петро",
+          "last_name": "Іванов",
+          "second_name": "Миколайович",
+          "birth_date": "1991-08-19",
+          "birth_country": "Україна",
+          "birth_settlement": "Вінниця",
+          "gender": "MALE",
+          "tax_id": "3126509816",
+          "secret": "secret",
+          "documents_person": [
+            {
+              "type": "PASSPORT",
+              "number": "АА120518",
+              "issued_by": "Рокитнянським РВ ГУ МВС Київської області",
+              "issued_at": "2017-02-28"
+            }
+          ],
           "documents_relationship": [
             {
               "type": "PASSPORT",
@@ -2668,7 +2667,14 @@ Invoke Get Patient Request by ID to obtain seed - Hash of previous block in pati
               "issued_by": "Рокитнянським РВ ГУ МВС Київської області",
               "issued_at": "2017-02-28"
             }
-          ]
+          ],
+          "phones": [
+            {
+              "type": "MOBILE",
+              "number": "+380503410870"
+            }
+          ],
+          "email": "emaill@example.com"
         }
       ],
       "patient_signed": false,
@@ -5494,7 +5500,7 @@ Use this method to reject previously created and signed Medication request.
 
 **Important**
 
-Invoke Get Medication request by ID to obtain previously created medication request. In order to reject medication request `reject_reason` and `reject_reason_code` should be added.
+Invoke Get Medication request by ID to obtain previously created medication request. In order to reject medication request `reject_reason (optional)` and `reject_reason_code (required)` should be added.
 
 **Note!** that medication request with intent *plan* and *order* has different structure.
 
@@ -8157,19 +8163,13 @@ Assuming that all required business processes and validations is implemented on 
     + addresses (array[Address], required)
     + phones (array[Phone], optional)
     + `authentication_methods` (array[Authentication_Method_Patient_Request], required)
-    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
-        - email
-        - phone
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + confidant_person (array, optional) - Should be set if this Person is disabled, underage, etc.
-        + include
-            + relation_type: PRIMARY (enum, required) 
-                - PRIMARY
-                - SECONDARY
-            + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
-            + documents_relationship (array[Document], required)
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone    
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
@@ -8179,13 +8179,10 @@ Assuming that all required business processes and validations is implemented on 
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
-    + confidant_person (array, optional) - Should be set if this Person is disabled, underage, etc.
-         + include
-            + relation_type: PRIMARY (enum, required) 
-                - PRIMARY
-                - SECONDARY
-            + id: `5fdeb780-3485-4a06-aacf-58ef3a61bc0e` (string, required) - Registered MPI identifier.
-            + documents_relationship (array[Document], required)
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone
     + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
