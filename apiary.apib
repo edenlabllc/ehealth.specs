@@ -3782,7 +3782,7 @@ This method allows to reset (set to **NA**) person authentication method.
             + type: `forbidden`
             + message: `Not found active declaration with person for this legal entity!` (string)
 
-### Get Person Declaration [PUT /api/persons/{id}/auth_method_requests]
+### Create authentication method request [PUT /api/persons/{id}/auth_method_requests]
 
 This method allow to add new authentication method for person.
 It is possible to add another person as an additional authentication method (type = `third person`) by sending third_person.id.
@@ -3795,6 +3795,7 @@ It is possible to add another person as an additional authentication method (typ
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
         + `auth_method_request` (Append_authentication_methods_request)
@@ -3805,6 +3806,8 @@ It is possible to add another person as an additional authentication method (typ
             + code: 201 (number)
         + data (object)
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + status: `NEW` (string, required)
+            + channel: `MIS` (enum, required) - channel that invoke add auth methods
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
             + documents (array[`media_content`], optional)
@@ -3818,9 +3821,43 @@ It is possible to add another person as an additional authentication method (typ
             + message: `Unverified phone number` (string, required)
 
 
+### Approve authentication method request [PATCH /api/persons/{id}/auth_method_requests/{request_id}/action/approve]
 
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
+    + request_id: `1096f147-7f93-3fc6-bddc-9d71b198fb7f` (string, required) - Request identifier
 
++ Request (application/json)
 
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + `verification_code`: 7489 (number, optional) - required if authentication_method is OTP
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + status: `APPROVED` (enum, optional) - current status on auth methods request.
+                - APPROVED
+                - SUCCESS
+            + channel: `MIS` (enum, required) - channel that invoke add auth methods
+        + urgent (object, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
+            + documents (array[`media_content`], optional)
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: request_malformed (string, required)
+            + message: `This doctor has X declarations and could not sign more` (string, required)
 
 
 ## Legal Entities [/api/legal_entities]
