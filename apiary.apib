@@ -3782,6 +3782,47 @@ This method allows to reset (set to **NA**) person authentication method.
             + type: `forbidden`
             + message: `Not found active declaration with person for this legal entity!` (string)
 
+### Get Person Declaration [PUT /api/persons/{id}/auth_method_requests]
+
+This method allow to add new authentication method for person.
+It is possible to add another person as an additional authentication method (type = `third person`) by sending third_person.id.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
+    + Attributes (object)
+        + `auth_method_request` (Append_authentication_methods_request)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+        + urgent (object, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
+            + documents (array[`media_content`], optional)
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `Unverified phone number` (string, required)
+
+
+
+
+
+
+
 ## Legal Entities [/api/legal_entities]
 
 ### Get Legal Entities [GET /api/legal_entities{?edrpou,legal_entity_id,settlement_id,type,owner_property,status,nhs_verified,page,page_size}]
@@ -7827,6 +7868,12 @@ Assuming that all required business processes and validations is implemented on 
 + unzr: `19900101-00099` (string, optional)
 + `emergency_contact`(`Emergency_Contact`)
 + `process_disclosure_data_consent`: true (boolean, required)
+
+### `Append_authentication_methods_request`
++ type: `THIRD_PERSON` (enum, required)
++ phone_number: `+380508887700` (string, required)
++ alias: `husband` (string, required)
+
 
 ## `Merge_Candidates`
 ### `Merge_Candidate`
