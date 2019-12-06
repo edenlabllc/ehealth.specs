@@ -2423,7 +2423,7 @@ Method is used to verify that provided in declarartion request phone number is v
             + channel: `MIS` (enum, required) - channel that invoke patient request create service
                 - MIS
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
             + documents (array[`media_content`], optional)
 
 ### Get Patient Requests List [GET /api/patient_requests{?legal_entity_id,status,page,page_size}]
@@ -2482,7 +2482,7 @@ A new authentication type `third_person` is added. If person < 14, then in authe
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke patient request create service
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
             + documents (array[`media_content`], optional)
 
 + Response 422 (application/json)
@@ -7898,6 +7898,15 @@ Assuming that all required business processes and validations is implemented on 
     - OFFLINE
     - NA
 + phone_number: `+380508887700` (string, optional)
++ alias: `husband` (string, optional)
+
+### `Authentication_Method_Patient_Response`
++ type (enum, required)
+    - OTP
+    - THIRD_PERSON
+    - OFFLINE
+    - NA
++ phone_number: `+38093*****85` (string, optional)
 + alias: `husband` (string, optional)
 
 ### `cabinet_person_response`
