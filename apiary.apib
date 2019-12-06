@@ -2456,7 +2456,7 @@ Method returns shortened details, to obtain full information - get Patient Reque
         + data (array[`Patient_Request_Short`])
 
 
-### Create Patient Request [POST /api/v2/patient_requests]
+### Create Patient Request [POST /api/patient_requests]
 
 This method is used to create Patient Request (as part of Patient creation w/o declaration process).
 Patient request is similar to declaration request, but person is created w/o declaration.
@@ -2493,7 +2493,39 @@ A new authentication type `third_person` is added. If person < 14, then in authe
             + type: unverified (string, required)
             + message: `Unverified phone number` (string, required)
 
+### Update Patient Request [PATCH /api/patient_requests]
 
+This method allows you to update the patient’s data according to his id, which was previously found
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+    + Attributes (object)
+        + `patient_request` (Update_Patient_Request)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + include `Patient_Request_Public_Response`
+            + status: `NEW` (string, required)
+            + channel: `MIS` (enum, required) - channel that invoke patient request create service
+        + urgent (object, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
+            + documents (array[`media_content`], optional)
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: unverified (string, required)
+            + message: `Unverified phone number` (string, required)
 
 ### Approve Patient Request [PATCH /api/patient_requests/{id}/actions/approve]
 
@@ -7784,6 +7816,27 @@ Assuming that all required business processes and validations is implemented on 
 + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
     - email
     - phone
+    
+
+### `Person_for_update`
++ id: `14b8f6fa-dc59-4e86-9bbd-dfb35a4b1713` (string, required)
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, optional)
++ secret: secret (string, required)
++ documents (array[Document], required)
++ addresses (array[Address], required)
++ phones (array[Phone], optional)
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
+    
 
 ### `Confidant_Person`
 + relation_type: PRIMARY (enum, required)
@@ -8302,6 +8355,54 @@ Assuming that all required business processes and validations is implemented on 
     - terminated
 + person (Person_Minimal_Declaration_Request)
 
+
+### `Update_Patient_Request`
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `14b8f6fa-dc59-4e86-9bbd-dfb35a4b1713` (string, required) - Person's who is updating
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `1991-08-19` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required)
+    + email: email@example.com (string, optional)
+    + tax_id: 3126509816 (string, required)
+    + secret: secret (string, required)
+    + documents (array, required)
+        + include
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
+            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
+    + addresses (array[Address], required)
+    + phones (array[Phone], optional)
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone    
+    + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+  
+
+### `Update_Patient_Request_Response`
++ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + include `Person_for_update`
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone
+    + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
+    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+
+  
 ## Party
 ### `Party_Short`
 + first_name: Петро (string, required)
