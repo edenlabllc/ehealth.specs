@@ -2436,10 +2436,10 @@ Method is used to verify that provided in declarartion request phone number is v
     + Attributes (Response_OK)
         + data (Response_verification_by_phone)
 
-## Patient Requests [/api/patient_requests]
+## Person Requests [/api/person_requests]
 [Person Request]() is a life-cycle entity that is used to create person WITHOUT [Declarations]().
 
-### Get Patient Request by ID [GET /api/patient_requests/{id}]
+### Get Person Request by ID [GET /api/person_requests/{id}]
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - request identifier
@@ -2464,20 +2464,20 @@ Method is used to verify that provided in declarartion request phone number is v
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + include `Patient_Request_Public_Response`
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
-            + channel: `MIS` (enum, required) - channel that invoke patient request create service
+            + channel: `MIS` (enum, required) - channel that invoke person request create service
                 - MIS
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
             + documents (array[`media_content`], optional)
 
-### Get Patient Requests List [GET /api/patient_requests{?legal_entity_id,status,page,page_size}]
+### Get Person Requests List [GET /api/person_requests{?legal_entity_id,status,page,page_size}]
 
-Use this method to obrain list of Patient Requests. 
+Use this method to obrain list of Person Requests. 
 If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
 
-Service returns only patient request related to the same legal entity as the user.
+Service returns only person request related to the same legal entity as the user.
 
-Method returns shortened details, to obtain full information - get Patient Request it by it's ID.
+Method returns shortened details, to obtain full information - get Person Request it by it's ID.
 
 + Parameters
     + status: active (enum, optional)
@@ -2500,47 +2500,24 @@ Method returns shortened details, to obtain full information - get Patient Reque
         + data (array[`Patient_Request_Short`])
 
 
-### Create Patient Request [POST /api/patient_requests]
+### Create/Update Person Request [POST /api/person_requests]
 
-This method is used to create Patient Request (as part of Patient creation w/o declaration process).
-Patient request is similar to declaration request, but person is created w/o declaration.
+This method is used to create Person Request (as part of Person creation w/o declaration process).
+Person request is similar to declaration request, but person is created w/o declaration.
 
 If such a person is already there, then there is an error that it is necessary to update the person.
 
+Also this method allows you to update the person’s data according to his id, which was previously found.
+A block with information about authentication methods must be transferred when the person is created. But it is unnecessary to transfer it when updating the person.
+
+This table shows which fields are required for specific action:
+Field               | Create        | Update
+person.id           |      -        | required
+person.auth_methods | required      |     -
+
+
+
 A new authentication type `third_person` is added. If person < 14, then in authentification method type = `third_person`
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-
-    + Attributes (object)
-        + `patient_request` (Patient_Request_Public)
-
-+ Response 201 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (object)
-            + include `Patient_Request_Public_Response`
-            + status: `NEW` (string, required)
-            + channel: `MIS` (enum, required) - channel that invoke patient request create service
-        + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
-            + documents (array[`media_content`], optional)
-
-+ Response 422 (application/json)
-    + Attributes (Response_Error)
-        + meta (Response__Meta)
-            + code: 422
-        + error
-            + type: unverified (string, required)
-            + message: `Unverified phone number` (string, required)
-
-### Update Patient Request [PATCH /api/patient_requests]
-
-This method allows you to update the patient’s data according to his id, which was previously found
-
 + Request (application/json)
 
     + Headers
@@ -2549,7 +2526,7 @@ This method allows you to update the patient’s data according to his id, which
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + `patient_request` (Update_Patient_Request)
+        + `person_request` (Patient_Request_Public)
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -2558,7 +2535,7 @@ This method allows you to update the patient’s data according to his id, which
         + data (object)
             + include `Patient_Request_Public_Response`
             + status: `NEW` (string, required)
-            + channel: `MIS` (enum, required) - channel that invoke patient request create service
+            + channel: `MIS` (enum, required) - channel that invoke person request create service
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
             + documents (array[`media_content`], optional)
@@ -2571,9 +2548,10 @@ This method allows you to update the patient’s data according to his id, which
             + type: unverified (string, required)
             + message: `Unverified phone number` (string, required)
 
-### Approve Patient Request [PATCH /api/patient_requests/{id}/actions/approve]
 
-Use this method to approve previously created Patient Request.
+### Approve Person Request [PATCH /api/person_requests/{id}/actions/approve]
+
+Use this method to approve previously created Person Request.
 
 In case if authentication_method is OTP or THIRD_PERSON, request example:
 ```
@@ -2618,9 +2596,9 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + type: forbidden (string, required)
             + message: `Invalid verification code` (string, required)
 
-### Reject Patient Request [PATCH /api/patient_requests/{id}/actions/reject]
+### Reject Person Request [PATCH /api/person_requests/{id}/actions/reject]
 
-Use this method to reject previously created Patient Request.
+Use this method to reject previously created Person Request.
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
@@ -2643,17 +2621,17 @@ Use this method to reject previously created Patient Request.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
 
-### Sign Patient Request [PATCH /api/patient_requests/{id}/actions/sign]
+### Sign Person Request [PATCH /api/person_requests/{id}/actions/sign]
 
-This method is used to sign Patient Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
+This method is used to sign Person Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
 All signature fields will be validated (including signer certificate authority).
 
-This service will store signed copy of Patient Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
+This service will store signed copy of Person Request in Media Content Storage, created or update MPI records  if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with Patient Request data and printout template. Object that need to be signed is returned by `Get Patient request by ID` or `Approve Patient request` response, `JSON.Path: $.data`.
-Patient must re-read and sign patient request print form and after that `patient_signed` should be changed to TRUE.
+Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by ID` or `Approve Person request` response, `JSON.Path: $.data`.
+Person must re-read and sign person request print form and after that `patient_signed` should be changed to TRUE.
 
-Patient request can be signed either by doctor or admin (user with scope `patient_request:sign`) from legal entity as in patient request.
+Person request can be signed either by doctor or admin (user with scope `p_request:sign`) from legal entity as in person request.
 
 
 **Signed object example:**
@@ -2779,9 +2757,9 @@ Patient request can be signed either by doctor or admin (user with scope `patien
         + data (`Patient_short`)
         
 
-### Resend Authorization OTP on Patient Request [PATCH /api/patient_requests/{id}/actions/resend_otp]
+### Resend Authorization method on Person Request [PATCH /api/person_requests/{id}/actions/resend_otp]
 
-Use this method to resend sms on previously created Patient Request.
+Use this method to resend sms on previously created Person Request.
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
@@ -7843,6 +7821,7 @@ Assuming that all required business processes and validations is implemented on 
     - phone
 
 ### `Person_v2`
++ id: `13001c60-45a0-4b5a-b425-9505e1de18bd` (string, optional)
 + first_name: Петро (string, required)
 + last_name: Іванов (string, required)
 + second_name: Миколайович (string, optional)
@@ -8334,6 +8313,7 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Patient_Request_Public`
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional)
     + first_name: Петро (string, required)
     + last_name: Іванов (string, required)
     + second_name: Миколайович (string, optional)
@@ -8353,7 +8333,7 @@ Assuming that all required business processes and validations is implemented on 
             + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
     + addresses (array[Address], required)
     + phones (array[Phone], optional)
-    + `authentication_methods` (array[Authentication_Method_Patient_Request], required)
+    + `authentication_methods` (array[Authentication_Method_Patient_Request], optional)
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
         + include `Emergency_Contact`
