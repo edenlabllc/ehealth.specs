@@ -4914,13 +4914,14 @@ All other attributes are immutable
             + code: 201 (number)
         + data (`Employee_role_response`)
 
-### Get employee roles [GET /api/employee_roles/{?employee_id,healthcare_service_id,page,page_size}]
+### Get employee roles [GET /api/employee_roles/{?employee_id,healthcare_service_id,status,page,page_size}]
 
 At least one query parameter must be provided
 
 + Parameters
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Employee identifier
     + `healthcare_service_id`: `c4de7c6e-8c6e-4d4f-8843-6bc122977227` (string, optional) - Healthcare service identifier
+    + status: active (string, optional) - Search only for active or inactive employee roles.
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
