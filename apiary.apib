@@ -2534,6 +2534,7 @@ A new authentication type `third_person` is added. If person < 14, then in authe
             + code: 201 (number)
         + data (object)
             + include `Patient_Request_Public_Response`
+            + id: `310c85ea-9c2a-476e-89be-95eeddaa13c0` (string, required) - request id
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke person request create service
         + urgent (object, required)
@@ -8366,7 +8367,7 @@ Assuming that all required business processes and validations is implemented on 
     - active
     - pending_verification
     - terminated
-+ `patient_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ `person_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 + inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
 + is_active: true (boolean, required)
 + reason: `manual_employee` (string, optional)
