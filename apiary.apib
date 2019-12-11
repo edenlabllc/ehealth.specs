@@ -2534,9 +2534,14 @@ A new authentication type `third_person` is added. If person < 14, then in authe
         + meta (Response__Meta)
             + code: 201 (number)
         + data (object)
+            + status: SIGNED (enum, optional)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+                - REJECTED
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
-            + id: `310c85ea-9c2a-476e-89be-95eeddaa13c0` (string, required) - request id
-            + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke person request create service
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
@@ -2584,9 +2589,14 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
         + meta (Response__Meta)
             + code: 201 (number)
         + data (object)
-            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826bb` (string, required)
+            + status: SIGNED (enum, optional)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+                - REJECTED
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
-            + status: `APPROVED` (string, required)
             + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
@@ -2616,9 +2626,14 @@ Use this method to reject previously created Person Request.
         + meta (Response__Meta)
             + code: 200 (number)
         + data (object)
-            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+            + status: SIGNED (enum, optional)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+                - REJECTED
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
-            + status: `REJECTED` (string, required)
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
@@ -2774,7 +2789,11 @@ Use this method to resend sms on previously created Person Request.
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
     
     + Attributes (object)
-        + phone_source: SECONDARY (string, optional)
+        + `authentication_method_current` (object, required)
+            + type: `OTP` (enum, required)
+                - OTP
+                - THIRD_PERSON
+            + alias: `husband` (string, required)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
