@@ -2480,11 +2480,12 @@ Service returns only person request related to the same legal entity as the user
 Method returns shortened details, to obtain full information - get Person Request it by it's ID.
 
 + Parameters
-    + status: active (enum, optional)
+    + status: APPROVED (enum, optional)
         - NEW
         - APPROVED
         - SIGNED
         - REJECTED
+        - CANCELLED
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -2526,7 +2527,7 @@ A new authentication type `third_person` is added. If person < 14, then in authe
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + `person_request` (Patient_Request_Public)
+        + include (Patient_Request_Public)
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -2735,7 +2736,7 @@ Person request can be signed either by doctor or admin (user with scope `p_reque
       "patient_signed": false,
       "process_disclosure_data_consent": true
     },
-    "content": "Person content"
+    "content": "<html><body><p>signed person data</p></body></html>"
   }
 }
 ```
@@ -8314,7 +8315,7 @@ Assuming that all required business processes and validations is implemented on 
 + `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 
 ### `Patient_Request_Public`
-+ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
++ person request (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
     + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional)
     + first_name: Петро (string, required)
     + last_name: Іванов (string, required)
@@ -8347,7 +8348,7 @@ Assuming that all required business processes and validations is implemented on 
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 ### `Patient_Request_Public_Response`
-+ person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
++ person_request (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
     + include `Person_v2`
     + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
     + emergency_contact (object, required)
@@ -8356,14 +8357,14 @@ Assuming that all required business processes and validations is implemented on 
     + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
         - email
         - phone
-    + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони без декларації.
+    + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 
 ### `Patient_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
 + signed_at: `2017-03-02T00:00:00.000Z` (string, required)
-+ status (enum, required)
++ status: active (enum, optional)
     - active
     - pending_verification
     - terminated
@@ -8375,10 +8376,12 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Patient_Request_Short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
-+ status (enum, required)
-    - active
-    - pending_verification
-    - terminated
++ status: active (enum, optional)
+    - NEW
+    - APPROVED
+    - SIGNED
+    - REJECTED
+    - CANCELLED
 + person (Person_Minimal_Declaration_Request)
 
 
