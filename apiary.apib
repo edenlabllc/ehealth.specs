@@ -8315,50 +8315,48 @@ Assuming that all required business processes and validations is implemented on 
 + `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 
 ### `Patient_Request_Public`
-+ person request (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
-    + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional)
-    + first_name: Петро (string, required)
-    + last_name: Іванов (string, required)
-    + second_name: Миколайович (string, optional)
-    + birth_date: `1991-08-19` (string, required)
-    + birth_country: `Україна` (string, required)
-    + birth_settlement: `Вінниця` (string, required)
-    + gender: MALE, FEMALE (enum[string], required)
-    + email: email@example.com (string, optional)
-    + tax_id: 3126509816 (string, required)
-    + secret: secret (string, required)
-    + documents (array, required)
-        + include
-            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
-            + number: АА120518 (string, required) - document issue number
-            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
-            + issued_at: `2017-02-28` (string, required) - the date when document was issued
-            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
-    + addresses (array[Address], required)
-    + phones (array[Phone], optional)
-    + `authentication_methods` (array[Authentication_Method_Patient_Request], optional)
-    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
-    + emergency_contact (object, required)
-        + include `Emergency_Contact`
-    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
-    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
-        - email
-        - phone    
-    + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
-    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
++ person_id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - if update person
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `1991-08-19` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ tax_id: 3126509816 (string, required)
++ secret: secret (string, required)
++ documents (array, required)
+    + include
+        + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[Address], required)
++ phones (array[Phone], optional)
++ `authentication_methods` (array[Authentication_Method_Patient_Request], optional)
++ unzr: `19900101-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone    
++ patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
++ `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 ### `Patient_Request_Public_Response`
-+ person_request (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
-    + include `Person_v2`
-    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
-    + emergency_contact (object, required)
-        + include `Emergency_Contact`
-    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
-    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
-        - email
-        - phone
-    + patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони.
-    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
++ include `Person_v2`
++ unzr: `19900101-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone
++ patient_signed: false (boolean, required) - Факт подписания заявки на створеня персони.
++ `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 
 ### `Patient_short`
@@ -8926,7 +8924,7 @@ Assuming that all required business processes and validations is implemented on 
 + email: email@example.com (string, required) - division's email
 + working_hours (`workinghours`) - optional field, business hours by each day weekly, doesn't make any influence on business process and will be shown on portal and map.
 + type: CLINIC (enum, required) - `Dictionary DIVISION_TYPE`
-+ legal_entity_id: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
++ legal_entity_id: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (optional, required)
 + external_id: `3213213` (string, optional)
 + location (Location, optional) - optional field. geographical location, if it's empty, division won't be shown on a map.
 
