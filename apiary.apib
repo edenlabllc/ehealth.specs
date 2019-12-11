@@ -5026,7 +5026,7 @@ Immutable parameters:
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
 
 + Request (application/json)
-scription 
+ 
     + Headers
 
         Authorization: Bearer c2778f3064753ea70de870a53795f5c9
@@ -5052,6 +5052,12 @@ scription
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
         + data (array[`Equipment_response`])
@@ -5061,6 +5067,12 @@ scription
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
 
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (`Equipment_response`)
@@ -5069,6 +5081,12 @@ scription
 
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - Equipment identifier
+
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -5080,11 +5098,96 @@ scription
 + Parameters
     + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Equipment identifier
 
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (`Equipment_response`)
             - status: ACTIVE
             
+## Preperson [/api/prepersons]
+
+### Create preperson [POST]
+This method allows to create unidentified person. There is one necessary field in payload - `external_id` which serves as identifier of unidentified person in external system. Preperson creates without using digital sign.
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (object)
+        + include `Preperson_base`
+        
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (`Preperson_response`)
+
+### Update preperson [PATCH /api/prepersons/{id}]
+Method enables to modify only `external_id` field.
+
++ Parameters
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the preperson. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+    
+    + Attributes (object)
+        + external_id: `#1234-FDS-aa` (string, required) - `Identifier from external system`
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Preperson_response`)
+
+### Get prepersons [GET /api/prepersons{?external_id,page,page_size}]
+Returns a list of ACTIVE prepersons has been created in legal entity user belongs to.
+
++ Parameters
+    + external_id: `#1234-FDS-aa` (string, optional) - `Identifier from external system`
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`Preperson_response`])
+
+### Get preperson by ID [GET /api/prepersons/{id}]
+Returns preperson details by it's MPI identifier
+
++ Parameters
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the preperson. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Preperson_response`)            
+
 
 # Group Public. Medical Programs
 
@@ -11153,6 +11256,20 @@ Assuming that all required business processes and validations is implemented on 
     - ACTIVE
     - INACTIVE
 + is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+## `Preperson`
+### `Preperson_base`
++ external_id: `#1234-FDS-aa` (string, required) - `Identifier from external system`
++ note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
+
+### `Preperson_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
++ include `Preperson_base`
++ status: ACTIVE (string, required) - `status of the preperson`
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
