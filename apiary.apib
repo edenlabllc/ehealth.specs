@@ -5435,6 +5435,52 @@ Use this method to resend sms on previously created preperson merge request.
     + Attributes (Response__Process_OK)
         + data (OTP)
 
+### Get preperson merge requests [GET]
+Method returns a list of preperson merge requests. Service returns only merge requests related to the same legal entity as the user.
+
++ Parameters
+    + status: NEW (enum, optional) - `status of the preperson merge request`
+        - NEW
+        - APPROVED
+        - REJECTED
+        - SIGNED
+    + preperson_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, optional) - MPI identifier of the preperson.
+    + person_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, optional) - MPI identifier of the person.
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+        API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array[`Preperson_merge_request_response`])
+
+### Get preperson merge request by ID [GET /api/preperson_merge_requests/{id}]
+Method returns preperson merge request details by it's ID
+
++ Parameters
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the preperson merge request`
+    
++ Request (application/json)
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Preperson_merge_request_response`)
+            + status: NEW (string, required) - `status of the preperson merge request`
+        + urgent (object, required)
+            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required)
+            + documents (array[`media_content`], optional)
+
+
 # Group Public. Medical Programs
 
 ## Medical Program [/api/medical_program]
