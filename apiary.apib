@@ -3714,7 +3714,16 @@ Method returns only **requested** parameters, birth place and second name in add
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
-        + data (array[`Person_Short`])
+        + data (array)
+            + object(`Person_Short`)
+                + merged_persons (array, required)
+                    + object ()
+                        + id: `57e30ea3-16f1-4f8e-adcd-1a05e99e2d22` (string, optional)
+                        + inserted_at: `2019-05-08T15:34:00Z` (string, optional)
+                        + merge_person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional)
+                        + person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
+                        + updated_at: `2019-05-08T15:34:00Z` (string, optional)
+
 
 + Response 403 (application/json)
     + Attributes (Response_Error)
