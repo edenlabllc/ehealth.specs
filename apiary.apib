@@ -2504,7 +2504,7 @@ Method returns shortened details, to obtain full information - get Person Reques
 ### Create/Update Person Request [POST /api/person_requests]
 
 This method is used to create Person Request (as part of Person creation w/o declaration process).
-Person request is similar to declaration request, but person is created w/o declaration.
+Upon successful completion of the whole process, a person is created in MPI.
 
 If such a person is already there, then there is an error that it is necessary to update the person.
 
@@ -2518,7 +2518,9 @@ person.auth_methods | required      |     -
 
 
 
-A new authentication type `third_person` is added. If person < 14, then in authentification method type = `third_person`
+There are three methods of authentication - OTP, OFFLINE and the THIRD_PERSON. A person > 14 years  can have OTP or OFFLINE.
+A person < 14 years can only have authentication method =  third person.
+
 + Request (application/json)
 
     + Headers
@@ -2648,7 +2650,7 @@ This service will store signed copy of Person Request in Media Content Storage, 
 Signed content MUST consists of JSON object with Person Request data and printout template. Object that need to be signed is returned by `Get Person request by ID` or `Approve Person request` response, `JSON.Path: $.data`.
 Person must re-read and sign person request print form and after that `patient_signed` should be changed to TRUE.
 
-Person request can be signed either by doctor or admin (user with scope `p_request:sign`) from legal entity as in person request.
+Person request can be signed either by doctor or admin (user with scope `person_request:sign`) from legal entity as in person request.
 
 
 **Signed object example:**
@@ -2776,7 +2778,11 @@ Person request can be signed either by doctor or admin (user with scope `p_reque
 
 ### Resend Authorization method on Person Request [PATCH /api/person_requests/{id}/actions/resend_otp]
 
-Use this method to resend sms on previously created Person Request.
+This method is used when you need to re-send SMS to a person who approve creating or updating data about himself.
+
+This method can be used to send to the same number that was sent after the Create person request.
+This endpoint is used to send to person’s another authentication method after Update person request. The sms is sended by default to auth_method which has field is_primary = True.
+At the response of Update person request and Get by ID in the block urgent has the array of all person’s methods of authentication. There is the alias of the methods. In request of endpoint Resend auth method transfer alias and the type of authentication to send an SMS to it.
 
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
@@ -8389,7 +8395,7 @@ Assuming that all required business processes and validations is implemented on 
     - THIRD_PERSON
     - OFFLINE
     - NA
-+ phone_number: `+380508887700` (string, optional)
++ value: `+380508887700` (string, optional)
 + alias: `husband` (string, optional)
 
 ### `Authentication_Method_Patient_Response`
@@ -8398,7 +8404,7 @@ Assuming that all required business processes and validations is implemented on 
     - THIRD_PERSON
     - OFFLINE
     - NA
-+ phone_number: `+38093*****85` (string, optional)
++ value: `+38093*****85` (string, optional)
 + alias: `husband` (string, optional)
 
 ### `cabinet_person_response`
@@ -8737,6 +8743,7 @@ Assuming that all required business processes and validations is implemented on 
 + birth_settlement: `Вінниця` (string, required)
 + gender: MALE, FEMALE (enum[string], required)
 + email: email@example.com (string, optional)
++ `no_tax_id`: false (boolean, required)
 + tax_id: 3126509816 (string, required)
 + secret: secret (string, required)
 + documents (array, required)
