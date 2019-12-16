@@ -2508,11 +2508,13 @@ Upon successful completion of the whole process, a person is created in MPI.
 
 If such a person is already there, then there is an error that it is necessary to update the person.
 
-Also this method allows you to update the person’s data according to his id, which was previously found.
+**NOTE:** Also this method allows you to update the person’s data according to his id, which was previously found.
 A block with information about authentication methods must be transferred when the person is created. But it is unnecessary to transfer it when updating the person.
 
 This table shows which fields are required for specific action:
+
 Field               | Create        | Update
+--------------------|---------------|-----------
 person.id           |      -        | required
 person.auth_methods | required      |     -
 
