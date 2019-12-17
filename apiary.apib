@@ -5148,7 +5148,8 @@ This method allows to create unidentified person. There is one necessary field i
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (`Preperson_response`)
+        + data (object)
+            + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
 
 ### Update preperson [PATCH /api/prepersons/{id}]
 Method enables to modify only `external_id` field.
@@ -5170,43 +5171,6 @@ Method enables to modify only `external_id` field.
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Preperson_response`)
-
-### Get prepersons [GET /api/prepersons{?external_id,page,page_size}]
-Returns a list of ACTIVE prepersons has been created in legal entity user belongs to.
-
-+ Parameters
-    + external_id: `#1234-FDS-aa` (string, optional) - `Identifier from external system`
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-+ Request (application/json)
-    + Headers
-        Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-        API-key: uXhEczJ56adsfh3Ri9SUkc4en
-
-+ Response 200 (application/json)
-    + Attributes (Response_Collection_V2)
-        + data (array[`Preperson_response`])
-
-### Get preperson by ID [GET /api/prepersons/{id}]
-Returns preperson details by it's MPI identifier
-
-+ Parameters
-    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the preperson. 
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Preperson_response`)            
 
 
 ## Preperson merge request [/api/preperson_merge_requests]
