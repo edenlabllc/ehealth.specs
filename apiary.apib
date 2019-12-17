@@ -2479,6 +2479,8 @@ Service returns only person request related to the same legal entity as the user
 
 Method returns shortened details, to obtain full information - get Person Request it by it's ID.
 
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/BADDIw
+
 + Parameters
     + status: APPROVED (enum, optional)
         - NEW
@@ -2522,6 +2524,8 @@ person.auth_methods | required      |     -
 
 There are three methods of authentication - OTP, OFFLINE and the THIRD_PERSON. A person > 14 years  can have OTP or OFFLINE.
 A person < 14 years can only have authentication method =  third person.
+
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
 
 + Request (application/json)
 
@@ -2576,6 +2580,8 @@ Before approve patient's scanned documents should be uploaded to the ([Signed UR
 All links are generated for one one-page document in jpeg format. Document should be no more than 10MB.
 Clients can use signed URL's to directly access [s3 storage](https://storage.ehealth-ukraine.org/) and upload files via API.
 
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/QgAjIw
+
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
 
@@ -2616,6 +2622,8 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
 
 Use this method to reject previously created Person Request.
 
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/MYDAIw
+
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
 
@@ -2654,6 +2662,7 @@ Person must re-read and sign person request print form and after that `patient_s
 
 Person request can be signed either by doctor or admin (user with scope `person_request:sign`) from legal entity as in person request.
 
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
 
 **Signed object example:**
 ```
@@ -2787,6 +2796,8 @@ This method can be used to send to the same number that was sent after the Creat
 This endpoint is used to send to person’s another authentication method after Update person request. The sms is sended by default to auth_method which has field is_primary = True.
 At the response of Update person request and Get by ID in the block urgent has the array of all person’s methods of authentication. There is the alias of the methods. In request of endpoint Resend auth method transfer alias and the type of authentication to send an SMS to it.
 
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/N4DrJ
+
 + Parameters
     + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
 
@@ -2798,12 +2809,11 @@ At the response of Update person request and Get by ID in the block urgent has t
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
     
     + Attributes (object)
-        + `authentication_method_current` (object, optional)
-            + type: `OTP` (enum, required)
-                - OTP
-                - OFFLINE
-                - THIRD_PERSON
-            + alias: `husband` (string, optional)
+        + type: `THIRD_PERSON` (enum, optional)
+            - OTP
+            - OFFLINE
+            - THIRD_PERSON
+        + alias: `husband` (string, optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
