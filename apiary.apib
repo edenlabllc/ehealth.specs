@@ -8391,8 +8391,14 @@ Assuming that all required business processes and validations is implemented on 
     - THIRD_PERSON
     - OFFLINE
     - NA
-+ value: `+38093*****85` (string, optional)
-+ alias: `husband` (string, optional)
++ phone_number: `+38093*****85` (string, optional)
++ authentication_reference (object, optional)
+    + type (enum, required)
+        - OTP
+        - OFFLINE
+    + phone_number: `+38093*****91` (string, optional)
+    + alias: `husband` (string, required)
+
 
 ### `cabinet_person_response`
 + include `Person`
@@ -8721,37 +8727,38 @@ Assuming that all required business processes and validations is implemented on 
 + `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 
 ### `Person_info_Public`
-+ person_id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - if update person
-+ first_name: Петро (string, required)
-+ last_name: Іванов (string, required)
-+ second_name: Миколайович (string, optional)
-+ birth_date: `1991-08-19` (string, required)
-+ birth_country: `Україна` (string, required)
-+ birth_settlement: `Вінниця` (string, required)
-+ gender: MALE, FEMALE (enum[string], required)
-+ email: email@example.com (string, optional)
-+ `no_tax_id`: false (boolean, required)
-+ tax_id: 3126509816 (string, required)
-+ secret: secret (string, required)
-+ documents (array, required)
-    + include
-        + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
-        + number: АА120518 (string, required) - document issue number
-        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
-        + issued_at: `2017-02-28` (string, required) - the date when document was issued
-        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
-+ addresses (array[Address], required)
-+ phones (array[Phone], optional)
-+ `authentication_methods` (array[Authentication_Method_Patient_Request], optional)
-+ unzr: `19900101-00011` (string, optional) - the record number in the demographic register
-+ emergency_contact (object, required)
-    + include `Emergency_Contact`
-+ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
-+ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
-    - email
-    - phone    
-+ patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
-+ `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
++ person (object, required)
+    + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - if update person
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `1991-08-19` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required)
+    + email: email@example.com (string, optional)
+    + `no_tax_id`: false (boolean, required)
+    + tax_id: 3126509816 (string, required)
+    + secret: secret (string, required)
+    + documents (array, required)
+        + include
+            + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
+            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
+    + addresses (array[Address], required)
+    + phones (array[Phone], optional)
+    + `authentication_methods` (array[Authentication_Method_Patient_Request], optional)
+    + unzr: `19900101-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone    
+    + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 
 ### `Patient_short`
