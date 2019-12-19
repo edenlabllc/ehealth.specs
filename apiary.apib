@@ -2463,6 +2463,8 @@ Method is used to verify that provided in declarartion request phone number is v
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + include `Person_info_Public`
+            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke person request create service
                 - MIS
@@ -2536,6 +2538,8 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
 
     + Attributes (object)
         + include (Person_info_Public)
+        + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+        + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -2550,6 +2554,8 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
+            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + channel: `MIS` (enum, required) - channel that invoke person request create service
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Response_Current`], required)
@@ -2607,6 +2613,8 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QgAjIw
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
+            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
@@ -2646,6 +2654,8 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/MYDAIw
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
             + include `Person_info_Public`
+            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
 
@@ -2762,10 +2772,10 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
           ],
           "email": "emaill@example.com"
         }
-      ],
-      "patient_signed": true,
-      "process_disclosure_data_consent": true
+      ]
     },
+    "patient_signed": true,
+    "process_disclosure_data_consent": true
     "content": "<html><body><p>signed person data</p></body></html>"
   }
 }
@@ -8770,8 +8780,7 @@ Assuming that all required business processes and validations is implemented on 
     + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
         - email
         - phone    
-    + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
-    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+
 
 
 ### `Patient_short`
