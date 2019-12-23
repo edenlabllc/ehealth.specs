@@ -4117,7 +4117,7 @@ nhs_verified = false
 
 Method receives signed message (pkcs7) including signed content, digital signature and signer public key.
 All signature fields will be validated (including signer certificate authority).
-There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/reference/dummy.-create-legal-entity/dummy-for-legal-entity/create/update-legal-entity) that describes the latest legal entity data model and can be used as documentation.
+There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/reference/dummy-methods/dummy-for-legal-entity/create/update-legal-entity) that describes the latest legal entity data model and can be used as documentation.
 Signed content MUST consists of JSON object with Legal Entity data:
 
 ```
@@ -4280,7 +4280,7 @@ Key features and main differences from V1:
 
 * *added EDR integration in order to validate and enrich legal entity data*
 
-There is a [**dummy method Create/Update legal entity V2**](https://uaehealthapi.docs.apiary.io/#reference/dummy.-create-legal-entity/dummy-for-legal-entity/create/update-legal-entity-v2) that describes the latest legal entity data model and can be used as documentation.
+There is a [**dummy method Create/Update legal entity V2**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-legal-entity/create/update-legal-entity-v2) that describes the latest legal entity data model and can be used as documentation.
 
 + Request (application/json)
 
@@ -5241,7 +5241,7 @@ Serves for receiving approval from person on action of merge with preperson. Als
             + `master_person` (`Person_info_Public`, required)
                 + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
             + `merge_person` (`Preperson_base`, required)
-                + person_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+                + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
             + content: `HTML` (string, required) - Generated printout form
             + status: APPROVED (string, required) - `status of the approved merge request`
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -5280,7 +5280,7 @@ Signed content MUST consists of JSON object with merge request data and printout
 Person must re-read and sign merge request print form and after that `patient_signed` should be changed to TRUE.
 
 Preperson merge request can be signed either by specialist or receptionist (user with scope `preperson_merge_request:write`) from legal entity as in preperson merge request.
-There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy.-create-legal-entity) that describes the latest merge request data model for sign and can be used as documentation.
+There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods) that describes the latest merge request data model for sign and can be used as documentation.
 
 + Parameters
     + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
@@ -5381,7 +5381,7 @@ Method returns merge request details by it's ID. Depending on merge request stat
             + `master_person` (`Person_info_Public`, required)
                 + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
             + `merge_person` (`Preperson_base`, required)
-                + person_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+                + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
             + content: `HTML` (string, required) - Generated printout form
             + status: APPROVED (string, required) - `status of the approved merge request`
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
@@ -6624,7 +6624,7 @@ This method is used to abtain list of events with filters.
     + Attributes (`Response_Collection_V2`)
          + data (array[`Get_events`])
 
-# Group Dummy methods.
+# Group Dummy methods
 
 ## Dummy for legal entity [/dummy/legal_entities]
 
@@ -6737,7 +6737,7 @@ This method is used to abtain list of events with filters.
         + `master_person` (`Person_info_Public`, required)
             + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
         + `merge_person` (`Preperson_base`, required)
-            + person_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+            + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
         + content: `HTML` (string, required) - Generated printout form
         + status: APPROVED (string, required) - `status of the approved merge request`
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
