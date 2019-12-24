@@ -5167,7 +5167,7 @@ Immutable parameters:
 ## Preperson [/api/prepersons]
 
 ### Create preperson [POST]
-This method allows to create unidentified person. There is one necessary field in payload - `external_id` which serves as identifier of unidentified person in external system. Preperson creates without using digital sign.
+This method allows to create unidentified person. There is one necessary field in payload - `external_id` which serves as identifier of unidentified person in external system. Preperson has been created without using digital sign.
 
 + Request (application/json)
 
@@ -5178,16 +5178,18 @@ This method allows to create unidentified person. There is one necessary field i
     
     + Attributes (object)
         + include `Preperson_base`
+        + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
         
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 201 (number)
         + data (object)
-            + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
+            + include `Preperson_response`
+            
 
 ### Update preperson [PATCH /api/prepersons/{id}]
-Method enables to modify only `external_id` field.
+Method enables to modify all the preperson fields.
 
 + Parameters
     + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the preperson. 
@@ -5200,12 +5202,36 @@ Method enables to modify only `external_id` field.
             API-key: uXhEczJ56adsfh3Ri9SUkc4en
     
     + Attributes (object)
-        + external_id: `#1234-FDS-aa` (string, required) - `Identifier from external system`
+        + include `Preperson_base`
+        + external_id: `#1234-FDS-ab` (string, optional) - `Identifier from external system`
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
+        + data (object)
+            + include `Preperson_response`
+            
+
+### Get preperson by ID [GET /api/prepersons/{id}]
+Returns preperson details by it's MPI identifier
+
++ Parameters
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the preperson. 
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Preperson_response`)     
+        
 
 
 ## Merge request [/api/merge_requests]
@@ -5253,11 +5279,12 @@ Serves for receiving approval from person on action of merge with preperson. Als
             + code: 200 (number)
         + data (object)
             + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
-            + `master_person` (`Person_info_Public`, required)
-                + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
-            + `merge_person` (`Preperson_base`, required)
+            + `master_person` (`Person_info_Public`, required) - `Person data`
+            + `merge_person` (`Preperson_base`, required) - `Preperson data`
                 + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+                + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
             + content: `HTML` (string, required) - Generated printout form
+            + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
             + status: APPROVED (string, required) - `status of the approved merge request`
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -5342,7 +5369,7 @@ Use this method to resend sms on previously created merge request.
         + data (OTP)
 
 ### Get merge requests [GET]
-Method returns a list of merge requests. Service returns only merge requests related to the same legal entity as the user.
+Method returns a list of merge requests. Service returns only merge requests related to the same legal entity as the user. To obtain more detailed information about merge request use [**Get merge request by ID**](https://uaehealthapi.docs.apiary.io/#reference/public.-medical-service-provider-integration-layer/merge-request/get-merge-request-by-id). Note that person and preperson data of SIGNED merge request avaliable limited period of time (depends on schedule of [Auto cleaning person data process](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/624328717/Auto+cleaning+of+person+data+from+merge+requests))
 
 + Parameters
     + status: NEW (enum, optional) - `status of the merge request`
@@ -5365,8 +5392,9 @@ Method returns a list of merge requests. Service returns only merge requests rel
     + Attributes (Response_Collection_V2)
         + data (array[`Merge_request_response`])
 
+
 ### Get merge request by ID [GET /api/merge_requests/{id}]
-Method returns merge request details by it's ID. Depending on merge request status different dataset returned in response: if status is NEW, REJECTED or EXPIRED - short dataset returned (w/o person and preperson data), if status is APPROVED or SIGNED - extended dataset returned (with person and preperson data)
+Method returns merge request details by it's ID. Depending on merge request status different data returned in response: if status is NEW, REJECTED or EXPIRED - short data returned, person and preperson data fields will have null. If status is APPROVED or SIGNED - person and preperson data returned.
 
 + Parameters
     + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
@@ -5381,23 +5409,13 @@ Method returns merge request details by it's ID. Depending on merge request stat
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_response`)
-            + status: NEW (string, required) - `status of the merge request`
-        + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required) - `Current authentication method of the master person`
-            + `authentication_methods` (array[`Authentication_Method_Patient_Response`], required) - `All active authentication methods of master person`
-            + documents (array[`media_content`], optional) - `Documents of the master person`
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
         + data (object)
             + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
-            + `master_person` (`Person_info_Public`, required)
-                + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
-            + `merge_person` (`Preperson_base`, required)
+            + `master_person` (`Person_info_Public`, required) - `Person data`
+            + `merge_person` (`Preperson_base`, required) - `Preperson data`
                 + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
             + content: `HTML` (string, required) - Generated printout form
+            + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
             + status: APPROVED (string, required) - `status of the approved merge request`
             + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
@@ -6735,33 +6753,38 @@ This method is used to abtain list of events with filters.
             + employee_request_id: `d098aee7-5ab3-4a24-a6ba-811f9cf94c6d` - Employee request identifier
 
 ## Dummy for person request [/dummy/person_requests]
-### Sign person request [PATCH /dummy/person_requests/{id}/actions/sign]
+
+### Sign merge request [PATCH /dummy/merge_requests/{id}/actions/sign]
+
 
 + Parameters
-    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
 
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            api-key: uXhEczJ56adsfh3Ri9SUkc4en
-            msp_drfo: 2534157686
-            
 
     + Attributes (object)
-        + status: APPROVED (string, required)
-        + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-        + person (`Person_info_Public`, required)
-        + patient_signed: true (boolean, required) - Факт подписания заявки на декларацию.
-        + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
-        + content: `<html><body><p>signed person data</p></body></html>` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
-        + channel: `MIS` (enum, required) - channel that invoke patient create service
-            
+        + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
+        + `master_person` (`Person_info_Public`, required) - `Person data`
+            + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
+        + `merge_person` (`Preperson_base`, required) - `Preperson data`
+            + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+        + content: `HTML` (string, required) - Generated printout form
+        + status: APPROVED (string, required) - `status of the approved merge request`
+        + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
+        + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
+        + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
-        + data (`Patient_short`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Merge_request_response`)
+            + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
 
 
 ## Dummy for merge request [/dummy/merge_requests]
@@ -11563,21 +11586,7 @@ Assuming that all required business processes and validations is implemented on 
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
-## `Preperson`
-### `Preperson_base`
-+ external_id: `#1234-FDS-aa` (string, required) - `Identifier from external system`
-+ note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
-
-### `Preperson_response`
-+ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
-+ include `Preperson_base`
-+ status: ACTIVE (string, required) - `status of the preperson`
-+ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-+ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
-+ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-+ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
-
-## `Merge request`
+## Merge request
 ### `Merge_request_base`
 + master_person_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `Identifier in MPI of the master person`
 + merge_person_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - `Person identifier in MPI which will be merged to master person \(preperson\)`
@@ -11586,6 +11595,29 @@ Assuming that all required business processes and validations is implemented on 
 + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
 + include `Merge_request_base`
 + status: NEW (string, required) - `status of the new merge request`
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+## `Preperson`
+### `Preperson_base`
++ external_id: `#1234-FDS-aa` (string, required) - `Identifier from external system`
++ first_name: Петро (string, optional)
++ last_name: Іванов (string, optional)
++ second_name: Миколайович (string, optional)
++ birth_date: `1980-01-01` (string, optional)
++ emergency_contact (object, optional)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this preperson is disabled, underage, etc.
+
+### `Preperson_response`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
++ include `Preperson_base`
++ note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
++ status: ACTIVE (enum, required) - `status of the preperson`
+    - ACTIVE
+    - INACTIVE
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
