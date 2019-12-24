@@ -5254,9 +5254,9 @@ Method creates request on merge preperson to person. Employee can merge any prep
             + code: 201 (number)
         + data (`Merge_request_response`)
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method`], required)
-            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
-            + documents (array[`media_content`], optional)
+            + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
+            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required) - `All active authentication methods of master person`
+            + documents (array[`media_content`], optional) - `Documents of the master person`
 
 ### Approve merge request [PATCH /api/merge_requests/{id}/actions/approve]
 Serves for receiving approval from person on action of merge with preperson. Also return a printout form of preperson merge request.
@@ -5420,9 +5420,9 @@ Method returns merge request details by it's ID. Depending on merge request stat
             + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method`], required)
-            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
-            + documents (array[`media_content`], optional)
+            + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
+            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required) - `All active authentication methods of master person`
+            + documents (array[`media_content`], optional) - `Documents of the master person`
             
 
 # Group Public. Medical Programs
@@ -6753,6 +6753,35 @@ This method is used to abtain list of events with filters.
 
 ## Dummy for person request [/dummy/person_requests]
 
+### Sign person request [PATCH /dummy/person_requests/{id}/actions/sign]
+
+
++ Parameters
+   + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+   
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            msp_drfo: 2534157686
+
+    + Attributes (object)
+        + status: APPROVED (string, required)
+        + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+        + person (`Person_info_Public`, required)
+        + patient_signed: true (boolean, required) - Факт подписания заявки на декларацию.
+        + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+        + content: `<html><body><p>signed person data</p></body></html>` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+        + channel: `MIS` (enum, required) - channel that invoke patient create service
+        
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Patient_short`)
+
+## Dummy for merge request [/dummy/merge_requests]
+
 ### Sign merge request [PATCH /dummy/merge_requests/{id}/actions/sign]
 
 
@@ -6764,48 +6793,16 @@ This method is used to abtain list of events with filters.
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
         + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
         + `master_person` (`Person_info_Public`, required) - `Person data`
-            + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
         + `merge_person` (`Preperson_base`, required) - `Preperson data`
             + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+            + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
         + content: `HTML` (string, required) - Generated printout form
-        + status: APPROVED (string, required) - `status of the approved merge request`
-        + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-        + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
-        + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
-        + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
-
-+ Response 200 (application/json)
-    + Attributes (Response__Process_OK)
-        + meta (Response__Meta)
-            + code: 200 (number)
-        + data (`Merge_request_response`)
-            + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
-
-
-## Dummy for merge request [/dummy/merge_requests]
-### Sign merge request [PATCH /dummy/merge_requests/{id}/actions/sign]
-
-
-+ Parameters
-    + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-
-    + Attributes (object)
-        + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
-        + `master_person` (`Person_info_Public`, required)
-            + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
-        + `merge_person` (`Preperson_base`, required)
-            + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
-        + content: `HTML` (string, required) - Generated printout form
+        + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
         + status: APPROVED (string, required) - `status of the approved merge request`
         + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
         + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
