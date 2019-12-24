@@ -5254,9 +5254,9 @@ Method creates request on merge preperson to person. Employee can merge any prep
             + code: 201 (number)
         + data (`Merge_request_response`)
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required) - `Current authentication method of the master person`
-            + `authentication_methods` (array[`Authentication_Method_Patient_Response`], required) - `All active authentication methods of master person`
-            + documents (array[`media_content`], optional) - `Documents of the master person`
+            + `authentication_method_current` (array[`Authentication_Method`], required)
+            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
+            + documents (array[`media_content`], optional)
 
 ### Approve merge request [PATCH /api/merge_requests/{id}/actions/approve]
 Serves for receiving approval from person on action of merge with preperson. Also return a printout form of preperson merge request.
@@ -5290,10 +5290,8 @@ Serves for receiving approval from person on action of merge with preperson. Als
             + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
             + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
-        + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required) - `Current authentication method of the master person`
-            + documents (array[`media_content`], optional) - `Documents of the master person`
 
+        
 ### Reject merge request [PATCH /api/merge_requests/{id}/actions/reject]
 This method gives opportunity to reject and close preperson merge request by hand.
 
@@ -5422,9 +5420,10 @@ Method returns merge request details by it's ID. Depending on merge request stat
             + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Response`], required) - `Current authentication method of the master person`
-            + documents (array[`media_content`], optional) - `Documents of the master person`
-
+            + `authentication_method_current` (array[`Authentication_Method`], required)
+            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
+            + documents (array[`media_content`], optional)
+            
 
 # Group Public. Medical Programs
 
