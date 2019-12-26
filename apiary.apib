@@ -8391,7 +8391,7 @@ Assuming that all required business processes and validations is implemented on 
     - OTP
     - OFFLINE
     - NA
-+ phone_number: `+380508887700` (string, optional)
++ phone_number: `+38093*****85` (string, optional)
 
 ### `Authentication_Method_Patient_Request`
 + type (enum, required)
@@ -8790,17 +8790,12 @@ Assuming that all required business processes and validations is implemented on 
 
 
 ### `Patient_short`
-+ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
-+ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
-+ status: active (enum, optional)
-    - active
-    - pending_verification
-    - terminated
-+ `person_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Id створеної персони
++ updated_at: `2017-03-02T00:00:00.000Z` (string, required)
++ status: SIGNED (string, optional)
++ id: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required) - request id
 + inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
-+ is_active: true (boolean, required)
-+ reason: `manual_employee` (string, optional)
-+ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
 
 ### `Patient_Request_Short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
