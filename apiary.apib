@@ -2439,93 +2439,24 @@ Method is used to verify that provided in declarartion request phone number is v
 ## Person Requests [/api/person_requests]
 [Person Request]() is a life-cycle entity that is used to create person WITHOUT [Declarations]().
 
-### Get Person Request by ID [GET /api/person_requests/{id}]
-
-+ Parameters
-    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - request identifier
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            api-key: uXhEczJ56adsfh3Ri9SUkc4en
-
-+ Response 200 (application/json)
-    + Attributes (Response_OK)
-        + meta (Response__Meta)
-            + code: 201 (number)
-        + data (object)
-            + status: SIGNED (enum, optional)
-                - NEW
-                - APPROVED
-                - SIGNED
-                - CANCELLED
-                - REJECTED
-            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-            + person (`Person_info_Public`, required)
-            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
-            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
-            + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
-            + channel: `MIS` (enum, required) - channel that invoke person request create service
-                - MIS
-        + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method`], required)
-            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
-            + documents (array[`media_content`], optional)
-
-### Get Person Requests List [GET /api/person_requests{?legal_entity_id,status,page,page_size}]
-
-Use this method to obrain list of Person Requests. 
-If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
-
-Service returns only person request related to the same legal entity as the user.
-
-Method returns shortened details, to obtain full information - get Person Request it by it's ID.
-
-More detailed information - https://e-health-ua.atlassian.net/wiki/x/BADDIw
-
-+ Parameters
-    + status: APPROVED (enum, optional)
-        - NEW
-        - APPROVED
-        - SIGNED
-        - REJECTED
-        - CANCELLED
-    + page: 2 (number, optional) - Page number.
-    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
-
-
-+ Request (application/json)
-
-    + Headers
-
-            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            api-key: uXhEczJ56adsfh3Ri9SUkc4en
-
-+ Response 200 (application/json)
-    + Attributes (`Response_Collection_V2`)
-        + data (array[`Patient_Request_Short`])
-
 
 ### Create/Update Person Request [POST /api/person_requests]
 
 This method is used to create Person Request (as part of Person creation w/o declaration process).
 Upon successful completion of the whole process, a person is created in MPI.
 
-If such a person is already there, then there is an error that it is necessary to update the person.
 
 **NOTE:** Also this method allows you to update the person’s data according to his id, which was previously found.
-A block with information about authentication methods must be transferred when the person is created. But it is unnecessary to transfer it when updating the person.
+A block with information about authentication methods must be transferred when the person is created. But it is prohibited to transfer it when updating the person.
 
 This table shows which fields are required for specific action:
 
-Field               | Create        | Update
---------------------|---------------|-----------
-person.id           |      -        | required
-person.auth_methods | required      |     -
+Actions   | person.id     | person.authentication_methods
+----------|---------------|--------------------
+**Create**    |      -        | required
+**Update**    | required      |     -
 
-
+      
 
 There are three methods of authentication - OTP, OFFLINE and the THIRD_PERSON. A person > 14 years  can have OTP or OFFLINE.
 A person < 14 years can only have authentication method =  third person.
@@ -2812,6 +2743,75 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
     + Attributes (Response__Process_OK)
         + data (`Patient_short`)
         
+
+### Get Person Request by ID [GET /api/person_requests/{id}]
+
++ Parameters
+    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + status: SIGNED (enum, optional)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+                - REJECTED
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+            + person (`Person_info_Public`, required)
+            + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+            + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+            + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + channel: `MIS` (enum, required) - channel that invoke person request create service
+                - MIS
+        + urgent (object, required)
+            + `authentication_method_current` (array[`Authentication_Method`], required)
+            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)
+            + documents (array[`media_content`], optional)
+
+### Get Person Requests List [GET /api/person_requests{?legal_entity_id,status,page,page_size}]
+
+Use this method to obrain list of Person Requests. 
+If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
+
+Service returns only person request related to the same legal entity as the user.
+
+Method returns shortened details, to obtain full information - get Person Request it by it's ID.
+
+More detailed information - https://e-health-ua.atlassian.net/wiki/x/BADDIw
+
++ Parameters
+    + status: APPROVED (enum, optional)
+        - NEW
+        - APPROVED
+        - SIGNED
+        - REJECTED
+        - CANCELLED
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Patient_Request_Short`])
+
 
 ### Resend Authorization method on Person Request [PATCH /api/person_requests/{id}/actions/resend_otp]
 
