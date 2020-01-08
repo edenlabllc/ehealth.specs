@@ -3954,7 +3954,7 @@ It is possible to add another person as an additional authentication method (typ
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + `auth_method_request` (Append_authentication_methods_request)
+        + include (`Append_authentication_methods_request`)
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -8480,9 +8480,26 @@ Assuming that all required business processes and validations is implemented on 
 + `process_disclosure_data_consent`: true (boolean, required)
 
 ### `Append_authentication_methods_request`
-+ type: `THIRD_PERSON` (enum, required)
-+ value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, required)
-+ alias: `husband` (string, required)
+- One of
+    + object()
+        + action: delete (string, required)
+        + authentication_method(object)
+            + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
+    + object()
+        + action: insert (string, required)
+        + authentication_method(object)
+            + type(enum, required)
+                - THIRD_PERSON
+                - OTP
+                - OFFLINE
+            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, required)
+            + alias: `husband` (string, required)
+    + object()
+        + action: update (string, required)
+        + authentication_method(object)
+            + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
+            + alias: `wife` (string, required)
+            + `default`: false (boolean, required)        
 
 
 ## `Merge_Candidates`
