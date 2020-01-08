@@ -3910,6 +3910,34 @@ This method allows to reset (set to **NA**) person authentication method.
             + type: `forbidden`
             + message: `Not found active declaration with person for this legal entity!` (string)
 
+### Get Person Authentication methods [GET /api/persons/{id}/authentication_methods]
+
+This method allows to find the active person's authentication methods.
+
+
++ Parameters
+    + id: `030d5c41-a945-41ac-89d1-b7c6d1c226c7` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection)
+        + data (`Person_auth_methods`) 
+        
+
++ Response 403 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta, fixed-type)
+            + code: 403 (number)
+        + error (Response__Error, fixed-type)
+            + type: `forbidden`
+            + message: `Such person not found` (string)
+
 ### Create authentication method request [PUT /api/persons/{id}/auth_method_requests]
 
 This method allow to add new authentication method for person.
@@ -8420,6 +8448,28 @@ Assuming that all required business processes and validations is implemented on 
     - NA
 + phone_number: `+380508887700` (string, optional)
 + alias: `husband` (string, optional)
+
+### `Person_auth_methods`
+- One of
+    + object()
+        + id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required)
+        + `default`: true (boolean, required)
+        + type (enum, required)
+            - OTP
+            - OFFLINE
+            - NA
+        + phone_number: `+38093*****85` (string, optional)
+    + object()
+        + id: `afd80555-6f2b-4686-a7d1-1de410446f20` (string, required)
+        + `default`: true (boolean, required)
+        + type: THIRD_PERSON
+        + alias: `husband` (string, required)
+        + authentication_reference (object, optional)
+            + type (enum, required)
+                - OTP
+                - OFFLINE
+            + phone_number: `+38093*****91` (string, optional)
+
 
 
 
