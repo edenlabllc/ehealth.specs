@@ -894,7 +894,7 @@ Available employee status transitions:
 NEW --> REJECTED (action=reject)
 NEW --> APPROVED (action=approve)
 
-Method logic described on [confluence page](https://edenlab.atlassian.net/wiki/pages/resumedraft.action?draftId=1316502&draftShareId=39ff8744-9673-48e0-ab0e-08fc80ed3190)
+Method logic described on [confluence page](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583401574/Approve+Reject+Employee+Request)
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -6248,7 +6248,7 @@ Medication Dispense - Indicates that a medication product has been dispensed for
 ### Create Medication Dispense [POST /api/medication_dispenses{?code}]
 
 This method is used to dispense medications to patient
-Full list of all validations can be found [here](https://edenlab.atlassian.net/wiki/x/-Jcz)
+Full list of all validations can be found [here](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583403856/Create+Medication+Dispense)
 
 **Important** In case medications are dispensed to patient under specific medical program, program participant id must be provided also
 
@@ -7132,7 +7132,7 @@ If contract_type is not defined in the URL it counts as a capitation contract.
 In order to create a new contract or update an existing contract, legal entity owner should create a contract request first. The contract request should be approved by both sides - Medical Service Provider(MSP) and National Health Service(NHS), and than signed by both sides as well. After that a new contract will be created or an existing contract will be updated.
 The detailed flow is described in a schema below:
 
-[Confluence: Status Chart](https://edenlab.atlassian.net/wiki/x/GIDMIg)
+[Confluence: Status Chart](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/583402826/Status+Chart)
 
 ![Contract request flow](https://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgQ29udHJhY3QgcmVxdWVzdHMKCnBhcnRpY2lwYW50IE1TUCBhcyBtc3AACg1lSGVhbHRoIGFzIGVoAAYFACkNRG9jdW1lbnQgc3RvcmFnZSBhcwADCABRDU5IUyBhcyBuaHMKCm1zcC0-AEYHOiA8PEluaXRpYWxpemUgYwCBFQ8-PgoAbwcAJwtHZW5lcmF0ZSBVUkxzABYKbXNwOiA8PFJlc3BvbnNlIHdpdGggaWQgYW5kACUFPj4AdAYAgSMHOiBVcGxvYWQgZACBPAdzAIETBgBCBVNpZ24AfBEgdXNpbmcgZGlnaXRhbCBzaWduYXR1cmUgAIFBEUNyZWF0AIE5FW5ocwCBbw1HZXQAgWQRcyBsaQAEKSBkZXRhaWxzPj4KCmFsdCBBcHByb3YAgjgSCiAgICAAbhBVcGQAgREXACUJbmhzAIFgLwBVFQCAfxggYnkgTkhTPj4KZWxzZSBEZWNsaW4AgSIcAElHAFEYPj4KZW5kIACFExIAgwwdAAkkAIMeCwCFcRAAggEcTVNQAINiKHByaW50b3UAhEsGZW4AhGYJAIMQMwCFFxAAhXoWAIMzCQCBTDQAhn4JRG93bgCHBAUAiQkFYWxseQCGVgVlZACFMhIAhxIPABgZXG4AhysIAIgABTJuZACFFAsAiG8QAIFDGQCCdQYKb3B0IFRlcm1pbgCHQBQAhlMFAIlCEAAVGgCDSQplbmQK&s=modern-blue)
 
