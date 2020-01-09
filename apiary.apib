@@ -5384,11 +5384,11 @@ Use this method to resend sms on previously created merge request.
             API-key: uXhEczJ56adsfh3Ri9SUkc4en
     
     + Attributes (object)
-        + `authentication_method_current` (object, required)
-            + type: `OTP` (enum, required)
-                - OTP
-                - THIRD_PERSON
-            + alias: `husband` (string, required)
+        + type: `THIRD_PERSON` (enum, optional)
+            - OTP
+            - OFFLINE
+            - THIRD_PERSON
+        + alias: `husband` (string, optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
