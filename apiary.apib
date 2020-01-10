@@ -3054,7 +3054,13 @@ This method method allows you to create a declaration only for an existing perso
         + data (object)
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + seed: hash (string, required)
-            + include `Declaration_Request_Public_Response_v2`
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + person_id: `1234f148-7f93-4fc2-b2ec-2d81b1966b7b` (string, required) - identifier of person
+            + scope (enum, required)
+                - family doctor
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
             + employee (Employee_Minimal, required)
             + `legal_entity` (`Medical_Service_Provider`, required)
