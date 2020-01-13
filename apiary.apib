@@ -8507,25 +8507,19 @@ Assuming that all required business processes and validations is implemented on 
 + alias: `husband` (string, optional)
 
 ### `Person_auth_methods`
-- One of
-    + object()
-        + id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required)
-        + `default`: true (boolean, required)
-        + type (enum, required)
-            - OTP
-            - OFFLINE
-            - NA
-        + phone_number: `+38093*****85` (string, optional)
-    + object()
-        + id: `afd80555-6f2b-4686-a7d1-1de410446f20` (string, required)
-        + `default`: true (boolean, required)
-        + type: THIRD_PERSON
-        + alias: `husband` (string, required)
-        + authentication_reference (object, optional)
-            + type (enum, required)
-                - OTP
-                - OFFLINE
-            + phone_number: `+38093*****91` (string, optional)
+
++ id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required)
++ `default`: true (boolean, required)
++ type (enum, required)
+    - THIRD_PERSON
+    - OTP
+    - OFFLINE
+    - NA
++ phone_number: `+38093*****85` (string, optional)
++ value: `34d4aca0-ee15-4d2d-9ab8-336e5ba1f9c7` (string, optional)
++ alias: `husband` (string, optional)
++ ended_at: `2020-01-10 18:23:34.217335` (string, optional) - ISO Datetime.
+
 
 
 
