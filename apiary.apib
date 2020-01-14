@@ -2474,6 +2474,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
         + person (Person_info_Public, required)
         + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
         + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+        + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -2486,7 +2487,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
                 - SIGNED
                 - CANCELLED
                 - REJECTED
-            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + person (`Person_info_Public`, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
@@ -2547,7 +2548,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QgAjIw
                 - SIGNED
                 - CANCELLED
                 - REJECTED
-            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
+            + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
             + person (`Person_info_Public`, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
