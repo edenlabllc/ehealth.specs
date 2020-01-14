@@ -2818,9 +2818,6 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/BADDIw
 
 This method is used when you need to re-send SMS to a person who approve creating or updating data about himself.
 
-This method can be used to send to the same number that was sent after the Create person request.
-This endpoint is used to send to person’s another authentication method after Update person request. The sms is sended by default to auth_method which has field is_primary = True.
-At the response of Update person request and Get by ID in the block urgent has the array of all person’s methods of authentication. There is the alias of the methods. In request of endpoint Resend auth method transfer alias and the type of authentication to send an SMS to it.
 
 More detailed information - https://e-health-ua.atlassian.net/wiki/x/N4DrJ
 
@@ -3994,10 +3991,11 @@ This method allows to find the active person's authentication methods.
             + type: `forbidden`
             + message: `Such person not found` (string)
 
-### Create authentication method request [PUT /api/persons/{id}/auth_method_requests]
+### Create authentication method request [POST /api/persons/{id}/authentication_method_requests]
 
-This method allow to add new authentication method for person.
-It is possible to add another person as an additional authentication method (type = `third person`) by sending third_person.id.
+This process describes adding an additional authentication method to an existing person, update authentication method and delete it.
+
+Confluence - https://e-health-ua.atlassian.net/wiki/x/FwC_J
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
@@ -4010,7 +4008,7 @@ It is possible to add another person as an additional authentication method (typ
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + include (`Append_authentication_methods_request`)
+        + include (`Authentication_methods_request`)
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -4033,11 +4031,21 @@ It is possible to add another person as an additional authentication method (typ
             + message: `Unverified phone number` (string, required)
 
 
-### Approve authentication method request [PATCH /api/persons/{id}/auth_method_requests/{request_id}/action/approve]
+### Approve authentication method request [PATCH /api/persons/{id}/authentication_method_requests/{request_id}/action/approve]
+
+Use this method to approve previously created Declaration Request.
+In case if person's or third person's authent authentication_method is OTP, request example:
+{
+  "verification_code": 7590
+}
+In case if authentication_method is OFFLINE, request body should be empty. Before approve patient's scanned documents should be uploaded to the (Signed URL's). All links are generated for one one-page document in jpeg format. Document should be no more than 10MB. 
+
+Confluence - https://e-health-ua.atlassian.net/wiki/x/G4DJJ
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
     + request_id: `1096f147-7f93-3fc6-bddc-9d71b198fb7f` (string, required) - Request identifier
+    
 
 + Request (application/json)
 
@@ -4055,9 +4063,7 @@ It is possible to add another person as an additional authentication method (typ
             + code: 201 (number)
         + data (object)
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-            + status: `APPROVED` (enum, optional) - current status on auth methods request.
-                - APPROVED
-                - SUCCESS
+            + status: `COMPLETED` (enum, optional) - current status on auth methods request.
             + channel: `MIS` (enum, required) - channel that invoke add auth methods
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
@@ -4071,6 +4077,25 @@ It is possible to add another person as an additional authentication method (typ
             + type: request_malformed (string, required)
             + message: `This doctor has X declarations and could not sign more` (string, required)
 
+### Resend Authorization OTP on Authentication method Request [POST /api/authentication_method_requests/{id}/actions/resend_otp]
+
+This method is used when you need to re-send SMS to a person or third person
+
+
++ Parameters
+    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (OTP)
 
 ## Legal Entities [/api/legal_entities]
 
@@ -8525,7 +8550,7 @@ Assuming that all required business processes and validations is implemented on 
 + `emergency_contact`(`Emergency_Contact`)
 + `process_disclosure_data_consent`: true (boolean, required)
 
-### `Append_authentication_methods_request`
+### `Authentication_methods_request`
 - One of
     + object()
         + action: delete (string, required)
@@ -8538,14 +8563,15 @@ Assuming that all required business processes and validations is implemented on 
                 - THIRD_PERSON
                 - OTP
                 - OFFLINE
-            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, required)
-            + alias: `husband` (string, required)
+            + phone_number: `+380976549872` (string, optional)
+            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, optional)
+            + alias: `husband` (string, optional)
     + object()
         + action: update (string, required)
         + authentication_method(object)
             + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
-            + alias: `wife` (string, required)
-            + `default`: false (boolean, required)        
+            + alias: `wife` (string, optional)
+            + `default`: false (boolean, optional)        
 
 
 ## `Merge_Candidates`
