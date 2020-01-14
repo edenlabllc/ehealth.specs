@@ -5331,6 +5331,7 @@ Method creates request on merge preperson to person. Employee can merge any prep
     
     + Attributes (object)
         + include `Merge_request_base`
+        + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of master person auth method
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -5339,7 +5340,6 @@ Method creates request on merge preperson to person. Employee can merge any prep
         + data (`Merge_request_response`)
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
-            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required) - `All active authentication methods of master person`
             + documents (array[`media_content`], optional) - `Documents of the master person`
 
 ### Approve merge request [PATCH /api/merge_requests/{id}/actions/approve]
@@ -5426,25 +5426,20 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
         + data (`Merge_request_response`)
             + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
 
-### Change authorization method on merge equest [PATCH /api/merge_requests/{id}/actions/change_auth]
+### Resend Authorization OTP on merge request [PATCH /api/merge_requests/{id}/actions/resend_otp]
 
-Use this method to resend sms on previously created merge request.
+Use this method to resend sms with OTP-code on previously created merge request.
 
 + Parameters
     + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
 
 + Request (application/json)
+
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
     
-    + Attributes (object)
-        + type: `THIRD_PERSON` (enum, optional)
-            - OTP
-            - OFFLINE
-            - THIRD_PERSON
-        + alias: `husband` (string, optional)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -5505,7 +5500,6 @@ Method returns merge request details by it's ID. Depending on merge request stat
             + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
-            + `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required) - `All active authentication methods of master person`
             + documents (array[`media_content`], optional) - `Documents of the master person`
             
 
