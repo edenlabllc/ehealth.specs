@@ -3054,23 +3054,19 @@ This method method allows you to create a declaration only for an existing perso
             + seed: hash (string, required)
             + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
             + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
-            + person_id: `1234f148-7f93-4fc2-b2ec-2d81b1966b7b` (string, required) - identifier of person
-            + scope (enum, required)
-                - family doctor
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
             + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
-            + employee (Employee_Minimal, required)
-            + `legal_entity` (`Medical_Service_Provider`, required)
-                + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-            + division (`Division_Declaration`, required)
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + signed_content: `{information of request}` (string, required)
         + urgent (object, required)
             + `authentication_method_current` (object, required)
                 + type: `OTP` (enum, required)
                     - OTP
                     - OFFLINE
-                    - NA
                 + number: `+38093*****74` (string, required)
             + documents (array[`media_content`], optional)
 
@@ -3125,6 +3121,60 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + division (`Division_Details`, required)
             + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+
++ Response 422 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta)
+            + code: 422
+        + error
+            + type: request_malformed (string, required)
+            + message: `This doctor has X declarations and could not sign more` (string, required)
+
+### Approve Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/approve]
+
+Use this method to approve previously created Declaration Request.
+
+In case if authentication_method is OTP, request example:
+```
+{
+  "verification_code": 3748
+}
+```
+In case if authentication_method is OFFLINE or N/A, request body should be empty.
+Before approve patient's scanned documents should be uploaded to the ([Signed URL's](https://cloud.google.com/storage/docs/access-control/create-signed-urls-program)).
+All links are generated for one one-page document in jpeg format. Document should be no more than 10MB.
+If make declaration request via cabinet then nothing must be uploaded to URL.
+Clients can use signed URL's to directly access [s3 storage](https://storage.ehealth-ukraine.org/) and upload files via API.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
+    + Attributes (object)
+        + `verification_code`: 2836 (number, optional) - required if authentication_method is OTP
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + seed: hash (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + status: `APPROVED` (string, required)
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + signed_content: `{information of request}` (string, required)
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
