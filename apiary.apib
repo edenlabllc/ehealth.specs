@@ -4033,11 +4033,13 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/FwC_J
 
 ### Approve authentication method request [PATCH /api/persons/{id}/authentication_method_requests/{request_id}/action/approve]
 
-Use this method to approve previously created Declaration Request.
+Use this method to approve previously created Authentication method Request.
 In case if person's or third person's authent authentication_method is OTP, request example:
+
 {
   "verification_code": 7590
 }
+
 In case if authentication_method is OFFLINE, request body should be empty. Before approve patient's scanned documents should be uploaded to the (Signed URL's). All links are generated for one one-page document in jpeg format. Document should be no more than 10MB. 
 
 Confluence - https://e-health-ua.atlassian.net/wiki/x/G4DJJ
