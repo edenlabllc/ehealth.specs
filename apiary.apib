@@ -4019,7 +4019,7 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/FwC_J
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke add auth methods
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
+            + `authentication_method_current` (array[`Authentication_Method`], required)
             + documents (array[`media_content`], optional)
 
 + Response 422 (application/json)
@@ -4065,9 +4065,7 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/G4DJJ
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + status: `COMPLETED` (enum, optional) - current status on auth methods request.
             + channel: `MIS` (enum, required) - channel that invoke add auth methods
-        + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method_Patient_Request`], required)
-            + documents (array[`media_content`], optional)
+
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -8252,6 +8250,30 @@ Assuming that all required business processes and validations is implemented on 
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
+
+## Private. Media storage [/api/admin/media_storage]
+
+### Private. Generate URL to media storage [POST /api/admin/media_storage/generate_url]
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
+    + Attributes (object)
+        + action: PUT (string, required)
+            - PUT
+            - GET
+        + resource_id: `f7f817b2-3134-4625-b87d-e2d7fc8e9b90` (string, required)
+        + `resource_name`: `signed_contract` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (object)
+            + url: `https://example.com/upload_url` (string, required)
 
 # Data Structures
 ## Responses
