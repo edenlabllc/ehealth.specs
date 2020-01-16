@@ -8474,7 +8474,7 @@ Assuming that all required business processes and validations is implemented on 
 + tax_id: 3126509816 (string, optional)
 + secret: `secret` (string, required)
 + documents_person (array[Document], required)
-+ documents_relationship (array[Document], required)
++ documents_relationship (array[RelationshipDocument], required)
 + phones (array[Phone], optional)
 
 ### `Confidant_Person_v2`
@@ -8491,7 +8491,7 @@ Assuming that all required business processes and validations is implemented on 
 + tax_id: 2659719350 (string, optional)
 + secret: `secret` (string, required)
 + documents_person (array[Document], required)
-+ documents_relationship (array[Document], required)
++ documents_relationship (array[RelationshipDocument], required)
 + phones (array[Phone], optional)
 + email: emaill@example.com (string, optional)
 
@@ -9760,6 +9760,13 @@ Assuming that all required business processes and validations is implemented on 
 ### Document
 + type: PASSPORT (string, required) - `Dictionary DOCUMENT_TYPE`
 + number: АА120518 (string, required) - document issue number
++ issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
++ issued_at: `2017-02-28` (string, optional) - the date when document was issued
+
+### RelationshipDocument
++ type: PASSPORT (string, required) - `Dictionary DOCUMENT_RELATIONSHIP_TYPE`
++ number: АА120518 (string, required) - document issue number
++ expiration_date: `2017-02-28` (string, optional) - document expiration date
 + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, optional) - authority which issued the document
 + issued_at: `2017-02-28` (string, optional) - the date when document was issued
 
