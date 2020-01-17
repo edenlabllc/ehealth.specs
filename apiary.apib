@@ -5363,6 +5363,7 @@ Method enables to modify all the preperson fields except note and status.
     + Attributes (object)
         + include `Preperson_base`
         + external_id: `#1234-FDS-ab` (string, optional) - `Identifier from external system`
+        + death_date: `2018-11-11` (string, optional) - Date of death
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -11831,6 +11832,7 @@ Assuming that all required business processes and validations is implemented on 
 + status: ACTIVE (enum, required) - `status of the preperson`
     - ACTIVE
     - INACTIVE
++ death_date: `2018-11-11` (string, optional) - date of death
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
