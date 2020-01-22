@@ -2471,7 +2471,9 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (object)
-        + person (Person_info_Public, required)
+        + person (required)
+            + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+            + include (Person_info_Public, required)
         + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
         + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
         + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
@@ -2488,7 +2490,9 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
                 - CANCELLED
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-            + person (`Person_info_Public`, required)
+            + person (required)
+                + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+                + include (Person_info_Public, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + channel: `MIS` (enum, required) - channel that invoke person request create service
@@ -2549,7 +2553,9 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QgAjIw
                 - CANCELLED
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-            + person (`Person_info_Public`, required)
+            + person (required)
+                + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+                + include (Person_info_Public, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
@@ -2591,7 +2597,9 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/MYDAIw
                 - CANCELLED
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required
-            + person (`Person_info_Public`, required)
+            + person (required)
+                + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+                + include (Person_info_Public, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
@@ -2769,7 +2777,9 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
                 - CANCELLED
                 - REJECTED
             + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-            + person (`Person_info_Public`, required)
+            + person (required)
+                + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+                + include (Person_info_Public, required)
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
@@ -3467,217 +3477,18 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
 This method is used to sign Declaration Request. Method receives signed message (pkcs7) including signed content, digital signature and signer public key in `signed_content` property.
 All signature fields will be validated (including signer certificate authority).
 
-This service will store signed copy of Declaration Request in Media Content Storage, created or update MPI records and create declaration if signature is all checks is passed.
+This service will store signed copy of Declaration Request in Media Content Storage, create declaration if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with Declaration Request data and printout template. Object that need to be signed is returned by `Get Declaration request by ID` response, `JSON.Path: $.data`.
+Signed content MUST consists of JSON object with Declaration Request data from field `data_to_be_signed`. Object that need to be signed is returned by `Get Declaration request by ID` or `Approve declaration request` response, `JSON.Path: $.data.data_to_be_signed`.
 Patient must re-read and sign declaration print form and after that `patient_signed` should be changed to TRUE.
 
 Declaration request can be signed either by doctor or admin (user with scope `declaration_request:sign`) from legal entity as in declaration request.
 
 **Important**
-Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration
+Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in declarations chain or other random component that should be signed with declaration.
 
-**Signed object example:**
-```
-{
-    "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-    "start_date": "2017-03-02",
-    "end_date": "2017-03-02",
-    "person": {
-      "id": "3b1d9e46-1c47-4ce8-89f9-15658f77d784"
-      "first_name": "Петро",
-      "last_name": "Іванов",
-      "second_name": "Миколайович",
-      "birth_date": "1991-08-19",
-      "birth_country": "Україна",
-      "birth_settlement": "Вінниця",
-      "gender": "MALE",
-      "email": "email@example.com",
-      "tax_id": "3126509816",
-      "secret": "secret",
-      "documents": [
-        {
-          "type": "PASSPORT",
-          "number": "120518"
-        }
-      ],
-      "addresses": [
-        {
-          "type": "RESIDENCE",
-          "country": "UA",
-          "area": "Житомирська",
-          "region": "Бердичівський",
-          "settlement": "Київ",
-          "settlement_type": "CITY",
-          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-          "street_type": "STREET",
-          "street": "вул. Ніжинська",
-          "building": "15",
-          "apartment": "23",
-          "zip": "02090"
-        }
-      ],
-      "phones": [
-        {
-          "type": "MOBILE",
-          "number": "+380503410870"
-        }
-      ],
-      "authentication_methods": [
-        {
-          "type": "OTP",
-          "phone_number": "+380508887700"
-        }
-      ],
-      "emergency_contact": {
-        "first_name": "Петро",
-        "last_name": "Іванов",
-        "second_name": "Миколайович",
-        "phones": [
-          {
-            "type": "MOBILE",
-            "number": "+380503410870"
-          }
-        ]
-      },
-      "confidant_person": [
-        {
-          "relation_type": "PRIMARY",
-          "first_name": "Петро",
-          "last_name": "Іванов",
-          "second_name": "Миколайович",
-          "birth_date": "1991-08-19",
-          "birth_country": "Україна",
-          "birth_settlement": "Вінниця",
-          "gender": "MALE",
-          "tax_id": "3126509816",
-          "email": "confidant_person@email.com",
-          "secret": "secret",
-          "documents_person": [
-            {
-              "type": "PASSPORT",
-              "number": "120518"
-            }
-          ],
-          "documents_relationship": [
-            {
-              "type": "PASSPORT",
-              "number": "120518"
-            }
-          ],
-          "phones": [
-            {
-              "type": "MOBILE",
-              "number": "+380503410870"
-            }
-          ]
-        }
-      ],
-      "patient_signed": false,
-      "process_disclosure_data_consent": true
-    },
-    "scope": "family doctor",
-    "employee": {
-      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-      "position": "P6",
-      "party": {
-        "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-        "first_name": "Петро",
-        "last_name": "Іванов",
-        "second_name": "Миколайович",
-        "email": "email@example.com",
-        "phones": [
-          {
-            "type": "MOBILE",
-            "number": "+380503410870"
-          }
-        ]
-      }
-    },
-    "legal_entity": {
-      "name": "Клініка НоуНейм",
-      "short_name": "Ноунейм",
-      "legal_form": "140",
-      "public_name": "ЦПМСД №1",
-      "edrpou": "5432345432",
-      "licenses": [
-        {
-          "license_number": "fd123443",
-          "issued_by": "Кваліфікацйна комісія",
-          "issued_date": "2017-02-28",
-          "expiry_date": "2017-02-28",
-          "active_from_date": "2017-02-28",
-          "what_licensed": "реалізація наркотичних засобів",
-          "order_no": "K-123"
-        }
-      ],
-      "accreditation": {
-        "category": "SECOND",
-        "issued_date": "2017-02-28",
-        "expiry_date": "2017-02-28",
-        "order_no": "fd123443",
-        "order_date": "2017-02-28"
-      },
-      "addresses": [
-        {
-          "type": "RESIDENCE",
-          "country": "UA",
-          "area": "Житомирська",
-          "region": "Бердичівський",
-          "settlement": "Київ",
-          "settlement_type": "CITY",
-          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-          "street_type": "STREET",
-          "street": "вул. Ніжинська",
-          "building": "15",
-          "apartment": "23",
-          "zip": "02090"
-        }
-      ],
-      "phones": [
-        {
-          "type": "MOBILE",
-          "number": "+380503410870"
-        }
-      ],
-      "email": "email@example.com",
-      "id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b"
-    },
-    "division": {
-      "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-      "legal_entity_id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-      "name": "Бориспільське відділення Клініки Ноунейм",
-      "addresses": [
-        {
-          "type": "RESIDENCE",
-          "country": "UA",
-          "area": "Житомирська",
-          "region": "Бердичівський",
-          "settlement": "Київ",
-          "settlement_type": "CITY",
-          "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-          "street_type": "STREET",
-          "street": "вул. Ніжинська",
-          "building": "15",
-          "apartment": "23",
-          "zip": "02090"
-        }
-      ],
-      "phones": [
-        {
-          "type": "MOBILE",
-          "number": "+380503410870"
-        }
-      ],
-      "email": "email@example.com",
-      "type": "clinic",
-      "external_id": "3213213"
-    },
-    "content": "Declaration content",
-    "seed": "ghTjh409dnhHUkdi4jdh6hded"
-  }
-}
-```
+There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-declaration-request/sign-declaration-request) that describes the signed date example.
+
 
 + Parameters
     + id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, required)
@@ -3689,7 +3500,7 @@ Invoke Get Declaration Request by ID to obtain seed - Hash of previous block in 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
 
     + Attributes (object)
-        + `signed_declaration_request`: `MIIWmAYJKoZIhvcNAQcCoIIWiTCCFoUCAQExCzAJBgUrDgMCGgUAMIISuwYJKoZIhvcNAQcBoIISrASCEqh7XHJ0ZjFcYW5zaVxhbnNpY3BnMTI1Mlxjb2NvYXJ0ZjE1MDRcY29jb2FzdWJydGY4MTANCntcZm9udHRibFxmMFxmc3dpc3NcZmNoYXJzZXQwIEhlbHZldGljYTt9DQp7XGNvbG9ydGJsO1xyZWQyNTVcZ3JlZW4yNTVcYmx1ZTI1NTtccmVkNzBcZ3JlZW41M1xibHVlOTY7XHJlZDI0OVxncmVlbjI0OVxibHVlMjUxO30NCntcKlxleHBhbmRlZGNvbG9ydGJsOztcY3NzcmdiXGMzNDUxMFxjMjc4NDNcYzQ1MDk4O1xjc3NyZ2JcYzk4MDM5XGM5ODAzOVxjOTg4MjQ7fQ0KXG1hcmdsMTQ0MFxtYXJncjE0NDBcdmlld3cxMDgwMFx2aWV3aDg0MDBcdmlld2tpbmQwDQpcZGVmdGFiNzIwDQpccGFyZFxwYXJkZWZ0YWI3MjBccGFydGlnaHRlbmZhY3RvcjANCg0KXGYwXGZzMjggXGNmMiBcY2IzIFxleHBuZDBcZXhwbmR0dzBca2VybmluZzANClx7XA0KICAgImlkIjoiYjA3NWYxNDgiLFwNCiAgICJzdGFydF9kYXRlIjoiMjAxNy0wMy0wMlQxMDo0NToxNi4wMDBaIixcDQogICAiZW5kX2RhdGUiOiIyMDE3LTAzLTAyVDEwOjQ1OjE2LjAwMFoiLFwNCiAgICJwZXJzb24iOlx7XA0KICAgICAgImZpcnN0X25hbWUiOiJcdWMwXHUxMDU1IFx1MTA3NyBcdTEwOTAgXHUxMDg4IFx1MTA4NiAiLFwNCiAgICAgICJsYXN0X25hbWUiOiJcdWMwXHUxMDMwIFx1MTA3NCBcdTEwNzIgXHUxMDg1IFx1MTA4NiBcdTEwNzQgIixcDQogICAgICAic2blic Vjb25kX25hbWUiOiJcdWMwXHUxMDUyIFx1MTA4MCBcdTEwODIgXHUxMDg2IFx1MTA4MyBcdTEwNzIgXHUxMDgxIFx1MTA4NiBcdTEwNzQgXHUxMDgwIFx1MTA5NSAiLFwNCiAgICAgICJiaXJ0aF9kYXRlIjoiMTk5MS0wOC0xOVQwMDowMDowMC4wMDBaIixcDQogICAgICAiYmlydGhfcGxhY2UiOiJcdWMwXHUxMDQyIFx1MTExMCBcdTEwODUgXHUxMDg1IFx1MTA4MCBcdTEwOTQgXHUxMTAzICwgXHUxMDU5IFx1MTA4MiBcdTEwODggXHUxMDcyIFx1MTExMSBcdTEwODUgXHUxMDcyICIsXA0KICAgICAgImdlbmRlciI6Ik1BTEUiLFwNCiAgICAgICJlbWFpbCI6ImVtYWlsQGV4YW1wbGUuY29tIixcDQogICAgICAidGF4X2lkIjoiMzEyNjUwOTgxNiIsXA0KICAgICAgIm5hdGlvbmFsX2lkIjoiQ0M3MTUwOTg1MjQzIixcDQogICAgICAic2VjcmV0Ijoic2VjcmV0IixcDQogICAgICAiZG9jdW1lbnRzIjpbXA0KICAgICAgICAgXHtcDQogICAgICAgICAgICAidHlwZSI6IlBBU1NQT1JUIixcDQogICAgICAgICAgICAibnVtYmVyIjoiMTIwNTE4IixcDQogICAgICAgICAgICAiaXNzdWVfZGF0ZSI6IjIwMTUtMDQtMDdUMDA6MDA6MDAuMDAwWiIsXA0KICAgICAgICAgICAgImV4cGlyeV9kYXRlIjoiMjAxNS0wNC0wN1QwMDowMDowMC4wMDBaIixcDQogICAgICAgICAgICAiaXNzdWVkX2J5IjoiRE1TVSJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImFkZHJlc3NlcyI6W1wNCiAgICAgICAgIFx7XA0KICAgICAgICAgICAgInR5cGUiOiJSRVNJREVOQ0UiLFwNCiAgICAgICAgICAgICJjb3VudHJ5IjoiVUEiLFwNCiAgICAgICAgICAgICJhcmVhIjoiXHVjMFx1MTA0NiBcdTEwODAgXHUxMDkwIFx1MTA4NiBcdTEwODQgXHUxMDgwIFx1MTA4OCBcdTEwODkgXHUxMTAwIFx1MTA4MiBcdTEwNzIgIixcDQogICAgICAgICAgICAicmVnaW9uIjoiXHVjMFx1MTA0MSBcdTEwNzcgXHUxMDg4IFx1MTA3NiBcdTEwODAgXHUxMDk1IFx1MTExMCBcdTEwNzQgXHUxMDg5IFx1MTEwMCBcdTEwODIgXHUxMDgwIFx1MTA4MSAiLFwNCiAgICAgICAgICAgICJjaXR5IjoiXHVjMFx1MTA1MCBcdTEwODAgXHUxMTExIFx1MTA3NCAiLFwNCiAgICAgICAgICAgICJjaXR5X3R5cGUiOiJDSVRZIixcDQogICAgICAgICAgICAic3RyZWV0IjoiXHVjMFx1MTA3NCBcdTEwOTEgXHUxMDgzIC4gXHUxMDUzIFx1MTExMCBcdTEwNzggXHUxMDgwIFx1MTA4NSBcdTEwODkgXHUxMTAwIFx1MTA4MiBcdTEwNzIgIixcDQogICAgICAgICAgICAiYnVpbGRpbmciOiIxNSIsXA0KICAgICAgICAgICAgImFwYXJ0bWVudCI6IjIzIixcDQogICAgICAgICAgICAiemlwIjoiMDIwOTAiXA0KICAgICAgICAgXH1cDQogICAgICBdLFwNCiAgICAgICJwaG9uZXMiOltcDQogICAgICAgICBce1wNCiAgICAgICAgICAgICJ0eXBlIjoiTU9CSUxFIixcDQogICAgICAgICAgICAibnVtYmVyIjoiKzM4MDUwMzQxMDg3MCJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImF1dGhlbnRpY2F0aW9uX21ldGhvZHMiOltcDQogICAgICAgICBce1wNCiAgICAgICAgICAgICJ0eXBlIjoiU01TIixcDQogICAgICAgICAgICAicGhvbmVfbnVtYmVyIjoiKzM4MDUwODg4NzcwMCJcDQogICAgICAgICBcfVwNCiAgICAgIF0sXA0KICAgICAgImVtZXJnZW5jeV9jb250YWN0Ijpce1wNCiAgICAgICAgICJmaXJzdF9uYW1lIjoiXHVjMFx1MTA1NSBcdTEwNzcgXHUxMDkwIFx1MTA4OCBcdTEwODYgIixcDQogICAgICAgICAibGFzdF9uYW1lIjoiXHVjMFx1MTAzMCBcdTEwNzQgXHUxMDcyIFx1MTA4NSBcdTEwODYgXHUxMDc0ICIsXA0KICAgICAgICAgInNlY29uZF9uYW1lIjoiXHVjMFx1MTA1MiBcdTEwODAgXHUxMDgyIFx1MTA4NiBcdTEwODMgXHUxMDcyIFx1MTA4MSBcdTEwODYgXHUxMDc0IFx1MTA4MCBcdTEwOTUgIixcDQogICAgICAgICAicGhvbmVzIjpbXA0KICAgICAgICAgICAgXHtcDQogICAgICAgICAgICAgICAidHlwZSI6Ik1PQklMRSIsXA0KICAgICAgICAgICAgICAgIm51bWJlciI6IiszODA1MDM0MTA4NzAiXA0KICAgICAgICAgICAgXH1cDQogICAgICAgICBdXA0KICAgICAgXH0sXA0KICAgICAgImNvbmZpZGFudF9wZXJzb24iOlx7XA0KICAgICAgICAgInJlbGF0aW9uX3R5cGUiOiJ0cnVzdGVlIixcDQogICAgICAgICAiZmlyc3RfbmFtZSI6Ilx1YzBcdTEwNTUgXHUxMDc3IFx1MTA5MCBcdTEwODggXHUxMDg2ICIsXA0KICAgICAgICAgImxhc3RfbmFtZSI6Ilx1YzBcdTEwMzAgXHUxMDc0IFx1MTA3MiBcdTEwODUgXHUxMDg2IFx1MTA3NCAiLFwNCiAgICAgICAgICJzZWNvbmRfbmFtZSI6Ilx1YzBcdTEwNTIgXHUxMDgwIFx1MTA4MiBcdTEwODYgXHUxMDgzIFx1MTA3MiBcdTEwODEgXHUxMDg2IFx1MTA3NCBcdTEwODAgXHUxMDk1ICIsXA0KICAgICAgICAgImJpcnRoX2RhdGUiOiIxOTkxLTA4LTE5VDAwOjAwOjAwLjAwMFoiLFwNCiAgICAgICAgICJiaXJ0aF9wbGFjZSI6Ilx1YzBcdTEwNDIgXHUxMTEwIFx1MTA4NSBcdTEwODUgXHUxMDgwIFx1MTA5NCBcdTExMDMgLCBcdTEwNTkgXHUxMDgyIFx1MTA4OCBcdTEwNzIgXHUxMTExIFx1MTA4NSBcdTEwNzIgIixcDQogICAgICAgICAiZ2VuZGVyIjoiTUFMRSIsXA0KICAgICAgICAgInRheF9pZCI6IjMxMjY1MDk4MTYiLFwNCiAgICAgICAgICJkb2N1bWVudHMiOltcDQogICAgICAgICAgICBce1wNCiAgICAgICAgICAgICAgICJ0eXBlIjoiUEFTU1BPUlQiLFwNCiAgICAgICAgICAgICAgICJudW1iZXIiOiIxMjA1MTgiLFwNCiAgICAgICAgICAgICAgICJpc3N1ZV9kYXRlIjoiMjAxNS0wNC0wN1QwMDowMDowMC4wMDBaIixcDQogICAgICAgICAgICAgICAiZXhwaXJ5X2RhdGUiOiIyMDE1LTA0LTA3VDAwOjAwOjAwLjAwMFoiLFwNCiAgICAgICAgICAgICAgICJpc3N1ZWRfYnkiOiJETVNVIlwNCiAgICAgICAgICAgIFx9XA0KICAgICAgICAgXSxcDQogICAgICAgICAicGhvbmVzIjpbXA0KICAgICAgICAgICAgXHtcDQogICAgICAgICAgICAgICAidHlwZSI6Ik1PQklMRSIsXA0KICAgICAgICAgICAgICAgIm51bWJlciI6IiszODA1MDM0MTA4NzAiXA0KICAgICAgICAgICAgXH1cDQogICAgICAgICBdXA0KICAgICAgXH0sXA0KICAgICAgInJlbmV3YWxfY29uc2VudCI6dHJ1ZSxcDQogICAgICAicGF0aWVudF9zaWduZWQiOnRydWUsXA0KICAgICAgImRpc2Nsb3N1cmVfY29uc2VudCI6dHJ1ZSxcDQogICAgICAicHJvY2Vzc19kYXRhX2NvbnNlbnQiOnRydWVcDQogICBcfSxcDQogICAiZW1wbG95ZWUiOlx7XA0KICAgICAgImlkIjoiZDI5MGYxZWUtNmM1NC00YjAxLTkwZTYtZDcwMTc0OGYwODUxIixcDQogICAgICAidGl0bGUiOiJcdWMwXHUxMDgzIFx1MTExMCBcdTEwODIgXHUxMDcyIFx1MTA4OCAiLFwNCiAgICAgICJwYXJ0eSI6XHtcDQogICAgICAgICAiaWQiOiJiMDc1ZjE0OC03ZjkzLTRmYzItYjJlYy0yZDgxYjE5YTliN2IiLFwNCiAgICAgICAgICJmaXJzdF9uYW1lIjoiXHVjMFx1MTA1NSBcdTEwNzcgXHUxMDkwIFx1MTA4OCBcdTEwODYgIixcDQogICAgICAgICAibGFzdF9uYW1lIjoiXHVjMFx1MTAzMCBcdTEwNzQgXHUxMDcyIFx1MTA4NSBcdTEwODYgXHUxMDc0ICIsXA0KICAgICAgICAgInNlY29uZF9uYW1lIjoiXHVjMFx1MTA1MiBcdTEwODAgXHUxMDgyIFx1MTA4NiBcdTEwODMgXHUxMDcyIFx1MTA4MSBcdTEwODYgXHUxMDc0IFx1MTA4MCBcdTEwOTUgIlwNCiAgICAgIFx9XA0KICAgXH0sXA0KICAgIm1zcCI6XHtcDQogICAgICAiaWQiOiJkMjkwZjFlZSIsXA0KICAgICAgIm5hbWUiOiJcdWMwXHUxMDUwIFx1MTA4MyBcdTExMTAgXHUxMDg1IFx1MTExMCBcdTEwODIgXHUxMDcyICBcdTEwNDEgXHUxMDg2IFx1MTA4OCBcdTEwODAgXHUxMDg5ICIsXA0KICAgICAgInNob3J0X05hbWUiOiJcdWMwXHUxMDQxIFx1MTA4NiBcdTEwODggXHUxMDgwIFx1MTA4OSAiLFwNCiAgICAgICJ0eXBlIjoiXHVjMFx1MTA2MCBcdTEwNTQgXHUxMDU1ICIsXA0KICAgICAgImVkcnBvdSI6IjU0MzIzNDU0MzIiXA0KICAgXH0sXA0KICAgInNjb3BlIjoiZmFtaWx5IGRvY3RvciIsXA0KICAgInBsYWludGV4dF9jb250ZW50IjoiRGVjbGFyYXRpb24gY29udGVudCJcDQpcfX2gggIuMIICKjCCAZOgAwIBAgIJANj0sC/v0hWYMA0GCSqGSIb3DQEBBQUAMBkxFzAVBgNVBAMUDlBLQ1MjNyBleGFtcGxlMB4XDTE3MDMyNzE0NTczM1oXDTE3MDQyNjE0NTczM1owGTEXMBUGA1UEAxQOUEtDUyM3IGV4YW1wbGUwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMuqrxE/0txT+ZVRKU1O85a8eaaUAOkbcAIy1mMoxQ+UBwcBeXt07Oxu32+p51HSY93Pp5AlDLKE48sjSNvMbTk5vtZ6g8sqMpZxlBVqHLkXLXYBMf2rmtE4hfV6yTP5YUJEs+a9cotsPN0r5KlI9g8aSpIj9Ie8mML5Vh1taQHNAgMBAAGjejB4MB0GA1UdDgQWBBTET2SwL5UfUMKDyhuBGCA+CaflnzBJBgNVHSMEQjBAgBTET2SwL5UfUMKDyhuBGCA+Cafln6EdpBswGTEXMBUGA1UEAxQOUEtDUyM3IGV4YW1wbGWCCQDY9LAv79IVmDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAF1uOGjUb6IVS28UqZ2qLc/kd2oNU2hOEuAp1YeaKRL2OaG4bTubJO1ejoxCJNfVj0FFw5PXIgjnw87JzkAy5KLDTiotQl8eknkd1bR3nIWINemck3GeGYkR8giG3gkNxz6ky1+63ZcoJkEiS46aneDhmS6BdH0V2G/3delos8+ZMYIBgDCCAXwCAQEwJjAZMRcwFQYDVQQDFA5QS0NTIzcgZXhhbXBsZQIJANj0sC/v0hWYMAkGBSsOAwIaBQCggbEwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTcwMzI4MTE1NDEwWjAjBgkqhkiG9w0BCQQxFgQU5NSvVRVYHz5tG1GW8gXrjHSnLj8wUgYJKoZIhvcNAQkPMUUwQzAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwDQYJKoZIhvcNAQEBBQAEgYCdqnN8gGXw9OUmtxOvQQgHK5Ni/4/2WQWj7rxERh5AI6rhXs/hh3DNS5Z5mN6wO8z47SQuedbsMQ5hf6+9BbKhXD7WKeU+DtGyfa1ner5/ubz6BeVvuT98D4PrzHlqNSpe/7AirrA70QVO9kPoFSmGtBG6JjaqaCZBYbvF9InPRw==` (string, required)
+        + `signed_declaration_request`: `ewogICJpZCI6ICJiMDk5ZjE0OC03ZjkzLTRmYzItYjJlYy0yZDgxYjE5YTliN2IiLAogICJkZWNsYXJhdGlvbl9udW1iZXIiOiAiMDAwMC0xMkg0LTI0NUQiLAogICJkZWNsYXJhdGlvbl9pZCI6ICI4MzExYWI4Mi1lMzQxLTRkYTAtOGE5NS0yMzVlYzk4ODVlMjMiLAogICJzdGFydF9kYXRlIjogIjIwMTctMDMtMDIiLAogICJlbmRfZGF0ZSI6ICIyMDE3LTAzLTAyIiwKICAiY29udGVudCI6ICJEZWNsYXJhdGlvbiBjb250ZW50IiwKICAiY2hhbm5lbCI6ICJNSVMiLAogICJwZXJzb24iOiB7CiAgICAiaWQiOiAiNWZiNTdhNWQtMTQ1Ny00MzBlLTk2NzgtYzgxY2VjNzI3NzlmIiwKICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgImxhc3RfbmFtZSI6ICLQhtCy0LDQvdC+0LIiLAogICAgInNlY29uZF9uYW1lIjogItCc0LjQutC+0LvQsNC50L7QstC40YciLAogICAgImJpcnRoX2RhdGUiOiAiMjAwOS0wNy0wNSIsCiAgICAiYmlydGhfY291bnRyeSI6ICLQo9C60YDQsNGX0L3QsCIsCiAgICAiYmlydGhfc2V0dGxlbWVudCI6ICLQktGW0L3QvdC40YbRjyIsCiAgICAiZ2VuZGVyIjogIk1BTEUiLAogICAgImVtYWlsIjogImVtYWlsQGV4YW1wbGUuY29tIiwKICAgICJub190YXhfaWQiOiBmYWxzZSwKICAgICJ0YXhfaWQiOiAiMzk5OTg2OTM5NCIsCiAgICAic2VjcmV0IjogInNlY3JldCIsCiAgICAiZG9jdW1lbnRzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiQklSVEhfQ0VSVElGSUNBVEUiLAogICAgICAgICJudW1iZXIiOiAi0JDQkDEyMDUxOCIsCiAgICAgICAgImlzc3VlZF9ieSI6ICLQoNC+0LrQuNGC0L3Rj9C90YHRjNC60LjQvCDQoNCSINCT0KMg0JzQktChINCa0LjRl9Cy0YHRjNC60L7RlyDQvtCx0LvQsNGB0YLRliIsCiAgICAgICAgImlzc3VlZF9hdCI6ICIyMDE3LTAyLTI4IiwKICAgICAgICAiZXhwaXJhdGlvbl9kYXRlIjogIjIwMjctMDItMjgiCiAgICAgIH0KICAgIF0sCiAgICAiYWRkcmVzc2VzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiUkVTSURFTkNFIiwKICAgICAgICAiY291bnRyeSI6ICJVQSIsCiAgICAgICAgImFyZWEiOiAi0JbQuNGC0L7QvNC40YDRgdGM0LrQsCIsCiAgICAgICAgInJlZ2lvbiI6ICLQkdC10YDQtNC40YfRltCy0YHRjNC60LjQuSIsCiAgICAgICAgInNldHRsZW1lbnQiOiAi0JrQuNGX0LIiLAogICAgICAgICJzZXR0bGVtZW50X3R5cGUiOiAiQ0lUWSIsCiAgICAgICAgInNldHRsZW1lbnRfaWQiOiAiYjA3NWYxNDgiLAogICAgICAgICJzdHJlZXRfdHlwZSI6ICJTVFJFRVQiLAogICAgICAgICJzdHJlZXQiOiAi0LLRg9C7LiDQndGW0LbQuNC90YHRjNC60LAiLAogICAgICAgICJidWlsZGluZyI6ICIxNSIsCiAgICAgICAgImFwYXJ0bWVudCI6ICIyMyIsCiAgICAgICAgInppcCI6ICIwMjA5MCIKICAgICAgfQogICAgXSwKICAgICJwaG9uZXMiOiBbCiAgICAgIHsKICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICJudW1iZXIiOiAiKzM4MDUwMzQxMDg3MCIKICAgICAgfQogICAgXSwKICAgICJhdXRoZW50aWNhdGlvbl9tZXRob2RzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiVEhJUkRfUEVSU09OIiwKICAgICAgICAidmFsdWUiOiAiKzM4MDUwODg4NzcwMCIsCiAgICAgICAgImFsaWFzIjogImh1c2JhbmQiCiAgICAgIH0KICAgIF0sCiAgICAidW56ciI6ICIyMDA5MDcwNS0wMDAxMSIsCiAgICAiZW1lcmdlbmN5X2NvbnRhY3QiOiB7CiAgICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgICAibGFzdF9uYW1lIjogItCG0LLQsNC90L7QsiIsCiAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgInBob25lcyI6IFsKICAgICAgICB7CiAgICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgICJjb25maWRhbnRfcGVyc29uIjogWwogICAgICB7CiAgICAgICAgInJlbGF0aW9uX3R5cGUiOiAiUFJJTUFSWSIsCiAgICAgICAgImZpcnN0X25hbWUiOiAi0J/QtdGC0YDQviIsCiAgICAgICAgImxhc3RfbmFtZSI6ICLQhtCy0LDQvdC+0LIiLAogICAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgICAiYmlydGhfZGF0ZSI6ICIxOTcyLTEwLTI2IiwKICAgICAgICAiYmlydGhfY291bnRyeSI6ICLQo9C60YDQsNGX0L3QsCIsCiAgICAgICAgImJpcnRoX3NldHRsZW1lbnQiOiAi0JLRltC90L3QuNGG0Y8iLAogICAgICAgICJnZW5kZXIiOiAiTUFMRSIsCiAgICAgICAgInRheF9pZCI6ICIyNjU5NzE5MzUwIiwKICAgICAgICAic2VjcmV0IjogInNlY3JldCIsCiAgICAgICAgInVuenIiOiAiMTk5MDAxMDEtMDAwOTkiLAogICAgICAgICJwcmVmZXJyZWRfd2F5X2NvbW11bmljYXRpb24iOiAiZW1haWwiLAogICAgICAgICJkb2N1bWVudHNfcGVyc29uIjogWwogICAgICAgICAgewogICAgICAgICAgICAidHlwZSI6ICJQQVNTUE9SVCIsCiAgICAgICAgICAgICJudW1iZXIiOiAi0JDQkDEyMDUxOCIsCiAgICAgICAgICAgICJleHBpcmF0aW9uX2RhdGUiOiAiMjAyMS0wMi0yOCIsCiAgICAgICAgICAgICJpc3N1ZWRfYnkiOiAi0KDQvtC60LjRgtC90Y/QvdGB0YzQutC40Lwg0KDQkiDQk9CjINCc0JLQoSDQmtC40ZfQstGB0YzQutC+0Zcg0L7QsdC70LDRgdGC0ZYiLAogICAgICAgICAgICAiaXNzdWVkX2F0IjogIjIwMTctMDItMjgiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAiZG9jdW1lbnRzX3JlbGF0aW9uc2hpcCI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAiQklSVEhfQ0VSVElGSUNBVEUiLAogICAgICAgICAgICAibnVtYmVyIjogItCQ0JAxMjA1MTgiLAogICAgICAgICAgICAiaXNzdWVkX2J5IjogItCg0L7QutC40YLQvdGP0L3RgdGM0LrQuNC8INCg0JIg0JPQoyDQnNCS0KEg0JrQuNGX0LLRgdGM0LrQvtGXINC+0LHQu9Cw0YHRgtGWIiwKICAgICAgICAgICAgImlzc3VlZF9hdCI6ICIyMDE3LTAyLTI4IgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInBob25lcyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgImVtYWlsIjogImVtYWlsbEBleGFtcGxlLmNvbSIKICAgICAgfQogICAgXSwKICAgICJwcmVmZXJyZWRfd2F5X2NvbW11bmljYXRpb24iOiAiZW1haWwiLAogICAgInBhdGllbnRfc2lnbmVkIjogdHJ1ZSwKICAgICJwcm9jZXNzX2Rpc2Nsb3N1cmVfZGF0YV9jb25zZW50IjogdHJ1ZQogIH0sCiAgImVtcGxveWVlIjogewogICAgImlkIjogImQyOTBmMWVlLTZjNTQtNGIwMS05MGU2LWQ3MDE3NDhmMDg1MSIsCiAgICAicG9zaXRpb24iOiAiUDYiLAogICAgInBhcnR5IjogewogICAgICAiaWQiOiAiYjA3NWYxNDgtN2Y5My00ZmMyLWIyZWMtMmQ4MWIxOWE5YjdiIiwKICAgICAgIm5vX3RheF9pZCI6IHRydWUsCiAgICAgICJmaXJzdF9uYW1lIjogItCf0LXRgtGA0L4iLAogICAgICAibGFzdF9uYW1lIjogItCG0LLQsNC90L7QsiIsCiAgICAgICJzZWNvbmRfbmFtZSI6ICLQnNC40LrQvtC70LDQudC+0LLQuNGHIiwKICAgICAgImVtYWlsIjogImVtYWlsQGV4YW1wbGUuY29tIiwKICAgICAgInBob25lcyI6IFsKICAgICAgICB7CiAgICAgICAgICAidHlwZSI6ICJNT0JJTEUiLAogICAgICAgICAgIm51bWJlciI6ICIrMzgwNTAzNDEwODcwIgogICAgICAgIH0KICAgICAgXQogICAgfQogIH0sCiAgImxlZ2FsX2VudGl0eSI6IHsKICAgICJuYW1lIjogItCa0LvRltC90ZbQutCwINCd0L7Rg9C90LXQudC8IiwKICAgICJzaG9ydF9uYW1lIjogItCd0L7Rg9C90LXQudC8IiwKICAgICJsZWdhbF9mb3JtIjogIjE0MCIsCiAgICAicHVibGljX25hbWUiOiAi0KbQn9Cc0KHQlCDihJYxIiwKICAgICJlZHJwb3UiOiAiNTQzMjM0NTQzMiIsCiAgICAibGljZW5zZXMiOiBbCiAgICAgIHsKICAgICAgICAibGljZW5zZV9udW1iZXIiOiAiZmQxMjM0NDMiLAogICAgICAgICJpc3N1ZWRfYnkiOiAi0JrQstCw0LvRltGE0ZbQutCw0YbQudC90LAg0LrQvtC80ZbRgdGW0Y8iLAogICAgICAgICJpc3N1ZWRfZGF0ZSI6ICIyMDE3LTAyLTI4IiwKICAgICAgICAiZXhwaXJ5X2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICAgImFjdGl2ZV9mcm9tX2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICAgIndoYXRfbGljZW5zZWQiOiAi0YDQtdCw0LvRltC30LDRhtGW0Y8g0L3QsNGA0LrQvtGC0LjRh9C90LjRhSDQt9Cw0YHQvtCx0ZbQsiIsCiAgICAgICAgIm9yZGVyX25vIjogItCS0JA0MzIzNCIKICAgICAgfQogICAgXSwKICAgICJhY2NyZWRpdGF0aW9uIjogewogICAgICAiY2F0ZWdvcnkiOiAiU0VDT05EIiwKICAgICAgImlzc3VlZF9kYXRlIjogIjIwMTctMDItMjgiLAogICAgICAiZXhwaXJ5X2RhdGUiOiAiMjAxNy0wMi0yOCIsCiAgICAgICJvcmRlcl9ubyI6ICJmZDEyMzQ0MyIsCiAgICAgICJvcmRlcl9kYXRlIjogIjIwMTctMDItMjgiCiAgICB9LAogICAgImFkZHJlc3NlcyI6IFsKICAgICAgewogICAgICAgICJ0eXBlIjogIlJFU0lERU5DRSIsCiAgICAgICAgImNvdW50cnkiOiAiVUEiLAogICAgICAgICJhcmVhIjogItCW0LjRgtC+0LzQuNGA0YHRjNC60LAiLAogICAgICAgICJyZWdpb24iOiAi0JHQtdGA0LTQuNGH0ZbQstGB0YzQutC40LkiLAogICAgICAgICJzZXR0bGVtZW50IjogItCa0LjRl9CyIiwKICAgICAgICAic2V0dGxlbWVudF90eXBlIjogIkNJVFkiLAogICAgICAgICJzZXR0bGVtZW50X2lkIjogImIwNzVmMTQ4IiwKICAgICAgICAic3RyZWV0X3R5cGUiOiAiU1RSRUVUIiwKICAgICAgICAic3RyZWV0IjogItCy0YPQuy4g0J3RltC20LjQvdGB0YzQutCwIiwKICAgICAgICAiYnVpbGRpbmciOiAiMTUiLAogICAgICAgICJhcGFydG1lbnQiOiAiMjMiLAogICAgICAgICJ6aXAiOiAiMDIwOTAiCiAgICAgIH0KICAgIF0sCiAgICAicGhvbmVzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAibnVtYmVyIjogIiszODA1MDM0MTA4NzAiCiAgICAgIH0KICAgIF0sCiAgICAiZW1haWwiOiAiZW1haWxAZXhhbXBsZS5jb20iLAogICAgImlkIjogImIwNzVmMTQ4LTdmOTMtNGZjMi1iMmVjLTJkODFiMTlhOWI3YiIKICB9LAogICJkaXZpc2lvbiI6IHsKICAgICJpZCI6ICJkMjkwZjFlZS02YzU0LTRiMDEtOTBlNi1kNzAxNzQ4ZjA4NTEiLAogICAgImxlZ2FsX2VudGl0eV9pZCI6ICJjOGFhZGI4Ny1lY2I5LTQxY2EtOWFkNC1mZmRmZTFkZDg5YzkiLAogICAgIm5hbWUiOiAi0JHQvtGA0LjRgdC/0ZbQu9GM0YHRjNC60LUg0LLRltC00LTRltC70LXQvdC90Y8g0JrQu9GW0L3RltC60Lgg0J3QvtGD0L3QtdC50LwiLAogICAgImFkZHJlc3NlcyI6IFsKICAgICAgewogICAgICAgICJ0eXBlIjogIlJFU0lERU5DRSIsCiAgICAgICAgImNvdW50cnkiOiAiVUEiLAogICAgICAgICJhcmVhIjogItCW0LjRgtC+0LzQuNGA0YHRjNC60LAiLAogICAgICAgICJyZWdpb24iOiAi0JHQtdGA0LTQuNGH0ZbQstGB0YzQutC40LkiLAogICAgICAgICJzZXR0bGVtZW50IjogItCa0LjRl9CyIiwKICAgICAgICAic2V0dGxlbWVudF90eXBlIjogIkNJVFkiLAogICAgICAgICJzZXR0bGVtZW50X2lkIjogImIwNzVmMTQ4IiwKICAgICAgICAic3RyZWV0X3R5cGUiOiAiU1RSRUVUIiwKICAgICAgICAic3RyZWV0IjogItCy0YPQuy4g0J3RltC20LjQvdGB0YzQutCwIiwKICAgICAgICAiYnVpbGRpbmciOiAiMTUiLAogICAgICAgICJhcGFydG1lbnQiOiAiMjMiLAogICAgICAgICJ6aXAiOiAiMDIwOTAiCiAgICAgIH0KICAgIF0sCiAgICAicGhvbmVzIjogWwogICAgICB7CiAgICAgICAgInR5cGUiOiAiTU9CSUxFIiwKICAgICAgICAibnVtYmVyIjogIiszODA1MDM0MTA4NzAiCiAgICAgIH0KICAgIF0sCiAgICAiZW1haWwiOiAiZW1haWxAZXhhbXBsZS5jb20iLAogICAgInR5cGUiOiAiY2xpbmljIiwKICAgICJleHRlcm5hbF9pZCI6ICIzMjEzMjEzIiwKICAgICJkbHNfaWQiOiAiMjg3Mjk4NSIsCiAgICAiZGxzX3ZlcmlmaWVkIjogdHJ1ZQogIH0sCiAgInNlZWQiOiAiaGFzaCIKfQ==` (string, required)
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
@@ -7134,7 +6945,9 @@ This method is used to abtain list of events with filters.
     + Attributes (object)
         + status: APPROVED (string, required)
         + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
-        + person (`Person_info_Public`, required)
+        + person (required)
+            + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+            + include (Person_info_Public, required)
         + patient_signed: true (boolean, required) - Факт подписания заявки на декларацию.
         + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
         + content: `<html><body><p>signed person data</p></body></html>` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
@@ -7168,6 +6981,29 @@ This method is used to abtain list of events with filters.
             + code: 200 (number)
         + data (`Merge_request_response`)
             + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
+
+
+## Dummy for declaration request [/dummy/declaration_requests]
+
+### Sign declaration request [PATCH /dummy/declaration_requests/{id}/actions/sign]
+
+
++ Parameters
+   + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+   
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            msp_drfo: 2534157686
+
+    + Attributes (`Decl_req_data_to_be_signed`, required)
+        
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (`Declaration_short`)
 
 
 # Group Public. Patient Cabinet
@@ -9185,18 +9021,20 @@ status: `APPROVED` (string, required)
 + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
 + channel: `MIS` (enum, required) - channel that invoke declaration create service
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+    + id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string,required )
     + include `Person_info_Public`
+    + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+    + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + employee (Employee_Minimal, required)
 + `legal_entity` (`Medical_Service_Provider`, required)
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + division (`Division_Declaration`, required)
-+ scope (enum, required)
-    - family doctor
++ seed: hash (string, required) - Hash of previous block in declarations chain or other random component that should be signed with declaration.
+
 
 
 
 ### `Person_info_Public`
-+ id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
 + first_name: Петро (string, required)
 + last_name: Іванов (string, required)
 + second_name: Миколайович (string, optional)
@@ -12040,7 +11878,9 @@ status: `APPROVED` (string, required)
 ### `Merge_request_sign_data`
 + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
 + status: APPROVED (string, required) - `status of the merge request`
-+ `master_person` (`Person_info_Public`, required) - `Person data`
++ `master_person` (required) - `Person data`
+    + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
+    + include (Person_info_Public, required)
     + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
 + `merge_person` (`Preperson_base`, required) - `Preperson data`
     + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
