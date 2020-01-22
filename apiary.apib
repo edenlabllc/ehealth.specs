@@ -3462,7 +3462,7 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
-            + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, optional)
+            + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, required)
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -3471,6 +3471,36 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
         + error
             + type: request_malformed (string, required)
             + message: `This doctor has X declarations and could not sign more` (string, required)
+
+### Reject Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/reject]
+
+Use this method to reject previously created Declaration Request.
+
++ Parameters
+    + id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + status: `NEW` (string, required)
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, optional)
 
 ### Sign Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/sign]
 
@@ -3505,6 +3535,48 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + data (`Declaration_short`)
+        
+        
+
+### Get Declaration Request by ID V3 [GET /api/v3/declaration_requests/{id}]
+
++ Parameters
+    + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (object)
+            + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
+            + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
+            + status: SIGNED (enum, required)
+                - NEW
+                - APPROVED
+                - SIGNED
+                - CANCELLED
+            + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, optional)
+        + urgent (object, required)
+            + `authentication_method_current` (object, required)
+                + type: `OTP` (enum, required)
+                    - OTP
+                    - OFFLINE
+                    - NA
+                + number: `+38093*****85` (string, required)
+            + documents (array[`media_content`], optional)
 
 ## Declarations [/api/declarations]
 
