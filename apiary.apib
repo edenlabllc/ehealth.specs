@@ -5414,7 +5414,7 @@ If there is needs to change person\`s default authentication method for merge re
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 201 (number)
-        + data (`Merge_request_short`)
+        + data (`Merge_request_response`)
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
             + documents (array[`media_content`], optional) - `Documents of the master person`
@@ -5438,8 +5438,9 @@ Serves for receiving approval from person on action of merge with preperson. Als
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_extended`)
+        + data (`Merge_request_response`)
             + status: APPROVED (string, required) - `status of the approved merge request`
+            + `data_to_be_signed` (`Merge_request_sign_data`, required)
 
 
 ### Reject merge request [PATCH /api/merge_requests/{id}/actions/reject]
@@ -5457,7 +5458,7 @@ This method gives opportunity to reject and close preperson merge request by han
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_short`)
+        + data (`Merge_request_response`)
             + status: REJECTED (string, required) - `status of the rejected merge request`
 
 ### Sign merge request [PATCH /api/merge_requests/{id}/actions/sign]
@@ -5466,8 +5467,8 @@ All signature fields will be validated (including signer certificate authority).
 
 This service will store signed copy of merge request in Media Content Storage, merge person and preperson MPI records if signature is all checks is passed.
 
-Signed content MUST consists of JSON object with merge request data and printout template. Object that need to be signed is returned by `Approve merge request` method, `JSON.Path: $.data`.
-Person must re-read and sign merge request print form and after that `patient_signed` should be changed to TRUE.
+Signed content MUST consists of data from `data_to_be_signed` field with merge request data, master person data, merge person data and printout template. Field `data_to_be_signed` that need to be signed is returned by `Approve merge request` method, `JSON.Path: $.data.data_to_be_signed` or by `Get merge request by ID` (for approved merge requests).
+Master person must re-read and sign merge request print form and after that `patient_signed` should be changed to TRUE.
 
 Preperson merge request can be signed either by specialist or receptionist (user with scope `merge_request:write`) from legal entity as in merge request.
 There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-merge-request/sign-merge-request) that describes the latest merge request data model for sign and can be used as documentation.
@@ -5489,7 +5490,7 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_short`)
+        + data (`Merge_request_response`)
             + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
 
 ### Resend Authorization OTP on merge request [PATCH /api/merge_requests/{id}/actions/resend_otp]
@@ -5533,13 +5534,13 @@ Method returns a list of merge requests. Service returns only merge requests rel
 
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
-        + data (array[`Merge_request_short`])
+        + data (array[`Merge_request_response`])
 
 
 ### Get merge request by ID [GET /api/merge_requests/{id}]
-Method returns merge request details by it's ID. Depending on merge request status different data returned in response: if status is NEW, REJECTED or EXPIRED - `details` section doesn\`t return in response. If status is APPROVED or SIGNED - `details` section returns.
+Method returns merge request details by it's ID. Depending on merge request status different data returned in response: if status is NEW, REJECTED or EXPIRED - `data_to_be_signed` section doesn\`t return in response. If status is APPROVED or SIGNED - `data_to_be_signed` section returns.
 
-**Note!** that `details` of SIGNED merge request avaliable limited period of time which depends on [**Auto cleaning of person data from merge requests process**](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/624328717/Auto+cleaning+of+person+data+from+merge+requests).
+**Note!** that `data_to_be_signed` of SIGNED merge request avaliable limited period of time which depends on [**Auto cleaning of person data from merge requests process**](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/624328717/Auto+cleaning+of+person+data+from+merge+requests).
 
 + Parameters
     + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
@@ -5554,14 +5555,8 @@ Method returns merge request details by it's ID. Depending on merge request stat
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_extended`)
-            + details (object, optional)
-                + `master_person` (`Person_info_Public`, required) - `Person data`
-                + `merge_person` (`Preperson_base`, required) - `Preperson data`
-                    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
-                    + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
-                + content: `HTML` (string, required) - Generated printout form
-                + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
+        + data (`Merge_request_response`)
+            + `data_to_be_signed` (`Merge_request_sign_data`, optional)
             + status: APPROVED (string, required) - `status of the approved merge request`
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
@@ -6933,21 +6928,14 @@ This method is used to abtain list of events with filters.
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
-    + Attributes (`Merge_request_extended`)
-        + details (object, required)
-            + `master_person` (`Person_info_Public`, required) - `Person data`
-                + patient_signed: true (boolean, required) - Person evidence of sign the merge request.
-            + `merge_person` (`Preperson_base`, required) - `Preperson data`
-                + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
-                + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
-            + content: `HTML` (string, required) - Generated printout form
-        + status: APPROVED (string, required) - `status of the approved merge request`
+    + Attributes (`Merge_request_sign_data`, required)
+        
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
         + meta (Response__Meta)
             + code: 200 (number)
-        + data (`Merge_request_short`)
+        + data (`Merge_request_response`)
             + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
 
 
@@ -11789,7 +11777,7 @@ Assuming that all required business processes and validations is implemented on 
 + master_person_id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `Identifier in MPI of the master person`
 + merge_person_id: `7c3da506-804d-4550-8993-bf17f9ee0403` (string, required) - `Person identifier in MPI which will be merged to master person \(preperson\)`
 
-### `Merge_request_short`
+### `Merge_request_response`
 + id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
 + include `Merge_request_base`
 + status: NEW (string, required) - `status of the new merge request`
@@ -11798,15 +11786,15 @@ Assuming that all required business processes and validations is implemented on 
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 
-### `Merge_request_extended`
-+ include `Merge_request_short`
-+ details (object, required)
-    + `master_person` (`Person_info_Public`, required) - `Person data`
-        + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
-    + `merge_person` (`Preperson_base`, required) - `Preperson data`
-        + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
-        + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
-    + content: `HTML` (string, required) - Generated printout form
+### `Merge_request_sign_data`
++ id: `7c3da506-804d-4550-8993-bf17f9ee0404` (string, required) - `Identifier of the merge request`
++ status: APPROVED (string, required) - `status of the merge request`
++ `master_person` (`Person_info_Public`, required) - `Person data`
+    + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
++ `merge_person` (`Preperson_base`, required) - `Preperson data`
+    + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
+    + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
++ content: `HTML` (string, required) - Generated printout form
 
 ## `Preperson`
 ### `Preperson_base`
