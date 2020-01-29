@@ -2496,6 +2496,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/KoAfIw
             + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + channel: `MIS` (enum, required) - channel that invoke person request create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required)
             <!--+ `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)-->
@@ -2560,6 +2561,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QgAjIw
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 + Response 422 (application/json)
     + Attributes (Response_Error)
@@ -2604,6 +2606,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/MYDAIw
             + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke patient create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 
 ### Sign Person Request [PATCH /api/person_requests/{id}/actions/sign]
@@ -2731,6 +2734,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
   "process_disclosure_data_consent": true,
   "content": "<html><body><p>signed person data</p></body></html>",
   "channel": "MIS"
+  "authorize_with": "cc949559-5dfe-420f-ac05-065e443b2cc6"
 }
 ```
 
@@ -2785,6 +2789,7 @@ More detailed information - https://e-health-ua.atlassian.net/wiki/x/QQAiIw
             + content: `Person content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + channel: `MIS` (enum, required) - channel that invoke person request create service
                 - MIS
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required)
             <!--+ `authentication_methods` (array [`Authentication_Methods_Patient_Response`], required)-->
@@ -3387,6 +3392,7 @@ This method method allows you to create a declaration only for an existing perso
 
     + Attributes (object)
         + include `Declaration_Request_Online`
+        + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -3403,6 +3409,8 @@ This method method allows you to create a declaration only for an existing perso
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            
         + urgent (object, required)
             + `authentication_method_current` (object, required)
                 + type: `OTP` (enum, required)
@@ -3462,6 +3470,7 @@ Clients can use signed URL's to directly access [s3 storage](https://storage.ehe
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
             + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, required)
 
 + Response 422 (application/json)
@@ -3500,6 +3509,7 @@ Use this method to reject previously created Declaration Request.
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
             + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, optional)
 
 ### Sign Declaration Request V3 [PATCH /api/v3/declaration_requests/{id}/actions/sign]
@@ -3568,6 +3578,7 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
                 - SIGNED
                 - CANCELLED
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
             + `data_to_be_signed`: (`Decl_req_data_to_be_signed`, optional)
         + urgent (object, required)
             + `authentication_method_current` (object, required)
@@ -9102,6 +9113,7 @@ status: `APPROVED` (string, required)
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + division (`Division_Declaration`, required)
 + seed: hash (string, required) - Hash of previous block in declarations chain or other random component that should be signed with declaration.
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 
 
