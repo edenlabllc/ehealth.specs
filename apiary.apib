@@ -524,7 +524,7 @@ This service should be used for approve employee request (set status on APPROVED
 
 + Response 200 (application/json)
     + Attributes (Response_OK)
-       + data (Employee_Request_Details)
+       + data (Employee_Request_Approve)
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 
 ### Reject Employee Request [POST /employee_requests/{id}/reject]
@@ -9369,6 +9369,10 @@ status: `APPROVED` (string, required)
 
 ### `Employee_Request_Details`
 + include `Employee_Request`
+
+### `Employee_Request_Approve`
++ include `Employee_Request`
++ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
 
 ### `Employee_Short`
 + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
