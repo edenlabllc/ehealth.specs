@@ -5663,7 +5663,7 @@ Method returns a list of merge requests. Service returns only merge requests rel
 
 
 ### Get merge request by ID [GET /api/merge_requests/{id}]
-Method returns merge request details by it's ID. Depending on merge request status different data returned in response: if status is NEW, REJECTED or EXPIRED - `data_to_be_signed` section doesn\`t return in response. If status is APPROVED or SIGNED - `data_to_be_signed` section returns.
+Method returns merge request details by it's ID. Depending on merge request status different data returned in response: if status is NEW, REJECTED or EXPIRED - `data_to_be_signed` section returns null in response. If status is APPROVED or SIGNED - `data_to_be_signed` section returns with detailed information of person, preperson, printout form e.t.c that will be needed for Sign merge request (look [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-merge-request/sign-merge-request)).
 
 **Note!** that `data_to_be_signed` of SIGNED merge request avaliable limited period of time which depends on [**Auto cleaning of person data from merge requests process**](https://e-health-ua.atlassian.net/wiki/spaces/EH/pages/624328717/Auto+cleaning+of+person+data+from+merge+requests).
 
