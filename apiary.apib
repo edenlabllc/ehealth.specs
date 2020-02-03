@@ -5522,7 +5522,7 @@ Returns preperson details by it's MPI identifier
 ## Merge request [/api/merge_requests]
 
 ### Create merge request [POST]
-Method creates request on merge preperson to person. Employee can merge any preperson to any person which has been created via patient request or declaration request.
+Method creates request on merge preperson to person. Employee can merge any **active preperson** to any **active person** which has been created via patient request or declaration request.
 If there is needs to change person\`s default authentication method for merge request approval than use `authorize_with` field.
 
 + Request (application/json)
