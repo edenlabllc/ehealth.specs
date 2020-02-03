@@ -7056,6 +7056,7 @@ This method is used to abtain list of events with filters.
             api-key: uXhEczJ56adsfh3Ri9SUkc4en
 
     + Attributes (`Merge_request_sign_data`, required)
+         + patient_signed: true (boolean, required) - Master person's evidence of sign the merge request.
         
 
 + Response 200 (application/json)
@@ -11969,7 +11970,7 @@ status: `APPROVED` (string, required)
 + `master_person` (required) - `Person data`
     + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
     + include (Person_info_Public, required)
-    + patient_signed: false (boolean, required) - Person evidence of sign the merge request.
++ patient_signed: false (boolean, required) - Master person's evidence of sign the merge request.
 + `merge_person` (`Preperson_base`, required) - `Preperson data`
     + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
     + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
