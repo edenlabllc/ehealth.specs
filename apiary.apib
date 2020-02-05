@@ -11924,7 +11924,10 @@ status: `APPROVED` (string, required)
 + type: `23143534` (string, required)- `code from dictionary -  EQUIPMENT_TYPE`            
 + external_id: `123-ASD-#1` (string, required) - Identifier from external system
 + udi (array, optional) - A set of unique identifiers assigned to the asset by the manufacturer 
-    - `IMEI 49015420323751` (string)
+    + include
+        + value: `IMEI 49015420323751` (string, required) - udi identifier
+        + type: `default` (string, required) - `type of the udi identifier acording to dictionary EQUIPMENT_UDI_TYPE`
+        + assigner_name: `Ukrainian center of the certification` (string, optional) - assigner name of the udi
 + lot_number: `RZ12345678` (string, optional)
 + manufacturer: `GlobalMed, Inc` (string, optional)
 + manufacture_date: `1999-01-01` (string, optional)
