@@ -11969,7 +11969,33 @@ status: `APPROVED` (string, required)
 + status: APPROVED (string, required) - `status of the merge request`
 + `master_person` (required) - `Person data`
     + id: `13001c60-45a0-4b5a-b425-9505e1de18bd`(string, optional) - MPI id of the person
-    + include (Person_info_Public, required)
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
+    + birth_date: `2009-07-05` (string, required)
+    + birth_country: `Україна` (string, required)
+    + birth_settlement: `Вінниця` (string, required)
+    + gender: MALE, FEMALE (enum[string], required)
+    + email: email@example.com (string, optional)
+    + `no_tax_id`: false (boolean, required)
+    + tax_id: 3999869394 (string, required)
+    + secret: secret (string, required)
+    + documents (array, required)
+        + include
+            + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+            + number: АА120518 (string, required) - document issue number
+            + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+            + issued_at: `2017-02-28` (string, required) - the date when document was issued
+            + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
+    + addresses (array[Address], required)
+    + phones (array[Phone], optional)
+    + unzr: `20090705-00011` (string, optional) - the record number in the demographic register
+    + emergency_contact (object, required)
+        + include `Emergency_Contact`
+    + `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
+    + preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+        - email
+        - phone    
 + patient_signed: false (boolean, required) - Master person's evidence of sign the merge request.
 + `merge_person` (`Preperson_base`, required) - `Preperson data`
     + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - MPI identifier of the merge person.
@@ -11986,7 +12012,6 @@ status: `APPROVED` (string, required)
 + birth_date: `1980-01-01` (string, optional)
 + emergency_contact (object, optional)
     + include `Emergency_Contact`
-+ `confidant_person` (array[`Confidant_Person`], optional) - Should be set if this preperson is disabled, underage, etc.
 
 ### `Preperson_response`
 + id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required) - `MPI identifier of the preperson`
