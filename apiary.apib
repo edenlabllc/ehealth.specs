@@ -8704,8 +8704,9 @@ Assuming that all required business processes and validations is implemented on 
     - OTP
     - OFFLINE
     - NA
-+ value: `+380508887700` (string, optional)
-+ alias: `husband` (string, optional)
++ phone_number: `+380508887700` (string, optional) - required for type = OTP
++ value: `c282f8a9-e709-40aa-94b4-dde1402bf4b6` (string, optional) - requered for type = THIRD_PERSON
++ alias: `husband` (string, optional) - required it type = THIRD_PERSON,  and optional for type = OTP or OFFLINE
 
 ### `Authentication_Methods_Patient_Response`
 - One of
