@@ -3589,6 +3589,37 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
                 + number: `+38093*****85` (string, required)
             + documents (array[`media_content`], optional)
 
+### Get Declaration Requests List V3 [GET /api/v3/declaration_requests{?employee_id,legal_entity_id,status,page,page_size}]
+
+Use this method to obrain list of Declaration Requests for an `empolee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor or Admin is interested in current UI section.
+
+
+Also we suggest use `employee_id` and `legal_entity_id` to make sure that end-user understands context of actions that he or she will perform.
+
+Method returns shortened details, to obtain full information - get Declaration Request it by it's ID.
+
++ Parameters
+    + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - user_id of a doctor.
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MSP ID.
+    + status: active (enum, optional)
+        - NEW
+        - APPROVED
+        - SIGNED
+        - REJECTED
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Declaration_Response_Short_v3`])
+
 ## Declarations [/api/declarations]
 
 ### Get Declarations List [GET /api/declarations{?employee_id,legal_entity_id,status,declaration_number,page,page_size}]
@@ -8960,6 +8991,18 @@ Assuming that all required business processes and validations is implemented on 
 + employee (Employee_Minimal)
 + `legal_entity` (`MSP_Short`)
 + division (`Division_Short_List`)
+
+### `Declaration_Response_Short_v3`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
++ start_date: `2017-03-02` (string, required)
++ end_date: `2025-03-02` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ person_id: `4fa9cac7-8950-44db-9294-0daba56eed58` (string, required) - unique id of person
++ employee: `60a797bb-43c5-463d-86ee-68e354cb626b` (string, required)
++ division : `4c9c9c6e-5230-444d-8b65-7678da1c1ab3` (string, required)
 
 ### `Declaration_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
