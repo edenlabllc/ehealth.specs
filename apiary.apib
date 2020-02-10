@@ -8997,12 +8997,15 @@ Assuming that all required business processes and validations is implemented on 
 + start_date: `2017-03-02` (string, required)
 + end_date: `2025-03-02` (string, required)
 + status (enum, required)
-    - active
-    - pending_verification
-    - terminated
-+ person_id: `4fa9cac7-8950-44db-9294-0daba56eed58` (string, required) - unique id of person
-+ employee: `60a797bb-43c5-463d-86ee-68e354cb626b` (string, required)
-+ division : `4c9c9c6e-5230-444d-8b65-7678da1c1ab3` (string, required)
+    - NEW
+    - APPROVED
+    - SIGNED
+    - REJECTED
+    - CANCELLED
++ person_id: `4fa9cac7-8950-44db-9294-0daba56eed58` (string, optional) - unique id of person
++ employee_id: `60a797bb-43c5-463d-86ee-68e354cb626b` (string, required) - unique id of employee
++ division_id : `4c9c9c6e-5230-444d-8b65-7678da1c1ab3` (string, required) - unique id of dividion
++ `legal_entity_id` : `56b8bcd7-78b8-4ff7-8a60-a48e54a6ef57` (string, required) unique id of LE
 
 ### `Declaration_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
