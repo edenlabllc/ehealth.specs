@@ -2872,6 +2872,9 @@ Also we suggest use `employee_id` and `legal_entity_id` to make sure that end-us
 
 Method returns shortened details, to obtain full information - get Declaration Request it by it's ID.
 
+**Important**
+This endpoint returns all declaration requests that were created through V2 and V3. If the declaration request was created according to version 3, then the block `person` will be empty.
+
 + Parameters
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - user_id of a doctor.
     + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - MSP ID.
@@ -2895,6 +2898,9 @@ Method returns shortened details, to obtain full information - get Declaration R
         + data (array[`Declaration_Request_Short`])
 
 ### Get Declaration Request by ID [GET /api/declaration_requests/{id}]
+
+This endpoint shows the declaration requests which are created by V2 and V3. Due to the fact that structure of declaration request V2 is different from the structure of decl request V3 , so not all fields of decl request v3 can be displayed.
+Block `person` became optional.
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
@@ -3550,6 +3556,8 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
 
 ### Get Declaration Request by ID V3 [GET /api/v3/declaration_requests/{id}]
 
+This endpoint returns declaration requests that were created through V2 and V3. Fields `person_id` and `data_to_be_signed` will be empty if declaration request is created by V2.
+
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
 
@@ -3567,7 +3575,7 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
             + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
-            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (string, required) - Person ID
+            + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (optional, required) - Person ID
             + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
             + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
             + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
@@ -3597,6 +3605,11 @@ Use this method to obrain list of Declaration Requests for an `empolee_id`. If y
 Also we suggest use `employee_id` and `legal_entity_id` to make sure that end-user understands context of actions that he or she will perform.
 
 Method returns shortened details, to obtain full information - get Declaration Request it by it's ID.
+
+**Important**
+
+This endpoint shows the declaration requests which are created by V2 and V3. Due to the fact that structure of declaration request V3 is different from the structure of decl request V2 , so not all fields of declaration request v2 can be displayed.
+If declaration request is created by v2, the field `person_id` will be empty
 
 + Parameters
     + `employee_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - user_id of a doctor.
