@@ -4296,13 +4296,15 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/G4DJJ
             + type: request_malformed (string, required)
             + message: `This doctor has X declarations and could not sign more` (string, required)
 
-### Resend Authorization OTP on Authentication method Request [POST /api/authentication_method_requests/{id}/actions/resend_otp]
+### Resend Authorization OTP on Authentication method Request [POST /api/persons/{id}/authentication_method_requests/{request_id}/actions/resend_otp]
 
 This method is used when you need to re-send SMS to a person or third person
 
 
 + Parameters
-    + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Person identifier
+    + request_id: `1096f147-7f93-3fc6-bddc-9d71b198fb7f` (string, required) - Request identifier
+    
 
 + Request (application/json)
 
