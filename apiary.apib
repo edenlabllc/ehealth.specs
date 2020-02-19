@@ -8783,7 +8783,6 @@ Assuming that all required business processes and validations is implemented on 
 ### `Person_auth_methods`
 
 + id: `b94893f5-b66b-4431-b023-d5b5c037caef` (string, required)
-+ `default`: true (boolean, required)
 + type (enum, required)
     - THIRD_PERSON
     - OTP
@@ -8818,14 +8817,13 @@ Assuming that all required business processes and validations is implemented on 
                 - OTP
                 - OFFLINE
             + phone_number: `+380976549872` (string, optional)
-            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, optional)
-            + alias: `husband` (string, optional)
+            + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, optional) - identifier of active person. It's required when type= THIRd_PERSON 
+            + alias: `husband` (string, optional) - it's required id type = THIRD_PERSON
     + object()
         + action: update (string, required)
         + authentication_method(object)
             + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
             + alias: `wife` (string, optional)
-            + `default`: false (boolean, optional)        
 
 
 ## `Merge_Candidates`
