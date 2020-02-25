@@ -8731,10 +8731,8 @@ Assuming that all required business processes and validations is implemented on 
 
 ### `Person_Medication_Request`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
-+ first_name: Петро (string, required)
-+ last_name: Іванов (string, required)
-+ second_name: Миколайович (string, optional)
-+ age: 35 (number, required) - full years between medication request date and birth date.
++ short_name: Петро І. І. (string, required)
++ age: 35 (number, required) - full years between medication request date and birth date
 
 
 ### `Authentication_Method`
@@ -10268,7 +10266,7 @@ status: `APPROVED` (string, required)
 + country: UA (string, required) - `Dictionary COUNTRY`
 + city: Київ (string, required)
 + institution_name: Академія Богомольця (string, required)
-+ issued_date: 2017-02-28 (string, required)
++ issued_date: `2017-02-28` (string, required)
 + diploma_number: DD123543 (string, required)
 + degree: MASTER (string, required) - `Dictionary EDUCATION_DEGREE`
 + speciality: Педіатр (string, required)
@@ -10298,8 +10296,8 @@ status: `APPROVED` (string, required)
 + level: FIRST (string, required) - `Dictionary SPECIALITY_LEVEL`
 + `qualification_type`: AWARDING (string, required) - `Dictionary SPEC_QUALIFICATION_TYPE`
 + attestation_name: Академія Богомольця (string, required) - орган що видав
-+ attestation_date: 2017-02-28 (string, required) - дата отримання
-+ valid_to_date: 2020-02-28 (string, required) - дата дії до
++ attestation_date: `2017-02-28` (string, required) - дата отримання
++ valid_to_date: `2020-02-28` (string, required) - дата дії до
 + certificate_number: AB/21331 (string, required)
 
 ### `Speciality_party`
