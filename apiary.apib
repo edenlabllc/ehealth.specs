@@ -4238,7 +4238,7 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/FwC_J
             + status: `NEW` (string, required)
             + channel: `MIS` (enum, required) - channel that invoke add auth methods
         + urgent (object, required)
-            + `authentication_method_current` (array[`Authentication_Method`], required)
+            + `authentication_method_current` (array[`Authentication_Method_for_request`], required) - if the person doesn't have active auth methods, then this block will be nill
             + documents (array[`media_content`], optional)
 
 + Response 422 (application/json)
@@ -8742,6 +8742,13 @@ Assuming that all required business processes and validations is implemented on 
     - NA
 + phone_number: `+38093*****85` (string, optional)
 
+### `Authentication_Method_for_request`
++ type (enum, required)
+    - OTP
+    - OFFLINE
++ phone_number: `+38093*****81` (string, optional)
+
+
 ### `Authentication_Method_Patient_Request`
 + type (enum, required)
     - THIRD_PERSON
@@ -8785,9 +8792,8 @@ Assuming that all required business processes and validations is implemented on 
     - THIRD_PERSON
     - OTP
     - OFFLINE
-    - NA
-+ phone_number: `+38093*****85` (string, optional)
-+ value: `34d4aca0-ee15-4d2d-9ab8-336e5ba1f9c7` (string, optional)
++ phone_number: `+38093*****85` (string, optional) - it's required for type = OTP
++ value: `34d4aca0-ee15-4d2d-9ab8-336e5ba1f9c7` (string, optional) - mpi identifier of `third_person`. It s required for type = `THIRD_PERSON`
 + alias: `husband` (string, optional)
 + ended_at: `2020-01-10 18:23:34.217335` (string, optional) - ISO Datetime.
 
