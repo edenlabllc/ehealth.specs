@@ -9225,15 +9225,16 @@ status: `APPROVED` (string, required)
 
 ### `Patient_Request_Short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - unique id of declaration
-+ status: active (enum, optional)
++ status: active (enum, required)
     - NEW
     - APPROVED
     - SIGNED
     - REJECTED
     - CANCELLED
-+ first_name: Петро (string, required)
-+ last_name: Іванов (string, required)
-+ second_name: Миколайович (string, optional)
++ person (object, optional) - Object that described a Patient
+    + first_name: Петро (string, required)
+    + last_name: Іванов (string, required)
+    + second_name: Миколайович (string, optional)
 
   
 ## Party
