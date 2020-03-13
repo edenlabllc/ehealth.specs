@@ -11437,7 +11437,7 @@ status: `APPROVED` (string, required)
     + (object)
         + include `Employee_divisions`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (array, optional)
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
     + (object)
         + include (`External_contractors`, required)
 + `start_date`: `2017-04-20` (string, required) - contract start date
@@ -11530,7 +11530,7 @@ status: `APPROVED` (string, required)
     + (object)
         + include `Employee_divisions_response`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (array, optional)
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
     + (object)
         + include (`External_contractors_response`, required)
 + `start_date`: `2017-04-20` (string, required) - contract start date
@@ -11738,7 +11738,7 @@ status: `APPROVED` (string, required)
     + (object)
         + include `Contractor_divisions`
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (array, optional)
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
     + (object)
         + include (`External_contractors_response`, required)
 + `contractor_employee_divisions` (array, fixed, required)
@@ -11854,7 +11854,7 @@ status: `APPROVED` (string, required)
     + include (`Payment_details`, required)
 + `contractor_rmsp_amount`: `50000` (number, optional) - the amount of population which were served by this MSP
 + `external_contractor_flag`: true (boolean, optional) - the existence of second appendix
-+ `external_contractors` (array, optional)
++ `external_contractors` (array, optional) - existing legal_entities with ACTIVE status
     + (object)
         + include (`External_contractors_response`, required)
 + `nhs_signer_id`: `da8cc932-7bca-4048-a3ff-9b07f901a860` (object, required)
