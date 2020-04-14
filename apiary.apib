@@ -5779,13 +5779,15 @@ This endpoint returns medical program by id.
         + data (`Medical_Program_Response`)
 
 
-### Get Program services list [GET /api/program_services]
+### Get Program services list [GET /api/program_services{?medical_program_id,page,page_size}]
 
 This endpoint returns list of service program members.
 
 **Scopes required:** `program_service:read`
 + Parameters
     + medical_program_id: `1380df72-275a-11e7-93ae-92361f002671` (string, required)
+    + page: 2 (number, optional) - Page number
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 500. Default: 50
 
 + Request (application/json)
 
@@ -10538,11 +10540,10 @@ status: `APPROVED` (string, required)
 ### `Program_Service_Response`
 + id: `c290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
 + medical_program_id: `b290f1ee-6c54-4b01-90e6-d701748f0852` (string, required)
-- One Of
-    + service_id: `d290f1ee-6c54-4b01-90e6-d701748f0853` (string, optional)
-    + `service_group_id`:  `f290f1ee-6c54-4b01-90e6-d701748f0854`(string, optional)
++ service_id: `d290f1ee-6c54-4b01-90e6-d701748f0853` (string, required)
++ service_group_id: null (string, required)
 + consumer_price: 15 (number, required)
-+ description: `text` (string, optional)
++ description: `text` (string, required)
 + request_allowed: true (boolean, required)
 + is_active: true (boolean, required)
 + inserted_at: `2019-04-20T19:14:13Z` (string, required)
