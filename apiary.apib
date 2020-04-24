@@ -4008,6 +4008,8 @@ This method allows to search for a Person (MPI) without disclosing personal data
 
 Method returns only **requested** parameters, birth place and second name in addition for manual identification on MSP side.
 
+Block `merged_persons` will be deprecated from response and endpoint `Search Person's merged persons` has information abount all merged persons which are related to this person
+
 + Parameters
     + first_name: Петро (string, required)
     + last_name: Іванов (string, required)
@@ -4042,6 +4044,49 @@ Method returns only **requested** parameters, birth place and second name in add
         + error (Response__Error, fixed-type)
             + type: `too_many_results`
             + message: `This API method returns only exact match results, please retry with more specific search result` (string)
+            
+
+### Search Person's merged persons [GET /api/persons/{id}/merged_persons]
+
+This method allows to find all persons, which were merged with this person. Also this endpoint shows all the persons who enter the whole chain of merges to this person.
+This information was in response of Get `Search for a Person` before.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (array)
+            + object ()
+                + id: `57e30ea3-16f1-4f8e-adcd-1a05e99e2d22` (string, optional) - identifier of the relation of persons who are compared during the deduplication process
+                + inserted_at: `2019-05-08T15:34:00Z` (string, optional)
+                + merge_person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional) - identifier of a person who is recognized as a duplicate and subsequently deactivated
+                + person_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - identifier of the person who as a result of the deduplication is recognized as true and subsequently left active
+                + updated_at: `2019-05-08T15:34:00Z` (string, optional)
+            + object ()
+                + id: `a4181621-681f-4e46-b0ba-7fa4e59859ef` (string, optional) - identifier of the relation of persons who are compared during the deduplication process
+                + inserted_at: `2019-01-08T15:34:00Z` (string, optional)
+                + merge_person_id: `1a356e56-a991-4ceb-a475-3edfd9930265` (string, optional) - identifier of a person who is recognized as a duplicate and subsequently deactivated
+                + person_id: `bdadc2a7-7283-4f24-bc99-8d8d9808af80` (string, optional) - identifier of the person who as a result of the deduplication is recognized as true and subsequently left active
+                + updated_at: `2019-01-08T15:34:00Z` (string, optional)
+
+
++ Response 404 (application/json)
+    + Attributes (Response_Error)
+        + meta (Response__Meta, fixed-type)
+            + code: 404 (number)
+        + error (Response__Error, fixed-type)
+            + type: `forbidden`
+            + message: `Such person not found` (string)
+ 
 
 ### Create Person [POST /api/persons/create]
 **[Not implemented]** This WS is designed to create person in offline method by legal_entity employee. Employee need scope person:write to create person.
