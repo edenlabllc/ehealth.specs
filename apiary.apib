@@ -7461,7 +7461,107 @@ This WS allows to see 2FA number via Cabinet
 + Response 200 (application/json)
     + Attributes (Response_OK)
         + data (authentication_factor)
+        
 
+### Get medication request list via Cabinet [GET /api/cabinet/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,encounter_id,page,page_size}]
+
+Use this method to obtain list of Medication request an `employee_id` or/and `person_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
+
+Also we suggest use `employee_id` to make sure that end-user understands context of actions that he or she will perform.
+
+Method returns shortened details, to obtain full information - get Medication request it by it's ID.
+
++ Parameters
+    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - legal entity identifier.
+    + `employee_id`: `7124259c-eeb1-4cbb-acac-ada2162675d1` (string, optional) - user_id of a doctor.
+    + `person_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - person_id of a pacient.
+    + `status`: `ACTIVE` (enum, optional). Default `ACTIVE`
+        - ACTIVE
+        - COMPLETED
+        - EXPIRED
+        - REJECTED
+    + `request_number` : `0000-243P-1X53-EH38` (string, optional) - Public medication request human readable number
+    + `created_from`: `2017-08-17` (string, optional) - Medication request creation date period start, which is determined by the external system. Format *DATE '2017-08-17'*
+    + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
+    + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
+    + intent: order (string, optional) - Medication request intent
+    + encounter_id: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - Encounter identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+   + Attributes (`Response_Collection_V2`)
+        + data (array[`Medication_request_Public_Response`])
+            
+
+### Get Medication request by ID via Cabinet [GET /api/cabinet/medication_requests/{id}]
+
+Use this method to obtain full information of Medication request an `id`.
+
++ Parameters
+    + id: `48416485-cc98-46c4-8bba-e321de9e1ecd` (string, required) - `Medication Request identifier OR request_number`
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Public_Response`
+            + veridication_code: `1234` (string, required)
+            
+
+### Get Medication Dispenses List via Cabinet [GET /api/cabinet/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,page,page_size}]
+
++ Parameters
+    + id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication dispense ID
+    + medication_request_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication request ID
+    + legal_entity_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Legal entity ID
+    + division_id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Division ID
+    + status: PROCESSED (string, optional) - Status
+    + dispensed_from: '2017-09-01' (string, optional) - date of dispense
+    + dispensed_to: '2017-10-01' (string, optional) - date of dispense
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array)
+            + (object)
+                + include `Medication_Dispense_Response`
+
+### Get Medication Dispense by ID [GET /api/cabinet/medication_dispenses/{id}]
+
++ Parameters
+    + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + data (object)
+            + include `Medication_Dispense_Response`
 
 # Group Public. Contracts
 
