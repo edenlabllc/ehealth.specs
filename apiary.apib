@@ -823,7 +823,7 @@ If the region is not specified, the service returns statistics for all regions
 
 ## Divisions [/report/divisions]
 
-### Search Divisions [GET /reports/stats/divisions{?id,employee_id,type,name,area,region,settlement,legal_entity_edrpou,legal_entity_id,legal_entity_name,north,east,south,west}]
+### Search Divisions [GET /reports/stats/divisions{?id,employee_id,type,name,area,region,settlement,legal_entity_edrpou,legal_entity_id,legal_entity_name,north,east,south,west,updated_at_from,updated_at_to}]
 Method searches divisions by parameters and returnes division details
 
 + Parameters
@@ -841,6 +841,8 @@ Method searches divisions by parameters and returnes division details
     + east: 50.32423 (number, required)
     + south: 50.32423 (number, required)
     + west: 50.32423 (number, required)
+    + `updated_at_from`: `2017-04-20T19:14:13Z` (string, optional)
+    + `updated_at_to`: `2017-04-20T19:14:13Z` (string, optional)
 
 + Request (application/json)
 
@@ -850,7 +852,7 @@ Method searches divisions by parameters and returnes division details
 
 ## Employees [/api/stats/employees]
 
-### Search Employees [GET /api/stats/employees{?id,employee_type,full_name,speciality,division_id,division_name,area,region,settlement,is_available,patient_birth_date,page,page_size}]
+### Search Employees [GET /api/stats/employees{?id,employee_type,full_name,speciality,division_id,division_name,area,region,settlement,is_available,patient_birth_date,page,page_size,updated_at_from,updated_at_to}]
 Method searches doctor by parameters and returnes division details
 
 + Parameters
@@ -865,6 +867,8 @@ Method searches doctor by parameters and returnes division details
     + settlement: `Луцьк` (string, optional) - the name of settlement where division is located
     + is_available: true (boolen, optional) - whether doctor is available to make declaration with
     + patient_birth_date: `01-01-1987` (string, optional) - patient birth date
+    + `updated_at_from`: `2017-04-20T19:14:13Z` (string, optional)
+    + `updated_at_to`: `2017-04-20T19:14:13Z` (string, optional)
     + page: 2 (number, optional)
     + page_size: 50 (number, optional)
 
