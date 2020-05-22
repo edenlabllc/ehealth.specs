@@ -2887,6 +2887,7 @@ This endpoint returns all declaration requests that were created through V2 and 
         - APPROVED
         - SIGNED
         - REJECTED
+        - CANCELLED
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -2904,7 +2905,7 @@ This endpoint returns all declaration requests that were created through V2 and 
 ### Get Declaration Request by ID [GET /api/declaration_requests/{id}]
 
 This endpoint shows the declaration requests which are created by V2 and V3. Due to the fact that structure of declaration request V2 is different from the structure of decl request V3 , so not all fields of decl request v3 can be displayed.
-Block `person` became optional.
+Block `person` has optional `id`.
 
 + Parameters
     + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - request identifier
@@ -2925,15 +2926,24 @@ Block `person` became optional.
                 - APPROVED
                 - SIGNED
                 - CANCELLED
+                - REJECTED
             + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+            + start_date: `2017-03-02` (string, required) - Should be defined on the client side.
+            + end_date: `2017-03-02` (string, required) - Will be defined on eHealth side if it's not set.
+            + person(`Person_Request`, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
+                + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
+                + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
+                + id: `53af47ba-d9eb-4a87-a2f7-4114adcf1fc4` (string, optional)
+            + authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
+            + scope (enum, required)
+                - family doctor
             + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
-            + include `Declaration_Request_Public_Response`
-                + id: `53af47ba-d9eb-4a87-a2f7-4114adcf1fc4` (string, required)
+            + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + employee (Employee_Minimal)
             + `legal_entity` (`Medical_Service_Provider`)
                 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
             + division (`Division_Details`)
-            + content: `Declaration content` (string, required) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
+            + content: `Declaration content` (string, optional) - HTML document that MUST be shown to a  - Should be defined on the client side.end-user and signed by hes key.
             + seed: hash (string, required) - Hash of previous block in declarations chain or other random component that should be signed with declaration.
             + channel: `MIS` (enum, required) - channel that invoke declaration create service
                 - MIS
@@ -3583,6 +3593,7 @@ This endpoint returns declaration requests that were created through V2 and V3. 
             + `person_id`: `4d0d790c-cbf1-44f5-ab21-ba8db67da161` (optional, required) - Person ID
             + `employee_id`: `1a8b10ea-ba09-40f2-8f9e-55608e9208c6` (string, required) - Employee ID with `type=DOCTOR` selected from available Employees as a third contract party.
             + `division_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+            + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - MSP ID.
             + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
             + declaration_id: `8311ab82-e341-4da0-8a95-235ec9885e23` (string, required) - presetted id for future declaration
             + status: SIGNED (enum, required)
@@ -8861,6 +8872,7 @@ Assuming that all required business processes and validations is implemented on 
 + first_name: Петро (string, required)
 + last_name: Іванов (string, required)
 + second_name: Миколайович (string, optional)
++ id: `9402935f-39bf-4636-a61e-5fe3227b8d39`(string, optional)
 
 ### `Person_Minimal_Contract`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
@@ -9177,6 +9189,7 @@ Assuming that all required business processes and validations is implemented on 
 + employee_id: `60a797bb-43c5-463d-86ee-68e354cb626b` (string, required) - unique id of employee
 + division_id : `4c9c9c6e-5230-444d-8b65-7678da1c1ab3` (string, required) - unique id of dividion
 + `legal_entity_id` : `56b8bcd7-78b8-4ff7-8a60-a48e54a6ef57` (string, required) unique id of LE
++ authorize_with: `cc949559-5dfe-420f-ac05-065e443b2cc6` (string, optional)- identifier of person's auth method
 
 ### `Declaration_short`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
