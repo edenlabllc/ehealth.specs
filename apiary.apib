@@ -3649,6 +3649,26 @@ If declaration request is created by v2, the field `person_id` will be empty
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + data (array[`Declaration_Response_Short_v3`])
+        
+        
+
+### Resend Authorization OTP on Declaration Request [POST /api/v3/declaration_requests/{id}/actions/resend_otp]
+
+Use this method to resend sms on previously created Declaration Request V3.
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (OTP)
+
 
 ## Declarations [/api/declarations]
 
