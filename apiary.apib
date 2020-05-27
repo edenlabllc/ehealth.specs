@@ -929,10 +929,10 @@ Service to search parties (doctors) in eHealth
     + area: `Волинська` (string, optional) - the name of region where division is located
     + region: `Луцький` (string, optional) -  the name of district where division is located
     + settlement: `Луцьк` (string, optional) - the name of settlement where division is located
-    + location_north: 30.1233 (number, required)
-    + location_east: 50.32423 (number, required)
-    + location_south: 50.32423 (number, required)
-    + location_west: 50.32423 (number, required)
+    + location_north: 30.1233 (number, optional)
+    + location_east: 50.32423 (number, optional)
+    + location_south: 50.32423 (number, optional)
+    + location_west: 50.32423 (number, optional)
     + page: 2 (number, optional)
     + page_size: 50 (number, optional)
 
@@ -7535,9 +7535,6 @@ Also we suggest use `employee_id` to make sure that end-user understands context
 Method returns shortened details, to obtain full information - get Medication request it by it's ID.
 
 + Parameters
-    + `legal_entity_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - legal entity identifier.
-    + `employee_id`: `7124259c-eeb1-4cbb-acac-ada2162675d1` (string, optional) - user_id of a doctor.
-    + `person_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - person_id of a pacient.
     + `status`: `ACTIVE` (enum, optional). Default `ACTIVE`
         - ACTIVE
         - COMPLETED
@@ -7581,7 +7578,7 @@ Use this method to obtain full information of Medication request an `id`.
         + meta (Response__Meta)
         + data (object)
             + include `Medication_request_Public_Response`
-            + veridication_code: `1234` (string, required)
+            + verification_code: `1234` (string, required)
             
 
 ### Get Medication Dispenses List via Cabinet [GET /api/cabinet/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,page,page_size}]
@@ -9385,7 +9382,7 @@ status: `APPROVED` (string, required)
 + channel: `MIS` (enum, required) - channel that invoke declaration create service
 + person (object, required) - Object that described a Patient. Confidant person should be set for disabled persons, underage persons, etc.
     + id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string,required )
-    + include `Person_info_Public`
+    + include `Person_info_Public_DRv3`
     + patient_signed: false (boolean, required) - Факт подписания заявки на декларацию.
     + `process_disclosure_data_consent`: true (boolean, required) - Согласие на раскрытие персональных данных
 + employee (Employee_Minimal, required)
@@ -9451,6 +9448,41 @@ status: `APPROVED` (string, required)
     + last_name: Іванов (string, required)
     + second_name: Миколайович (string, optional)
 
+
+### `Person_info_Public_DRv3`
++ first_name: Петро (string, required)
++ last_name: Іванов (string, required)
++ second_name: Миколайович (string, optional)
++ birth_date: `2009-07-05` (string, required)
++ birth_country: `Україна` (string, required)
++ birth_settlement: `Вінниця` (string, required)
++ gender: MALE, FEMALE (enum[string], required)
++ email: email@example.com (string, optional)
++ `no_tax_id`: false (boolean, required)
++ tax_id: 3999869394 (string, optional)
++ secret: secret (string, required)
++ documents (array, required)
+    + include
+        + type: BIRTH_CERTIFICATE (string, required) - `Dictionary DOCUMENT_TYPE`
+        + number: АА120518 (string, required) - document issue number
+        + issued_by: `Рокитнянським РВ ГУ МВС Київської області` (string, required) - authority which issued the document
+        + issued_at: `2017-02-28` (string, required) - the date when document was issued
+        + expiration_date: `2027-02-28` (string, optional) - the date when document expired, is necessery for those documents which has this date, ex, Temporary certificate, etc.
++ addresses (array[Address], required)
++ phones (array[Phone], optional)
++ `authentication_methods` (array, required)
+    + include
+        + type (enum, required)
+            - OTP
+            - OFFLINE
+        + phone_number: `+38093*****85` (string, optional)
++ unzr: `20090705-00011` (string, optional) - the record number in the demographic register
++ emergency_contact (object, required)
+    + include `Emergency_Contact`
++ `confidant_person` (array[`Confidant_Person_v2`], optional) - Should be set if this Person is disabled, underage, etc.
++ preferred_way_communication: email (enum, optional) - the way how a patient wants to be reached
+    - email
+    - phone 
   
 ## Party
 ### `Party_Short`
