@@ -823,7 +823,7 @@ If the region is not specified, the service returns statistics for all regions
 
 ## Divisions [/report/divisions]
 
-### Search Divisions [GET /reports/stats/divisions{?id,employee_id,type,name,area,region,settlement,legal_entity_edrpou,legal_entity_id,legal_entity_name,north,east,south,west,updated_at_from,updated_at_to}]
+### Search Divisions [GET /reports/stats/divisions{?id,employee_id,type,name,area,region,settlement,legal_entity_edrpou,legal_entity_id,legal_entity_name,healthcare_service_speciality_type,healthcare_service_providing_condition,north,east,south,west,updated_at_from,updated_at_to}]
 Method searches divisions by parameters and returnes division details
 
 + Parameters
@@ -837,6 +837,8 @@ Method searches divisions by parameters and returnes division details
     + `legal_entity_edrpou`: 12345678 (string, optional) - legal_entity edrpou
     + `legal_entity_id`: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, optional) - legal entity ID
     + `legal_entity_name`: `Аптека 199` (string, optional) - legal_entity name
+    + `healthcare_service_speciality_type`: `FAMILY_DOCTOR` (string, optional) - `Dictionary SPECIALITY_TYPE`
+    + `healthcare_service_providing_condition`: OUTPATIENT (string, optional) - `Dictionary PROVIDING_CONDITION`
     + north: 30.1233 (number, required)
     + east: 50.32423 (number, required)
     + south: 50.32423 (number, required)
@@ -914,6 +916,32 @@ Method logic described on [confluence page](https://e-health-ua.atlassian.net/wi
     + Attributes (Response_OK)
 
 ## Parties [/parties]
+
+### Search parties [GET /api/stats/parties{?employee_type,full_name,speciality,division_id,division_name,area,region,settlement,location_north,location_east,location_south,location_west,page,page_size}]
+Service to search parties (doctors) in eHealth
+
++ Parameters
+    + employee_type: DOCTOR (string, optional)
+    + full_name: `Іванов Іван Іванович` (enum, optional) - doctor's full name
+    + speciality: `FAMILY_DOCTOR` (string, optional) - specialization of healthcare services provided by doctor
+    + division_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - division ID
+    + division_name: Відділення1 (string, optional) - the name of division
+    + area: `Волинська` (string, optional) - the name of region where division is located
+    + region: `Луцький` (string, optional) -  the name of district where division is located
+    + settlement: `Луцьк` (string, optional) - the name of settlement where division is located
+    + location_north: 30.1233 (number, required)
+    + location_east: 50.32423 (number, required)
+    + location_south: 50.32423 (number, required)
+    + location_west: 50.32423 (number, required)
+    + page: 2 (number, optional)
+    + page_size: 50 (number, optional)
+
++ Request (application/json)
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[EntriesParties], required, fixed-type)
+
 
 ### Get declaration count internal [POST /api/parties/declaration_count/{ids}]
 
@@ -10362,6 +10390,7 @@ status: `APPROVED` (string, required)
 + contacts (ContactInfo, optional)
 + coordinates (Location, optional)
 + `legal_entity` (`LegalEntityMap`, required)
++ `healthcare_services` (array[`Healthcare_service_response`], required, fixed-type)
 
 ### EntriesEmployeesListMap
 + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required) - employee id
@@ -10391,6 +10420,41 @@ status: `APPROVED` (string, required)
         + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required)
         + name: Клініка Ноунейм (string, required)
 
+### EntriesParties (PartyDoctorMap)
++ employees (array[EntriesPartyEmployees], required, fixed-type)
+
+### EntriesPartyEmployees
++ id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required) - employee id
++ position: P1 (string, required) - employee position
++ employee_type: DOCTOR (string, required)
++ `healthcare_services` (array[EntriesHealthcareServices], required, fixed-type)
+
+### EntriesHealthcareServices
++ id: `7c3da506-804d-4550-8993-bf17f9ee0402` (string, required)
++ division (EntriesHealthcareServiceDivision)
++ `speciality_type`: `FAMILY_DOCTOR` (string, required) - `Dictionary SPECIALITY_TYPE`
++ `providing_condition`: OUTPATIENT (string, required) - `Dictionary PROVIDING_CONDITION`
++ category (array, optional)
+    - `0742d949-1492-4864-9494-60fd7102abfd` (string)
++ type (array, optional)
+    - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
++ status: ACTIVE (string, required)
+    - ACTIVE
+    - INACTIVE
++ comment: `Заведено помилково` (string, optional)
++ coverage_area (array, optional)
+    - `2c0110a9-0bea-4b16-af8e-6e2e149a5bfc` (string)
++ `available_time` (array[`Available_time`], optional)
++ `not_available` (array[`Restricted_period`], optional)
+
+### EntriesHealthcareServiceDivision
++ id: `asSbcy12sYs8c` (string, required)
++ name: `Aдоніс` (string, required)
++ type: CLINIC, AMBULANT_CLINIC, FAP (enum, required)
++ addresses (Address, optional)
++ contacts (ContactInfo, optional)
++ coordinates (Location, optional)
++ `legal_entity` (`LegalEntityMap`, required)
 
 ### LegalEntityMap
 + name: Клініка Ноунейм (string, required)
