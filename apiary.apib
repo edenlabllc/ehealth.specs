@@ -3593,7 +3593,7 @@ There is a [**dummy method**](https://uaehealthapi.docs.apiary.io/#reference/dum
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
-        + data (`Declaration_short`)
+        + data (`Declaration_short_v3`)
         
         
 
@@ -9261,6 +9261,25 @@ Assuming that all required business processes and validations is implemented on 
 + reason: `manual_employee` (string, optional)
 + reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
 
+### `Declaration_short_v3`
++ id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ start_date: `2017-03-02` (string, required)
++ end_date: `2017-03-02` (string, required)
++ signed_at: `2017-03-02T00:00:00.000Z` (string, required)
++ status (enum, required)
+    - active
+    - pending_verification
+    - terminated
++ `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
++ person_id: `5fb57a5d-1457-430e-9678-c81cec72779f` (string, required)
++ `legal_entity_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
++ employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ division_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ inserted_at: `2017-07-06T16:54:05.161571Z` (string, required)
++ is_active: true (boolean, required)
++ reason: `manual_employee` (string, optional)
++ reason_description: `Згідно постанови 1 від 10.01.2017` (string, optional)
+
 ### `Declaration_Details`
 + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required)
 + declaration_number: `0000-12H4-245D` (string, required) - unique number of declaration.
@@ -9277,7 +9296,7 @@ Assuming that all required business processes and validations is implemented on 
     - active
     - pending_verification
     - terminated
-+ scope (enum, required)
++ scope (enum, optional)
     - family_doctor
 + `declaration_request_id`: `74a6fae6-4207-4e03-a136-f2e70c6b0c02` (string, required)
 + inserted_at: `2017-03-02T10:45:16.000Z` (string, optional)
