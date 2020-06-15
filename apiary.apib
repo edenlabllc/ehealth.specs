@@ -8940,7 +8940,7 @@ Assuming that all required business processes and validations is implemented on 
     - FEMALE
     - MALE
 + tax_id: 3126509816 (string, optional)
-+ phones (array[Phone], required)
++ phones (array[Phone], optional)
 + birth_settlement: Вінниця (string, required)
 + birth_country: Україна (string, required) - країна народження
 
@@ -10053,6 +10053,7 @@ status: `APPROVED` (string, required)
 + addresses (array[Address], required)
 + phones (array[Phone], required)
 + email: email@example.com (string, required) - division's email
++ location (Location, required) - geographical location, if it's empty, division won't be shown on a map.
 
 
 ### `Division_Short_List`
