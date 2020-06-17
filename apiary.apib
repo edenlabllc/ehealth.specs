@@ -8400,6 +8400,139 @@ After contract request was signed by both sides signed contract request with pri
             + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
             + `printout_content`: `Contract content` (string, required) - HTML document for contract
 
+## Global Budget. Contracts [/api/global_budged/contracts]
+
+### Public. Get contracts [GET /api/global_budged/contracts/{?id,type,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,is_suspended,status,contract_number,date_from_start_date,date_to_start_date,date_from_end_date,date_to_end_date,page,page_size}]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - contract id
+    + type: CAPITATION (string, optional) - type of a contract
+        - CAPITATION
+        - REIMBURSEMENT
+    + contractor_legal_entity_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity which created contract request.
+    + edrpou: `5432345432` (string, optional) - contractor legal entity EDRPOU
+    + contractor_owner_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of legal entity owner.
+    + `nhs_signer_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of nhs employee
+    + status: `VERIFIED` (enum, optional) - current contract status.
+        - TERMINATED
+        - VERIFIED
+    + is_suspended: true (boolean, optional) - wether contract is active
+    + date_from_start_date: `2018-01-01` (string, optional)
+    + date_to_start_date: `2019-01-01` (string, optional)
+    + date_from_end_date: `2018-01-01` (string, optional)
+    + date_to_end_date: `2019-01-01` (string, optional)
+    + contract_number: `0000-9EAX-XT7X-3115` (string, optional) - human readable number of contract request.
+    + medical_program_id: `2075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - id of a program that is a subject of reimbursement contract
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contracts_CRUD_response`])
+
+### Public. Get contract by ID [GET /api/global_budged/contracts/{id}]
+
++ Parameters
+    + `id`: `801f37f5-52c8-477e-aba5-a1d01876d210` (string, required)
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Contracts_CRUD_response`)
+
+## Global Budget. Contract divisions [/api/global_budged/contract_divisions]
+
+### Public. Get contract divisions [GET /api/global_budged/contract_divisions/{?id,contract_id,division_id,page,page_size}]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
+    + contract_id: `82286646-ee07-4d89-929d-29287c367e8a` (string, optional) - Contract identifier
+    + division_id: `f93ac873-b999-47d2-a945-32e7f582eed0` (string, optional) - Division identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contract_divisions_CRUD_response`])
+
+
+### Public. Get contract division by ID [GET /api/global_budged/contract_divisions/{id}]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Contract_divisions_CRUD_response`)
+        
+
+## Global Budget. Contract employees [/api/global_budged/contract_employees]
+
+### Public. Get contract employees [GET]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
+    + employee_id: `da1c07c3-1104-45a3-9a8c-04ffd898da6a` (string, optional) - Employee identifier
+    + division_id: `f93ac873-b999-47d2-a945-32e7f582eed0` (string, optional) - Division identifier
+    + contract_id: `82286646-ee07-4d89-929d-29287c367e8a` (string, optional) - Contract identifier
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + data (array[`Contract_employees_CRUD_response`])
+
+### Public. Get contract employee by ID [GET /api/global_budged/contract_employees/{id}]
+
++ Parameters
+    + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Contract emplyee identifier
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (`Contract_employees_CRUD_response`)
+
+
 # Group Private. Contracts
 
 This group of endpoints is implemented for trusted third party to manipulate with contract records in ehealth system.
