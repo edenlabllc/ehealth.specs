@@ -7021,6 +7021,7 @@ List of events that are stored to EventDB:
 - person status change
 - contract's is_suspended change
 - service request status change
+- legal entity status change
 
 Entity_type variants:
 - Declaration
@@ -7032,6 +7033,7 @@ Entity_type variants:
 - Contract
 - Person
 - ServiceRequest
+- LegalEntity
 
 In the EventDB events are kept during one month or till 10K. The duration and amount of events are parametrized.
 
@@ -8402,7 +8404,12 @@ After contract request was signed by both sides signed contract request with pri
 
 ## Global Budget. Contracts [/api/global_budged/contracts]
 
+These methods allows get information about contracts with the GB_CBP type. All information of this type of contracts is created and managed by the NHS.
+
 ### Public. Get contracts [GET /api/global_budged/contracts/{?id,type,contractor_legal_entity_id,edrpou,contractor_owner_id,nhs_signer_id,is_suspended,status,contract_number,date_from_start_date,date_to_start_date,date_from_end_date,date_to_end_date,page,page_size}]
+
+This method allows to get all existing in legal entity contracts with GB_CBP type
+**Scopes required:** `global_contracts:read`
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - contract id
@@ -8438,6 +8445,9 @@ After contract request was signed by both sides signed contract request with pri
 
 ### Public. Get contract by ID [GET /api/global_budged/contracts/{id}]
 
+This method allows to get existing in legal entity contract by its id with GB_CBP type
+**Scopes required:** `global_contracts:read`
+
 + Parameters
     + `id`: `801f37f5-52c8-477e-aba5-a1d01876d210` (string, required)
 
@@ -8456,6 +8466,9 @@ After contract request was signed by both sides signed contract request with pri
 ## Global Budget. Contract divisions [/api/global_budged/contract_divisions]
 
 ### Public. Get contract divisions [GET /api/global_budged/contract_divisions/{?id,contract_id,division_id,page,page_size}]
+
+This method allows to get all existing in legal entity contract division for contract with GB_CBP type through the MIS
+**Scopes required:** `global_contracts:read`
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
@@ -8477,6 +8490,9 @@ After contract request was signed by both sides signed contract request with pri
 
 ### Public. Get contract division by ID [GET /api/global_budged/contract_divisions/{id}]
 
+This method allows to get existing in legal entity contract divisions by its id for contracts with GB_CBP type
+**Scopes required:** `global_contracts:read`
+
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
 
@@ -8496,6 +8512,9 @@ After contract request was signed by both sides signed contract request with pri
 ## Global Budget. Contract employees [/api/global_budged/contract_employees]
 
 ### Public. Get contract employees [GET]
+**Scopes required:** `global_contracts:read`
+
+This method allows to get all existing in legal entity contract employees for contracts with GB_CBP type
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
@@ -8516,6 +8535,9 @@ After contract request was signed by both sides signed contract request with pri
         + data (array[`Contract_employees_CRUD_response`])
 
 ### Public. Get contract employee by ID [GET /api/global_budged/contract_employees/{id}]
+
+This method allows to get existing in legal entity contract employees by its id for contracts with GB_CBP type through the MIS
+**Scopes required:** `global_contracts:read`
 
 + Parameters
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Contract emplyee identifier
