@@ -8457,7 +8457,8 @@ Assuming that all required business processes and validations is implemented on 
     + status: `VERIFIED` (enum, optional) - current contract status.
         - TERMINATED
         - VERIFIED
-    + is_suspended: true (boolean, optional) - wether contract is active
+    + is_suspended: true (boolean, optional) - wether contract is suspensed
+    + is_active: true (boolean, optional) - wether contract is active
     + date_from_start_date: `2018-01-01` (string, optional)
     + date_to_start_date: `2019-01-01` (string, optional)
     + date_from_end_date: `2018-01-01` (string, optional)
@@ -8553,6 +8554,7 @@ Assuming that all required business processes and validations is implemented on 
     + id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional) - Contract division identifier
     + contract_id: `82286646-ee07-4d89-929d-29287c367e8a` (string, optional) - Contract identifier
     + division_id: `f93ac873-b999-47d2-a945-32e7f582eed0` (string, optional) - Division identifier
+    + is_active: true (boolean, optional) - wether contract divisions is active
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -8643,6 +8645,7 @@ Assuming that all required business processes and validations is implemented on 
     + employee_id: `da1c07c3-1104-45a3-9a8c-04ffd898da6a` (string, optional) - Employee identifier
     + division_id: `f93ac873-b999-47d2-a945-32e7f582eed0` (string, optional) - Division identifier
     + contract_id: `82286646-ee07-4d89-929d-29287c367e8a` (string, optional) - Contract identifier
+    + is_active: true (boolean, optional) - wether contract employees is active
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned. Maximum: 500
 
@@ -8703,8 +8706,8 @@ Assuming that all required business processes and validations is implemented on 
         + action: PUT (string, required)
             - PUT
             - GET
-        + resource_id: `f7f817b2-3134-4625-b87d-e2d7fc8e9b90` (string, required)
-        + `resource_name`: `signed_contract` (string, required)
+        + resource_id: `f7f817b2-3134-4625-b87d-e2d7fc8e9b90` (string, required) - Folder identifier
+        + `resource_name`: `signed_contract` (string, required) - File name
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
