@@ -7022,6 +7022,7 @@ List of events that are stored to EventDB:
 - contract's is_suspended change
 - service request status change
 - legal entity status change
+- preperson status change
 
 Entity_type variants:
 - Declaration
@@ -7034,6 +7035,7 @@ Entity_type variants:
 - Person
 - ServiceRequest
 - LegalEntity
+- Preperson
 
 In the EventDB events are kept during one month or till 10K. The duration and amount of events are parametrized.
 
@@ -8499,6 +8501,7 @@ Assuming that all required business processes and validations is implemented on 
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
+        + data (object)
         + meta (Response__Meta)
             + code: 200 (number)
 
@@ -8589,6 +8592,7 @@ Assuming that all required business processes and validations is implemented on 
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
+        + data (object)
         + meta (Response__Meta)
             + code: 200 (number)
 
@@ -8680,6 +8684,7 @@ Assuming that all required business processes and validations is implemented on 
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
+        + data (object)
         + meta (Response__Meta)
             + code: 200 (number)
 
