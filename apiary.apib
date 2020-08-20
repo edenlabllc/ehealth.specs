@@ -799,21 +799,11 @@ Methods returns agregated numbers of declarations and doctors by division.
 
 
 
-### Get Histogram Stats Declarations [GET /reports/stats/histogram?{from_date}&{to_date}&{interval}]
+### Get Histogram Stats Declarations [GET /reports/stats/histogram]
 
 Methods returns agregated numbers of declarations.
-Total statistis are calculated on the date that is transmitted in the parameter to_date
-The statistics for the period are calculated using from_date and to_date
-If the region is not specified, the service returns statistics for all regions
-
-+ Parameters
-    + from_date: 2017-01-28 (string, required)
-    + to_date: 2017-02-28 (string, required)
-    + interval: DAY (enum, optional)
-      - DAY
-      - MONTH
-      - YEAR
-      + Default: DAY
+Total statistis are calculated by automatically setting parameters (at the moment, from the current date for 13 months with a MONTH interval).
+The service returns statistics for all regions
 
 + Request (application/json)
 
@@ -10385,8 +10375,8 @@ status: `APPROVED` (string, required)
 + name: `Київ` (string, required)
 
 ### HistogramStats
-+ period_type: DAY (string, required)
-+ period_name: `2017-09-01` (string, required)
++ period_type: MONTH (string, required)
++ period_name: `2017-09` (string, required)
 + declarations_created: 0 (number, required)
 + declarations_closed: 0 (number, required)
 + declarations_active_start: 1 (number, required)
