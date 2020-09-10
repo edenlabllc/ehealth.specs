@@ -5637,6 +5637,7 @@ Method enables to modify all the preperson fields except note and status.
     
     + Attributes (object)
         + include `Preperson_base`
+        + gender: MALE (string, optional) - `Dictionary GENDER`
         + external_id: `#1234-FDS-ab` (string, optional) - `Identifier from external system`
         + death_date: `2018-11-11` (string, optional) - Date of death
         + note: `Registered in SmartMed clinic at 01.01.2019 16:40. Male, 40 years old approximately, tatoo with sport motorcycle on the right forearm` (string, optional) - Notes
@@ -12379,7 +12380,7 @@ status: `APPROVED` (string, required)
 + first_name: Петро (string, optional)
 + last_name: Іванов (string, optional)
 + second_name: Миколайович (string, optional)
-+ gender: MALE (string, optional) - `Dictionary GENDER`
++ gender: MALE (string, required) - `Dictionary GENDER`
 + birth_date: `1980-01-01` (string, optional)
 + emergency_contact (object, optional)
     + include `Emergency_Contact`
