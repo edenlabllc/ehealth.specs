@@ -5844,25 +5844,28 @@ Method returns merge request details by it's ID. Depending on merge request stat
 
 ## Medical Program [/api/medical_program]
 
-### Get Medical Programs list [GET /api/medical_programs]
-
-This endpoint returns list of medical programs, such as reimbursement program or fee-for-service program.
+### Get medical programs list [GET /api/medical_programs{?id,name,is_active,page,page_size}]
+Method returns list of medical programs filtering by parameters. By default method returns only active medical programs `is_active=true`
 
 **Scopes required:** `medical_program:read`
+
++ Parameters
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Medical program identifier
+    + `name`: `Доступні ліки` (string, optional) - Name of the Medical program
+    + `is_active`: `true` (boolean, optional) - Is medical program active or not. Default: true
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
 + Request (application/json)
 
     + Headers
 
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
-            API-key: uXhEczJ56adsfh3Ri9SUkc4en
 
 + Response 200 (application/json)
     + Attributes (`Response_Collection_V2`)
         + meta (Response__Meta)
-            + code: 200 (number)
-        + data (array[`Medical_Program_Response`])
-
+        + data (array[`medical_programs_response`])
 
 ### Get Medical Program by id [GET /api/medical_programs/id]
 
