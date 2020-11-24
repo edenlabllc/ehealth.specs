@@ -844,12 +844,11 @@ Method searches divisions by parameters and returnes division details
 
 ## Employees [/api/stats/employees]
 
-### Search Employees [GET /api/stats/employees{?id,employee_type,full_name,speciality,division_id,division_name,area,region,settlement,is_available,patient_birth_date,page,page_size,updated_at_from,updated_at_to}]
+### Search Employees [GET /api/stats/employees{?id,full_name,speciality,division_id,division_name,area,region,settlement,legal_entity_status,page,page_size,updated_at_from,updated_at_to}]
 Method searches doctor by parameters and returnes division details
 
 + Parameters
     + id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, optional) - Employee ID
-    + employee_type: 'DOCTOR' (string, optional)
     + full_name: `Іванов Іван Іванович` (enum, optional) - doctor's full name
     + speciality: `FAMILY_DOCTOR` (string, optional) - doctor officio speciality
     + division_id: b075f148-7f93-4fc2-b2ec-2d81b19a9b7b (string, optional) - division ID
@@ -857,8 +856,7 @@ Method searches doctor by parameters and returnes division details
     + area:`Волинська` (string, optional) - the name of region where division is located
     + region: `Луцький` (string, optional) -  the name of district where division is located
     + settlement: `Луцьк` (string, optional) - the name of settlement where division is located
-    + is_available: true (boolen, optional) - whether doctor is available to make declaration with
-    + patient_birth_date: `01-01-1987` (string, optional) - patient birth date
+    + legal_entity_status: ACTIVE (boolen, optional) - the status of a legal entity in which the doctor works
     + `updated_at_from`: `2017-04-20T19:14:13Z` (string, optional)
     + `updated_at_to`: `2017-04-20T19:14:13Z` (string, optional)
     + page: 2 (number, optional)
@@ -10454,7 +10452,10 @@ status: `APPROVED` (string, required)
 + `legal_entity` (object, required)
     + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required)
     + name: Клініка Ноунейм (string, required)
-
+    + status: ACTIVE (enum, required)
+        - ACTIVE
+        - SUSPENDED
+        - CLOSED
 
 ### EntriesEmployeeMap
 + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required) - employee id
@@ -10466,9 +10467,13 @@ status: `APPROVED` (string, required)
     + name: `Aдоніс` (string, required)
     + type: CLINIC, AMBULANT_CLINIC, FAP (enum, required)
     + addresses (Address, required)
-    + `legal_entity` (object, required)
-        + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required)
-        + name: Клініка Ноунейм (string, required)
++ `legal_entity` (object, required)
+    + id: `7d23bebb-1cf3-4221-bf21-18aada444756` (string, required)
+    + name: Клініка Ноунейм (string, required)
+    + status: ACTIVE (enum, required)
+        - ACTIVE
+        - SUSPENDED
+        - CLOSED
 
 ### EntriesParties (PartyDoctorMap)
 + employees (array[EntriesPartyEmployees], required, fixed-type)
