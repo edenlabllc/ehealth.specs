@@ -5981,7 +5981,41 @@ This endpoint returns list of drugs. Each drug contains all allowed package form
         + meta (Response__Meta)
             + code: 200 (number)
         + data (array[Drug_Response])
+        
 
+### Get drugs list v2 [GET /api/drugs{?innm_id,innm_name,innm_sctid,innm_dosage_form,innm_dosage_id,innm_dosage_name,medication_code_atc,medical_program_id,page,page_size}]
+
+This endpoint returns list of drugs. Each drug contains all allowed package forms and related innm.
+The method contains is_primary parameter, which indicates whether the ingredient is the primary in the drug.
+[Get drugs list](https://uaehealthapi.docs.apiary.io/#reference/public.-reimbursement/drugs/get-drugs-list) method will be deprecated in the future.
+
+
+**Scopes required:** `drug:read`
+
++ Parameters
+    + `innm_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Innm identifier.
+    + `innm_name`: `Інсулін деглюдек` (string, optional) - Innm local name.
+    + `innm_sctid`: `52574003` (string, optional) - Innm CNOMED code.
+    + `innm_dosage_form`: `ML` (string, optional) - Innm_dosage form.
+    + `innm_dosage_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - Innm_dosage identifier.
+    + `innm_dosage_name`: `Інсулін деглюдек 200мл шприц-ручка` (string, optional) - Innm_dosage name.
+    + `medication_code_atc`: `С01BD01` (string, optional) - Medication code ATC.
+    + `medical_program_id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, optional) - medical program id.
+    + `page`: 2 (number, optional) - Page number.
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            API-key: uXhEczJ56adsfh3Ri9SUkc4en
+
++ Response 200 (application/json)
+    + Attributes (`Response_Collection_V2`)
+        + meta (Response__Meta)
+            + code: 200 (number)
+        + data (array[Drug_v2_Response])
 
 ## Medication Request Requests [/api/medication_request_requests]
 
@@ -10906,6 +10940,22 @@ status: `APPROVED` (string, required)
 + `innm` (`Innm_Public_Response_Short`, required)
 + `dosage` (`Dosage_drug`, required)
 + `packages` (array [`Medication_package`], required)
+
+### `Drug_v2_Response`
++ `id`: `ae9bf68e-3c98-4027-9211-535f7dad7a87` (string, required)
++ `name`: `Аміодарон 200мг таблетки` (string, required)
++ `form`: PILL (string, required) - `Dictionary MEDICATION_FORM`
++ `daily_dosage`: 50 (number, required) - Daily dosage
++ `max_daily_dosage`: 200 (number, required) - Max daily dosage
++ `ingredients`: (array[`Ingredient_v2`], required)
++ `packages` (array [`Medication_package`], required)
+
+### `Ingredient_v2`
++ `id` : `1349a693-4db1-4a3f-9ac6-8c2f9e541982` (string, required)
++ `name` : `Інсулін деглюдек` (string, required)
++ `name_original` : `Insulin degludec` (string, required)
++ `dosage` (`Dosage_drug`, required)
++ `is_primary` : true (boolean, required)
 
 ### `Medication_package`
 + `container_dosage` (`Dosage_container`, required)
