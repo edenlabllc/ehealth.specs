@@ -7742,7 +7742,7 @@ id_form|true| словник `CONTRACT_TYPE`, поки що лише один в
 contract_number|false| human-redable номер контракту
 statute_md5|false| хеш завантаженого документу (статуту)
 additional_document_md5|false| хеш завантаженого документу (додатковий документ)
-medical_program_id|true| ідентифікатор державної програми компенсації, що є субєктом договору
+medical_programs|true| масив ідентифікаторів державних програми компенсації, що є субєктом договору
 consent_text|true|
 
 ####Contractor_payment_details
@@ -7849,7 +7849,9 @@ Reimbursement version:
   "contract_number": "0000-9EAX-XT7X",
   "statute_md5": "db218b04eff70f86f40c1572ce8ca16a",
   "additional_document_md5": "ac642b04eff40f86f40c1572ce8ca16a",
-  "medical_program_id": "3922a240-63db-404e-b730-09222bfeb2d1"
+  "medical_programs": [
+    "3922a240-63db-404e-b730-09222bfeb2d1"
+  ]
   "consent_text": "Цією заявою Заявник висловлює бажання укласти договір про реімбурсацію з Національною службою здоров'я України та підтверджує, що на момент подання цієї заяви Заявник провадить господарську діяльність на підставі ліцензії на провадження господарської діяльності з роздрібної торгівлі лікарськими засобами та відповідає ліцензійним умовам. Заявник усвідомлює, що у разі зміни інформації, зазначеної Заявником у цій заяві та (або) доданих до неї документах Заявник зобов'язаний повідомити про такі зміни НСЗУ протягом трьох робочих днів з дня настання таких змін шляхом надсилання інформації про такі зміни на електронну пошту dohovir@nszu.gov.ua, з одночасним внесенням таких змін в Систему. Заявник усвідомлює, що законодавством України передбачена відповідальність за подання недостовірної інформації органам державної влади."
 }
 ```
@@ -11820,7 +11822,8 @@ status: `APPROVED` (string, required)
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
 + `contract_number`: `0000-9EAX-XT7X-3115` (string, optional) - number of existing VERIFIED contract
-+ `medical_program_id`: `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - id of a medical program that is a subject of reimbursment contract
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
 
 ### `Contract_request_list_capitation`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - contract_request ID
@@ -11863,7 +11866,9 @@ status: `APPROVED` (string, required)
 + `parent_contract_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - parent contract id
 + `start_date`: `2017-04-20` (string, required) - contract start date
 + `end_date`: `2017-04-20` (string, required) - contract end date
-+ `medical_program_id`: `12e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject for reimbursement contract
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
+
 
 ### `Contract_request_Update`
 + `contract_type`: `CAPITATION`
@@ -11956,7 +11961,9 @@ status: `APPROVED` (string, required)
 + `printout_content`: `Contract request content` (optional) - HTML document for contract request, is shown only for requests in `APPROVED`, `PENDING_NHS_SIGN`, `NHS_SIGNED`, `SIGNED` statuses.
 + `previous_request_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - changed contract request id
 + `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
-+ `medical_program_id`: `12e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject for reimbursement contract
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
+
 
 ### `Contract_request_Details_Full`
 + include `Contract_request_Details_Capitation`
@@ -12080,7 +12087,9 @@ status: `APPROVED` (string, required)
 + id_form: `RMB` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
 + `assignee_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - NHS employee which review contract request
-+ `medical_program_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject of a reimbursement contract
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
+
 
 
 ### `Contract_Details_Capitation`
@@ -12160,7 +12169,9 @@ status: `APPROVED` (string, required)
 + `end_date`: `2017-04-20` (string, required) - contract end date
 + id_form: `RMB` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
-+ `medical_program_id`: `22e416c4-5747-41cd-9f73-c3a85cdee885` (string, optional) - id of a medical program that is a subject of a reimbursement contract
++ `medical_programs` (array, required)
+    + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
+
 
 ### `Capitation_report`
 + id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, required) - Unique report id
