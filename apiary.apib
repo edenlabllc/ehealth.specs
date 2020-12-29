@@ -7947,6 +7947,17 @@ This method is designed to get full information of contract request by id
         + urgent (object, required)
             + documents (array[`contract_media_content`], optional)
 
+### Private. Create Contract Request by NHS [POST /api/contract_requests/{contract_type}/{id}]
+
+***Scope  contract_request:create***
+
+This WS is designed to update contract by NHS by creating new contract request. 
+Contract request is created with contract number, and parent contract is added to request. 
+NHS Admin can change only fields that are on nhs side.
+
+Request has a similar structure as in `Public. Create Contract Request`.
+For Create contract request by NHS, the `contract_number` in the request is required, it is used to change the existing contract by the NHS.
+
 ### Private. Assign Contract Request by NHS Employee [PATCH /api/contract_requests/{id}/actions/assign]
 
 ***Scope  contract_request:update***
