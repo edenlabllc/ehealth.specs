@@ -7958,6 +7958,25 @@ NHS Admin can change only fields that are on nhs side.
 Request has a similar structure as in `Public. Create Contract Request`.
 For Create contract request by NHS, the `contract_number` in the request is required, it is used to change the existing contract by the NHS.
 
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+
+    + Attributes (object)
+        + include `Contract_request_Request_signed`
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + include `Contract_request_Details_Capitation`
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (object)
+            + include `Contract_request_Details_Reimbursement`
+
 ### Private. Assign Contract Request by NHS Employee [PATCH /api/contract_requests/{id}/actions/assign]
 
 ***Scope  contract_request:update***
