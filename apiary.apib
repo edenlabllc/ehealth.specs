@@ -8468,6 +8468,8 @@ Assuming that all required business processes and validations is implemented on 
             api-key: c2778f3064753ea70de870a53795f5c9
 
     + Attributes (Contracts_CRUD_request)
+        + `medical_programs` (array, optional) - list of medical programs
+            - `d313342c-0b3c-443b-a92e-afb78d1e8086`
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -12299,13 +12301,14 @@ status: `APPROVED` (string, required)
 + type: `CAPITATION` (string, required) - Contract type. Dictionary CONTRACT_TYPES
     - CAPITATION
     - REIMBURSEMENT
-+ `medical_program_id`: `d313342c-0b3c-443b-a92e-afb78d1e8086` (string, optional)
 + reason: `не було виконано умов контракту` (string, optional) - additional the reason of terminated status
 + `signed_content_location`: `bucket_name/folder_identifier/file_name` (string, optional) - Location of the signed content in media storage
 
 ### `Contracts_CRUD_response`
 + id: `8be63914-a278-470b-b868-1af5b9087332` (string, required) - Unique record identifier
 + include `Contracts_CRUD_request`
++ `medical_programs` (array, optional) - list of medical programs
+    - `d313342c-0b3c-443b-a92e-afb78d1e8086`
 + is_active: true (boolean, required) - Technical attribute. Indicates the availability of therecord in the system
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
