@@ -7738,7 +7738,7 @@ previous_request_id | false | опційне поле, яке вказує, що
 contractor_divisions|true| масив id відділень мед. закладу, що включаються в договір
 start_date|false| пункт 9.2 - цей договір діє з (рік має бути поточний або настпуний)
 end_date|false| пункт 9.2 - цей договір діє по (рік має співпадати з роком у start_date або бути наступним за роком start_date за умови, що договір укладається строком на рік)
-id_form|true| словник `CONTRACT_TYPE`, поки що лише один вид Договір на ПМД
+id_form|true| словник `REIMBURSEMENT_CONTRACT_TYPE`, поки що лише один вид Договір на ПМД
 contract_number|false| human-redable номер контракту
 statute_md5|false| хеш завантаженого документу (статуту)
 additional_document_md5|false| хеш завантаженого документу (додатковий документ)
@@ -11876,7 +11876,7 @@ status: `APPROVED` (string, required)
     + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
 + `start_date`: `2017-04-20` (string, required) - contract start date
 + `end_date`: `2017-04-20` (string, required) - contract end date
-+ `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
++ `id_form`: `PMD_1` (string, required) - type of contract {DICTIONARY REIMBURSEMENT_CONTRACT_TYPE}
 + `contract_number`: `0000-9EAX-XT7X-3115` (string, optional) - number of existing VERIFIED contract
 + `medical_programs` (array, required)
     + `3914a240-63db-404e-b730-09222bfeb2d0` (string, required) - - ids of a medical programs that is a subject of reimbursment contract
@@ -11998,7 +11998,7 @@ status: `APPROVED` (string, required)
 
 + `start_date`: `2017-04-20` (string, required) - contract start date
 + `end_date`: `2017-04-20` (string, required) - contract end date
-+ `id_form`: `RMB-1` (string, required) - type of contract {DICTIONARY CONTRACT_TYPE}
++ `id_form`: `RMB-1` (string, required) - type of contract {DICTIONARY REIMBURSEMENT_CONTRACT_TYPE}
 + `nhs_signer` (object, optional)
     + include (`Person_Minimal_Contract`)
 + `nhs_legal_entity` (object)
@@ -12298,7 +12298,7 @@ status: `APPROVED` (string, required)
 + parent_contract_id: `09106b70-18b0-4726-b0ed-6bda1369fd52` (string, optional)
 + id_form: `PMD` (string, required)
 + `nhs_signed_date`: `2017-04-20` (string, required) - Date when contract was signed by NHS
-+ type: `CAPITATION` (string, required) - Contract type. Dictionary CONTRACT_TYPES
++ type: `CAPITATION` (string, required)
     - CAPITATION
     - REIMBURSEMENT
 + reason: `не було виконано умов контракту` (string, optional) - additional the reason of terminated status
