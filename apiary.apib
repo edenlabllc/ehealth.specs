@@ -6028,7 +6028,7 @@ After Medication request Request is signed it will be automatically moved to [Me
 
 > **Important:** Dispense of Medications under this Medication Request is possible in period between dispense_valid_from and dispense_valid_to
 
-### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,intent,based_on,page,page_size}]
+### Get Medication Request Requests List [GET /api/medication_request_requests{?employee_id,person_id,status,intent,care_plan_id,page,page_size}]
 
 Use this method to obtain list of Medication request Requests an `employee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -6045,7 +6045,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         - EXPIRED
         - REJECTED
     + intent: order (string, optional) - Medication request request intent
-    + `based_on`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - based_on identifier. Only care plan is supported
+    + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -6395,7 +6395,7 @@ Use this method to obtain full information of Medication request an `id`.
         + data (object)
             + include `Medication_request_Public_Response`
 
-### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,based_on,page,page_size}]
+### Get Medication requests List [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,page,page_size}]
 
 Use this method to obtain list of Medication request an `employee_id` or/and `person_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -6417,7 +6417,7 @@ Method returns shortened details, to obtain full information - get Medication re
     + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
     + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
     + intent: order (string, optional) - Medication request intent
-    + `based_on`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - based_on identifier. Only care plan is supported
+    + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -6935,7 +6935,7 @@ Invoke Get Medication dispanse details to obtain previously created medication d
         + data (object)
             + include `Medication_Dispense_Response`
 
-### Get Medication Dispenses List [GET /api/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,page,page_size}]
+### Get Medication Dispenses List [GET /api/medication_dispenses{?id,medication_request_id,legal_entity_id,division_id,status,dispensed_from,dispensed_to,care_plan_id,page,page_size}]
 
 + Parameters
     + id: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, optional) - Medication dispense ID
@@ -6945,6 +6945,7 @@ Invoke Get Medication dispanse details to obtain previously created medication d
     + status: PROCESSED (string, optional) - Status
     + dispensed_from: '2017-09-01' (string, optional) - date of dispense
     + dispensed_to: '2017-10-01' (string, optional) - date of dispense
+    + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -11379,12 +11380,19 @@ status: `APPROVED` (string, required)
     - order - The request represents a request/demand and authorization for action.
 + category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
     - community - Includes requests for medications to be administered or consumed by the patient in their home
-+ `based_on`(Reference, optional, fixed-type)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `care_plan` (string)
++ based_on (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string)
 + `context`(Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -11408,12 +11416,19 @@ status: `APPROVED` (string, required)
     - order - The request represents a request/demand and authorization for action.
 + category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
     - community - Includes requests for medications to be administered or consumed by the patient in their home
-+ `based_on`(Reference, optional, fixed-type)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `care_plan` (string)
++ based_on (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string)
 + `context`(Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -11445,12 +11460,19 @@ status: `APPROVED` (string, required)
     - order - The request represents a request/demand and authorization for action.
 + category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
     - community - Includes requests for medications to be administered or consumed by the patient in their home
-+ `based_on`(Reference, optional, fixed-type)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `care_plan` (string)
++ based_on (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string)
 + `context`(Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
@@ -11578,13 +11600,20 @@ status: `APPROVED` (string, required)
     - order - The request represents a request/demand and authorization for action.
 + category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
     - community - Includes requests for medications to be administered or consumed by the patient in their home
-+ `based_on`(Reference, optional, fixed-type)
-    + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
-                + (Coding)
-                    + code: `care_plan` (string)
-+ `context`(Reference, required, fixed-type)
++ based_on (array,optional, fixed-type)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `care_plan` (string)
+    + (Reference)
+        + identifier (Identifier)
+            + type (Codeable_Concept)
+                + coding (array, fixed-type)
+                    + (Coding)
+                        + code: `activity` (string)
++ `context`(Reference, optional, fixed-type)
     + identifier (Identifier)
         + type (Codeable_Concept)
             + coding (array, fixed-type)
