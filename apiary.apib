@@ -8837,6 +8837,35 @@ Assuming that all required business processes and validations is implemented on 
         + data (object)
             + url: `https://example.com/upload_url` (string, required)
 
+
+## Group Public. Forbidden groups
+There are public methods presented to work with a forbidden groups data. 
+
+### Get Forbidden group list [GET /api/forbidden_groups]
+
+This method returns list of all active forbidden groups.
+
+**Scopes required:** `forbidden_group:read`
+
++ Parameters
+    + `name`: `Some name` (string, optional) - Forbidden group name
+    + `page`: 2 (number, optional) - Page number
+    + `page_size`: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Request (application/json)
+    + Headers
+        
+        Authorization: Bearer YW5WcFkyVnFkV2xqWldwMWFXTmxDZzp
+        api-key: c2778f3064753ea70de870a53795f5c9
+
++ Response 200 (application/json)
+    + Attributes (`Response_OK`)
+        + data (array)
+            + (object)
+                + id: `f7f817b2-3134-4625-b87d-e2d7fc8e9b90` (string, required) - Forbidden group identifier
+                + name: `Some name` (string) - Forbidden group name
+
+
 # Data Structures
 ## Responses
 ### `Response_Collection`
