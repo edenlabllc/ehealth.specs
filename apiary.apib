@@ -6047,155 +6047,8 @@ Invoke Get Medication request by ID to obtain previously created medication requ
 * *Medical program* is required for *order*
 * *Medical program* is absent in *plan*
 
-**Signed object example:**
-```
-{
-        "status": "ACTIVE",
-        "started_at": "2018-10-19",
-        "request_number": "0000-MX87-0X36-01M2",
-        "person": {
-            "second_name": "Іванович",
-            "last_name": "Іванов",
-            "id": "34e77202-94d0-45f7-b714-cb581307db26",
-            "first_name": "Іван",
-            "age": 18
-        },
-        "medication_info": {
-            "medication_qty": 10,
-            "medication_name": "Амідарон",
-            "medication_id": "2c020fb0-e418-4e5a-b108-3d8a2ab4dfec",
-            "form": "COATED_TABLET",
-            "dosage": {
-                "numerator_value": 300,
-                "numerator_unit": "MG",
-                "denumerator_value": 1,
-                "denumerator_unit": "PILL"
-            }
-        },
-        "medical_program": {
-            "name": "Тестова програма",
-            "id": "9bedfff4-a642-4bbe-a535-737a9f088f8d"
-        },
-        "legal_entity": {
-            "type": "MSP",
-            "status": "ACTIVE",
-            "short_name": "Клініка Ноунейм",
-            "public_name": "Клініка Ноунейм",
-            "name": "Клініка Ноунейм Медікал",
-            "id": "c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9",
-            "edrpou": "11111111"
-        },
-        "id": "5e8f6b74-76d1-42e2-8a51-a6e8a837c7a0",
-        "ended_at": "2018-11-19",
-        "employee": {
-            "position": "P2",
-            "party": {
-                "second_name": "Петрович",
-                "phones": [
-                    {
-                        "type": "MOBILE",
-                        "number": "+380501234567"
-                    }
-                ],
-                "last_name": "Петров",
-                "id": "1816a1ff-40f3-44ea-9665-82ea375e8be0",
-                "first_name": "Петро"
-            },
-            "id": "b810a901-1173-4a56-9f12-75fbe182f162"
-        },
-        "division": {
-            "working_hours": {
-                "wed": [
-                    [
-                        "08.00",
-                        "12.00"
-                    ],
-                    [
-                        "14.00",
-                        "17.00"
-                    ]
-                ],
-                "tue": [
-                    [
-                        "08.00",
-                        "12.00"
-                    ],
-                    [
-                        "14.00",
-                        "17.00"
-                    ]
-                ],
-                "thu": [
-                    [
-                        "08.00",
-                        "12.00"
-                    ],
-                    [
-                        "14.00",
-                        "17.00"
-                    ]
-                ],
-                "mon": [
-                    [
-                        "08.00",
-                        "12.00"
-                    ],
-                    [
-                        "14.00",
-                        "17.00"
-                    ]
-                ],
-                "fri": [
-                    [
-                        "08.00",
-                        "12.00"
-                    ],
-                    [
-                        "14.00",
-                        "16.00"
-                    ]
-                ]
-            },
-            "type": "CLINIC",
-            "phones": [
-                {
-                    "type": "MOBILE",
-                    "number": "+380501234567"
-                }
-            ],
-            "name": "Відділення клініки Ноунейм",
-            "location": {
-                "longitude": 31.900939,
-                "latitude": 49.180239
-            },
-            "legal_entity_id": "c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9",
-            "id": "034b6bbc-53be-477c-919e-d182120a21d8",
-            "external_id": "3213213",
-            "email": "email@email.com",
-            "addresses": [
-                {
-                    "type": "RESIDENCE",
-                    "country": "UA",
-                    "area": "Житомирська",
-                    "region": "Бердичівський",
-                    "settlement": "Київ",
-                    "settlement_type": "CITY",
-                    "settlement_id": "b075f148-7f93-4fc2-b2ec-2d81b19a9b7b",
-                    "street_type": "STREET",
-                    "street": "вул. Ніжинська",
-                    "building": "15",
-                    "apartment": "23",
-                    "zip": "02090"
-              }
-            ]
-        },
-        "dispense_valid_to": "2018-11-19",
-        "dispense_valid_from": "2018-10-19",
-        "created_at": "2018-10-19",
-        "reject_reason": "Помилка призначення. Несумісні препарати.",
-        "reject_reason_code": "INCORRECT_DOSAGE"
-    }
-```
+Look at [**Dummy Reject Medication Request**](https://uaehealthapi.docs.apiary.io/#reference/dummy-methods/dummy-for-medication-request/reject-medication-request) for more details.
+
 
 + Parameters
     + `id`: `a89f6a26-4221-4597-a1d2-542d5e40b565` (string, required)
@@ -6863,7 +6716,6 @@ This method is used to abtain list of events with filters.
         + data (`Merge_request_response`)
             + status: SIGNED (string, required) - `status of the signed merge request. Merge completed`
 
-
 ## Dummy for declaration request [/dummy/declaration_requests]
 
 ### Sign declaration request [PATCH /dummy/declaration_requests/{id}/actions/sign]
@@ -6886,8 +6738,8 @@ This method is used to abtain list of events with filters.
     + Attributes (Response__Process_OK)
         + data (`Declaration_short`)
 
-
 ## Dummy for medication request requests [/dummy/medication_request_requests]
+
 ### Sign medication request requests [PATCH /dummy/medication_request_requests/{id}/actions/sign]
 
 
@@ -6910,6 +6762,30 @@ This method is used to abtain list of events with filters.
             + printout_form: `HTML` (string, required) - Generated printout form
             + is_blocked: false (boolean, required) - Whether medication request is blocked or not
         + meta (Response__Meta)
+        
+## Dummy for medication request [/dummy/medication_requests]
+
+### Reject medication request [PATCH /dummy/medication_requests/id/actions/reject]
+
+
++ Parameters
+   + id: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required)
+   
++ Request (application/json)
+
+    + Headers
+
+            Authorization: Bearer c2778f3064753ea70de870a53795f5c9
+            api-key: uXhEczJ56adsfh3Ri9SUkc4en
+            msp_drfo: 2534157686
+            
+    + Attributes (`Medication_request_Reject`, required)
+    
++ Response 200 (application/json)
+    + Attributes (Response_OK)
+        + meta (Response__Meta)
+        + data (object)
+            + include `Medication_request_Reject_Response`
 
 
 
@@ -11327,6 +11203,82 @@ status: `APPROVED` (string, required)
 + `rejected_at`: `2017-04-20T19:14:13Z` (string, required) - Reject date - ISO 8601 date and time in UTC timezone.
 + `rejected_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - Rejected user identifier
 
+### `Medication_request_Reject`
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
++ `created_at`: `2018-11-13` (string, required) - Medication request creation date, which is determined by the external system. Format *DATE '2017-09-07'*
++ `dispense_valid_from`: `2018-11-13` (string, required) - Start date of dispense period, which is determined by the external system. Format *DATE '2017-09-07'*
++ `dispense_valid_to`: `2018-12-13` (string, required) - End date of dispense period, which is determined by the external system. Greater or equal to **dispense_valid_from**. Format *DATE '2017-10-07'*
++ `division` (`Division`, required)
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
+    + `legal_entity_id`: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
++ `dosage_instruction` (array, required, fixed-type)
+    + (Dosage_Instruction)
++ `employee` (Employee_Minimal, required)
++ `ended_at`: `2018-12-13` (string, required) - End date of a treatment period, which is determined by the external system. Greater or equal to **started_at**. Format *DATE '2017-10-07'*
++ `id`: `eeebb86d-5cba-43c9-885b-6482ecaf826b` (string, required) - Medication Request request identifier
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act. "medical_program" is absent
+    - order - The request represents a request/demand and authorization for action. "medical_program" is required
++ is_blocked: false (boolean, required) - Whether medication request is blocked or not
++ `legal_entity` (`Legal_Entity_Short`, required)
+    + `id`: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
+    + licenses (array[MSP_License], required)
+    + accreditation (MSP_Accreditation, optional)
++ `medication_info` (`Innm_Dosage_for_Medication_request_Responce`, required)
++ `person` (`Person_Medication_Request`, required)
++ `request_number` : `0000-K8K5-5MTE-352H` (string, required) - Public medication request human readable number
++ `started_at`: `2018-11-13` (string, required) - Start date of a treatment period, which is determined by the external system. Greater or equal to **created_at**. Format *DATE '2017-09-07'*
++ `status`: `ACTIVE` (string, required) - Medication Request status. Find available **statuses** on State Charts wiki page
++ `medical_program` (`Medical_Program_Response`, optional)
++ `reject_reason_code`: (enum, required) - `Dictionary MEDICATION_REQUEST_REJECT_REASON`
+    - NO_REQUEST_NEEDED
+    - NO_SMS
+    - PATIENT_REJECT
+    - WRONG_DOSAGE
+    - WRONG_PERIOD
+    - WRONG_QTY
+    - WRONG_SIGNATURE
++ `reject_reason`: `Помилка призначення. Несумісні препарати.` (string, optional) - Medication request reject reason
+
+### `Medication_request_Reject_Response`
++ category: community (enum, required) - Type of medication usage. Dictionary MEDICATION_REQUEST_CATEGORY
+    - community - Includes requests for medications to be administered or consumed by the patient in their home
++ `created_at`: `2017-08-17` (string, required) - Medication request creation date, which is determined by the external system. Format *DATE '2017-09-07'*
++ `dispense_valid_from`: `2017-08-17` (string, required) - Start date of dispense period, which is determined by the external system. Format *DATE '2017-09-07'*
++ `dispense_valid_to`: `2017-09-16` (string, required) - End date of dispense period, which is determined by the external system. Greater or equal to **dispense_valid_from**. Format *DATE '2017-10-07'*
++ `division` (`Division`, required)
+    + `id`: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
++ `dosage_instruction` (array, optional, fixed-type)
+    + (Dosage_Instruction)
++ `employee` (Employee_Minimal, required)
++ `ended_at`: `2017-09-16` (string, required) - End date of a treatment period, which is determined by the external system. Greater or equal to **started_at**. Format *DATE '2017-10-07'*
++ `id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, required) - Medication Request identifier
++ intent: plan (enum, required) - Represents the medication request purpose. Dictionary MEDICATION_REQUEST_INTENT
+    - plan - The request represents an intention to ensure something occurs without providing an authorization for others to act. "medical_program" is absent
+    - order - The request represents a request/demand and authorization for action. "medical_program" is required
++ is_blocked: false (boolean, required) - Whether medication request is blocked or not
++ `legal_entity` (`Legal_Entity_Short`, required)
+    + `id`: `c8aadb87-ecb9-41ca-9ad4-ffdfe1dd89c9` (string, required)
+    + licenses (array[MSP_License], required)
+    + accreditation (MSP_Accreditation, optional)
++ `medication_info` (`Innm_Dosage_for_Medication_request_Responce`, required)
++ `person` (`Person_Medication_Request`, required)
++ `reject_reason_code`: (enum, required) - `Dictionary MEDICATION_REQUEST_REJECT_REASON`
+    - NO_REQUEST_NEEDED
+    - NO_SMS
+    - PATIENT_REJECT
+    - WRONG_DOSAGE
+    - WRONG_PERIOD
+    - WRONG_QTY
+    - WRONG_SIGNATURE
++ `rejected_at`: (string, optional, nullable) - Reject date - ISO 8601 date and time in UTC timezone.
++ `rejected_by`: (string, optional, nullable) - Rejected user identifier
++ `request_number` : `0000-243P-1X53-EH38` (string) - Public medication request human readable number
++ `started_at`: `2017-08-17` (string, required) - Start date of a treatment period, which is determined by the external system. Greater or equal to **created_at**. Format *DATE '2017-09-07'*
++ `status`: `REJECTED` (enum[string], required) - Medication Request status. Find available **statuses** on State Charts wiki page
++ `medical_program` (`Medical_Program_Response`, optional)
++ `reject_reason`: (string, optional, nullable) - Medication request reject reason
 
 ## `Medication Dispense`
 ### `Medication_Dispense_Request`
