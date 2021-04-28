@@ -5522,7 +5522,7 @@ Method returns merge request details by it's ID. Depending on merge request stat
         + urgent (object, required)
             + `authentication_method_current` (array[`Authentication_Method`], required) - `Current authentication method of the master person`
             + documents (array[`media_content`], optional) - `Documents of the master person`
-            
+
 
 # Group Public. Medical Programs
 
@@ -7783,6 +7783,104 @@ After contract request was signed by both sides signed contract request with pri
             + id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required) - contract identifier
             + `printout_content`: `Contract content` (string, required) - HTML document for contract
 
+
+## Medical program provision [/api/medical_program_provision]
+### Create Medical program provision [POST]
+This method allows to create medical program provision by divisions of user’s legal entity. It shows what divisions provide medical program according to legal entity contract.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of the request in Media Content Storage if all checks is passed. 
+
+**Scopes required:** `medical_program_provision:write`
+
+Look at [Dummy Create Medical program provision](https://uaehealthapi.docs.apiary.io/#reference/public.-contracts/medical-program-provision/dummy-create-medical-program-provision) for more details
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (object)
+        + `signed_content`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+        + `signed_content_encoding`: `base64` (string, required)
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (array)
+            + (`Medical_program_provision_response`)
+
+
+### Dummy Create Medical program provision [POST]
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes (Medical_program_provision_request)
+
+
++ Response 201 (application/json)
+    + Attributes (Response__Process_OK)
+        + meta (Response__Meta)
+            + code: 201 (number)
+        + data (array)
+            + (`Medical_program_provision_response`)
+            + (`Medical_program_provision_response`)
+                + id: `2060b523-b469-4fc5-89af-ddb5899d8efe` (string, required)
+                + `division_id`: `6d07bdb0-59c0-4b54-8a90-bada3e232877` (string, required)
+
+
+### Get Medical program provision List [GET /api/medical_program_provision{?contract_number,medical_program_id,division_id,is_active,page,page_size}]
+This method allows to get a list of medical programs already provided by the divisions of legal entity according to contracts. Also, this list can be filtered using search parameters.
+
+**Scopes required:** `medical_program_provision:read`
+
++ Parameters
+    + `contract_number`: `0000-PAP5-M000` (string, optional) - Contract number
+    + `medical_program_id`: `04d5ea65-d6e7-44f8-9eef-f0d3c1121d2b` (string, optional) - Medical program identifier
+    + `division_id`: `6d07bdb0-59c0-4b54-8a90-bada3e232877` (string, optional) - Division identifier
+    + `is_active`: true (boolean, optional) - Medical program provision status
+    + page: 2 (number, optional) - Page number.
+    + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
+
++ Response 200 (application/json)
+    + Attributes (Response_Collection_V2)
+        + data (array)
+            + (`Medical_program_provision_response`)
+            + (`Medical_program_provision_response`)
+                + id: `2060b523-b469-4fc5-89af-ddb5899d8efe` (string, required)
+                + `division_id`: `6d07bdb0-59c0-4b54-8a90-bada3e232877` (string, required)
+
+
+### Deactivate Medical program provision [PATCH]
+This method allows to deactivate division that provide a medical program within user's legal entity. 
+
+**Scopes required:** `medical_program_provision:write`
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes(object)
+        + `medical_program_provision_ids` (array[string], required) - Array of active Medical program provision identifiers
+            + `2060b523-b469-4fc5-89af-ddb5899d8efe`
+            + `3e34da3d-9b8c-4aaf-be8e-24a161279b6a`
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (array)
+            + (`Medical_program_provision_response`)
+                + `is_active`: false (boolean, required)
+                + `deactivate_reason`: `MANUAL_DEACTIVATION` (string, required, nullable) - the reason of deactivated status
+            + (`Medical_program_provision_response`)
+                + id: `2060b523-b469-4fc5-89af-ddb5899d8efe` (string, required)
+                + `division_id`: `6d07bdb0-59c0-4b54-8a90-bada3e232877` (string, required)
+                + `is_active`: false (boolean, required)
+                + `deactivate_reason`: `MANUAL_DEACTIVATION` (string, required, nullable) - the reason of deactivated status
+            
 
 # Group Private. Contracts
 
@@ -12079,6 +12177,26 @@ status: `APPROVED` (string, required)
     - ACTIVE
     - INACTIVE
 + death_date: `2018-11-11` (string, optional) - date of death
++ `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
++ `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
++ `updated_by`: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
+
+## Medical program provision
+### `Medical_program_provision_request`
++ `contract_number`: `0000-PAP5-M000` (string, required)
++ `medical_program_id`: `04d5ea65-d6e7-44f8-9eef-f0d3c1121d2b` (string, required)
++ divisions (array[string], required)
+    + `15caea3f-cac3-483c-a3da-5875eba96430`
+    + `6d07bdb0-59c0-4b54-8a90-bada3e232877`
+
+### `Medical_program_provision_response`
++ id: `3e34da3d-9b8c-4aaf-be8e-24a161279b6a` (string, required) - identifier of the Medical program provision
++ `contract_number`: `0000-PAP5-M000` (string, required) - сontract number according to which Medical program provision has been created
++ `medical_program_id`: `04d5ea65-d6e7-44f8-9eef-f0d3c1121d2b` (string, required) - medical program that is provided
++ `division_id`: `15caea3f-cac3-483c-a3da-5875eba96430` (string, required) - division that provide a medical program
++ `is_active`: true (boolean, required) - status of the Medical program provision
++ `deactivate_reason`: (string, required, nullable) - the reason of deactivated status
 + `inserted_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
 + `inserted_by`: `e1453f4c-1077-4e85-8c98-c13ffca0063e` (string, required)
 + `updated_at`: `2017-04-20T19:14:13Z` (string, required) - ISO 8601 date and time in UTC timezone.
