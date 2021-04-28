@@ -7853,12 +7853,33 @@ This method allows to get a list of medical programs already provided by the div
                 + id: `2060b523-b469-4fc5-89af-ddb5899d8efe` (string, required)
                 + `division_id`: `6d07bdb0-59c0-4b54-8a90-bada3e232877` (string, required)
 
-
 ### Deactivate Medical program provision [PATCH]
-This method allows to deactivate division that provide a medical program within user's legal entity. 
+This method allows to deactivate division that provide a medical program within user's legal entity.
+Method receives signed message (pkcs7) that consists of signed content, digital signature and signer public key. All signature fields will be validated (including signer certificate authority).
+Service will store signed copy of the request in Media Content Storage if all checks is passed. 
 
 **Scopes required:** `medical_program_provision:write`
 
+Look at [Dummy Deactivate Medical program provision](https://uaehealthapi.docs.apiary.io/#reference/public.-contracts/medical-program-provision/dummy-deactivate-medical-program-provision) for more details
+
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+        
+    + Attributes(object)
+        + `signed_content`:`ew0KICAicGVyaW9kIjogew0KIC...` (string, required, fixed-type)
+        + `signed_content_encoding`: `base64` (string, required)
+
++ Response 200 (application/json)
+    + Attributes (Response__Process_OK)
+        + data (array)
+            + (`Medical_program_provision_response`)
+                + `is_active`: false (boolean, required)
+                + `deactivate_reason`: `MANUAL_DEACTIVATION` (string, required, nullable) - the reason of deactivated status
+        
+
+### Dummy Deactivate Medical program provision [PATCH]
 + Request (application/json)
     + Headers
         Authorization: Bearer F3GF124Df565FDS234SDF34
