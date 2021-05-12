@@ -7846,6 +7846,11 @@ This method allows to get a list of medical programs already provided by the div
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
+
 + Response 200 (application/json)
     + Attributes (Response_Collection_V2)
         + data (array)
@@ -7861,6 +7866,11 @@ This method allows to deactivate division that provide a medical program within 
 
 + Parameters
     + `id`: `2060b523-b469-4fc5-89af-ddb5899d8efe` (string, optional) - Medical program provision identifier
+    
++ Request (application/json)
+    + Headers
+        Authorization: Bearer F3GF124Df565FDS234SDF34
+        api-key: aDGFDFGT46S5gFGD
 
 + Response 200 (application/json)
     + Attributes (Response__Process_OK)
