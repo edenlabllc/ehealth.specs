@@ -5714,7 +5714,7 @@ After Medication request Request is signed it will be automatically moved to [Me
 
 > **Important:** Dispense of Medications under this Medication Request is possible in period between dispense_valid_from and dispense_valid_to
 
-### Get Medication Request Requests [GET /api/medication_request_requests{?employee_id,person_id,status,intent,care_plan_id,page,page_size}]
+### Get Medication Request Requests [GET /api/medication_request_requests{?employee_id,person_id,status,intent,care_plan_id,encounter_id,page,page_size}]
 
 Use this method to obtain list of Medication request Requests an `employee_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -5732,6 +5732,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         - REJECTED
     + intent: order (string, optional) - Medication request request intent
     + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -5747,7 +5748,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         + data (object)
             + include `Medication_request_Request_Public_Response`
 
-### Get Medication Request Requests in care plan context [GET /api/care_plans/{care_plan_id}/medication_request_requests{?employee_id,person_id,status,intent,care_plan_id,page,page_size}]
+### Get Medication Request Requests in care plan context [GET /api/care_plans/{care_plan_id}/medication_request_requests{?employee_id,person_id,status,intent,encounter_id,page,page_size}]
 
 The method returns a list of medication request requests in the context of a care plan. 
 User must have an approval on the care plan from url.
@@ -5763,6 +5764,7 @@ Method returns shortened details, to obtain full information - Get Medication re
         - EXPIRED
         - REJECTED
     + intent: order (string, optional) - Medication request request intent
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -5965,7 +5967,7 @@ Use this method to obtain full information of Medication request an `id`.
         + data (object)
             + include `Medication_request_Public_Response`
 
-### Get Medication requests [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,page,page_size}]
+### Get Medication requests [GET /api/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,encounter_id,page,page_size}]
 
 Use this method to obtain list of Medication request an `employee_id` or/and `person_id`. If you want to reduce amount of data that is going trough your application, use `status` filter and show only requests that Doctor is interested in current UI section.
 
@@ -5988,6 +5990,7 @@ Method returns shortened details, to obtain full information - get Medication re
     + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
     + intent: order (string, optional) - Medication request intent
     + `care_plan_id`: `8838982b-6a77-4cb5-87cd-cdb82eb55364` (string, optional) - care plan identifier
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
@@ -6001,7 +6004,7 @@ Method returns shortened details, to obtain full information - get Medication re
    + Attributes (`Response_Collection_V2`)
         + data (array[`Medication_request_Public_Response`])
 
-### Get Medication requests in care plan context [GET /api/care_plans/{care_plan_id}/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,care_plan_id,page,page_size}]
+### Get Medication requests in care plan context [GET /api/care_plans/{care_plan_id}/medication_requests{?legal_entity_id,employee_id,person_id,status,request_number,created_from,created_to,medication_id,intent,encounter_id,page,page_size}]
 
 The method returns a list of medication requests in the context of a care plan. 
 User must have an approval on the care plan from url.
@@ -6022,6 +6025,7 @@ Method returns shortened details, to obtain full information - get Medication re
     + `created_to`: `2017-08-30` (string, optional) - Medication request creation date period end, which is determined by the external system. Format *DATE '2017-08-30'*
     + `medication_id`: `b075f148-7f93-4fc2-b2ec-2d81b19a9b5b` (string, optional) - innm dosage id
     + intent: order (string, optional) - Medication request intent
+    + `encounter_id`: `7075e0e2-6b57-47fd-aff7-324806efa7e5` (string, optional) - encounter identifier
     + page: 2 (number, optional) - Page number.
     + page_size: 50 (number, optional) - A limit on the number of objects to be returned, between 1 and 100. Default: 50
 
