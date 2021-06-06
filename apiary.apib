@@ -7177,9 +7177,6 @@ Reimbursement version:
     "payer_account": "UA3412345678901234567890",
     "bank_name": "Банк №1"
   },
-  "contractor_divisions": [
-    "adeac295-0d39-4a8e-8e16-9526787de3f1"
-  ],
   "start_date": "2019-04-20",
   "end_date": "2020-04-19",
   "id_form": "PMD_1",
@@ -11515,8 +11512,8 @@ status: `APPROVED` (string, required)
 + `contractor_payment_details` (object, required)
     + include (`Payment_details`, required)
 + `contractor_rmsp_amount`: `50000` (number, required) - the amount of population which were served by this MSP
-+ `contractor_divisions` (array, required)
-    + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
++ `contractor_divisions` (array, required) - division ID (only for CAPITATION)
+    + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required)
 + `contractor_employee_divisions` (array, optional)
     + (object)
         + include `Employee_divisions`
@@ -11793,7 +11790,6 @@ status: `APPROVED` (string, required)
     + (object)
         + id: `2922a240-63db-404e-b730-09222bfeb2dd` (string, required) - division ID
         + name: Бориспільське відділення Клініки Ноунейм (string, required) - the full name of division
-
 + `nhs_signer_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - person which represents nhs
 + `nhs_legal_entity_id`: `df9f70ee-4b12-4740-b0f5-bb5aea116863` (string, optional) - nhs legal entity ID
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
@@ -11871,10 +11867,7 @@ status: `APPROVED` (string, required)
 + `contractor_divisions` (array, fixed, required)
     + (object)
         + include `Contractor_divisions`
-
-
 + `nhs_signer_base`: `на підставі наказу` (string, optional) - documents which allows to represent nhs
-
 + `nhs_payment_method`: `prepayment` (enum, optional) - payment method for contract
 + status: `VERIFIED` (string, required) - contract status
 + status_reason: `не було виконано умов контракту` (string, optional) - the reason of terminated status
