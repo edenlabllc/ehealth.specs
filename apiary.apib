@@ -10487,7 +10487,7 @@ status: `APPROVED` (string, required)
 + text (string, optional)
 
 ### `Coding`
-+ system : `eHealth/resources` (string, optional)
++ system : `eHealth/resources` (string, required)
 + code : `patient` (string, required) - Symbol in syntax defined by the system
 
 ### `Duration`
@@ -10862,10 +10862,10 @@ status: `APPROVED` (string, required)
                         + code: `activity` (string)
 + `context`(Reference, optional, fixed-type)
     + identifier (Identifier)
-        + type (Codeable_Concept)
-            + coding (array, fixed-type)
+        + type (Codeable_Concept, required)
+            + coding (array, fixed-type, required)
                 + (Coding)
-                    + code: `encounter` (string)
+                    + code: `encounter` (string, required)
 + `dosage_instruction` (array, optional, fixed-type)
     + (Dosage_Instruction)
 
