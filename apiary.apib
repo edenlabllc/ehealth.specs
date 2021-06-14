@@ -3520,14 +3520,12 @@ Response structure differs depending on employee type:
 * Employee info
 * User Info
 
-**For DOCTOR or PHARMACIST:**
+**For DOCTOR, SPECIALIST, ASSISTANT or PHARMACIST:**
 
 * Person info
 * Employee info
 * User Info
 * Doctor info
-
-`Declaration_limit` and `declaration_count` are mooved to approve declaration request error, temporary are left in response with `0` value.
 
 + Parameters
     + employee_id: `d290f1ee-6c54-4b01-90e6-d701748f0851` (string, required)
@@ -3535,7 +3533,7 @@ Response structure differs depending on employee type:
 + Request (application/json)
 
     + Headers
-
+    
             Authorization: Bearer c2778f3064753ea70de870a53795f5c9
 
 + Response 200 (application/json)
@@ -3543,6 +3541,9 @@ Response structure differs depending on employee type:
         + data (Employee_Response)
             + division (Division_Short)
             + `legal_entity` (`Legal_Entity_Short`)
+                + `legal_form`: 140 (string, required) - `Dictionary LEGAL_FORM`
+                + `owner_property_type`: STATE (string, required) - `Dictionary OWNER_PROPERTY_TYPE`
+                + `mis_verified`: VERIFIED, NOT_VERIFIED (enum, required)
 
 
 ### Deactivate Employee [PATCH /api/employees/{id}/actions/deactivate]
@@ -9187,9 +9188,10 @@ status: `APPROVED` (string, required)
 + start_date: `2017-03-02T10:45:16.000Z` (string, required)
 + end_date: `2018-03-02T10:45:16.000Z` (string, optional)
 + status: APPROVED, DISMISSED (enum, required)
++ `is_active`: `true` (boolean, required)
 + `employee_type`: DOCTOR (string, required) - `Dictionary EMPLOYEE_TYPE`
 + party (`Party_Response_old`)
-+ doctor (DoctorNew, optional)
++ doctor (DoctorNew, optional) - `Field's name depends of employee type name`
 
 ### `Employee_Update`
 + division_id: `b075f148-7f93-4fc2-b2ec-2d81b19a9b7b` (string, optional)
