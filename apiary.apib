@@ -4011,6 +4011,7 @@ Confluence - https://e-health-ua.atlassian.net/wiki/x/FwC_J
 
     + Attributes (object)
         + include (`Authentication_methods_request`)
+    
 
 + Response 201 (application/json)
     + Attributes (Response__Process_OK)
@@ -8541,13 +8542,13 @@ This web service returns a catalog of all active forbidden groups in eHealth.
 + `process_disclosure_data_consent`: true (boolean, required)
 
 ### `Authentication_methods_request`
-- One of
+  - One of
     + object()
-        + action: delete (string, required)
+        + action: DEACTIVATE (string, required)
         + authentication_method(object)
             + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
     + object()
-        + action: insert (string, required)
+        + action: INSERT (string, required)
         + authentication_method(object)
             + type(enum, required)
                 - THIRD_PERSON
@@ -8557,7 +8558,7 @@ This web service returns a catalog of all active forbidden groups in eHealth.
             + value: `7b100a9c-daaa-490e-b88d-2a911059b0d2` (string, optional) - identifier of active person. It's required when type= THIRd_PERSON 
             + alias: `husband` (string, optional) - it's required id type = THIRD_PERSON
     + object()
-        + action: update (string, required)
+        + action: UPDATE (string, required)
         + authentication_method(object)
             + id: `7b100a9c-daaa-490e-b88d-2a911059b055` (string, required)
             + alias: `wife` (string, optional)
